@@ -49,7 +49,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-
+const applyUpdateBtn = document.getElementById('applyUpdate');
 
 applyUpdateBtn.onclick = () => {
   if (newWorker) {
@@ -977,7 +977,6 @@ hideBtn.onclick = () => {
   }
 };
 
-const applyUpdateBtn = document.getElementById('applyUpdate');
 
 const updateBanner = document.getElementById('updateBanner');
 const viewUpdateDetailsBtn = document.getElementById('viewUpdateDetails');
