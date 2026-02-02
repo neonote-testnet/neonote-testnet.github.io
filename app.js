@@ -42,7 +42,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-const applyUpdateBtn = document.getElementById('applyUpdate');
+
 applyUpdateBtn.onclick = () => {
   if (newWorker) {
     newWorker.postMessage({ action: 'skipWaiting' });
@@ -55,7 +55,7 @@ applyUpdateBtn.onclick = () => {
   }
 };
 
-const applyUpdateBtn = document.getElementById('applyUpdate');
+
 
 applyUpdateBtn.onclick = () => {
   if (newWorker) {
@@ -985,6 +985,8 @@ hideBtn.onclick = () => {
 
 
 const updateBanner = document.getElementById('updateBanner');
+const applyUpdateBtn = document.getElementById('applyUpdate');
+
 const viewUpdateDetailsBtn = document.getElementById('viewUpdateDetails');
 
 const updateDetailsModal = document.getElementById('updateDetailsModal');
