@@ -1,8 +1,8 @@
 {
-  "version": "v1.2.10",
+  "version": "v1.3.0",
   "title": "New feature update",
   "details": [
-    "Test Added Collection Mode for Account this will let users use account in different way.",
+    "Added Collection Mode for Account this will let users use account in different way.",
     "Improved promise sorting in All tab",
     "Performance optimizations",
     "Minor UI polish"
