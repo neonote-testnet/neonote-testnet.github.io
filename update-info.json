@@ -1,8 +1,8 @@
 {
-  "version": "v223",
-  "title": "New feature update",
+  "version": "v225",
+  "title": "Adding new feature",
   "details": [
-    "Added client-based account management",
+    "Sample added client-based account management",
     "Improved promise sorting in All tab",
     "Performance optimizations",
     "Minor UI polish"
