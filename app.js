@@ -27,14 +27,6 @@ const viewUpdateDetailsBtn = document.getElementById('viewUpdateDetails');
 const updateDetailsModal = document.getElementById('updateDetailsModal');
 const closeUpdateDetails = document.getElementById('closeUpdateDetails');
 
-viewUpdateDetailsBtn.onclick = () => {
-  updateDetailsModal.classList.remove('hidden');
-};
-
-closeUpdateDetails.onclick = () => {
-  updateDetailsModal.classList.add('hidden');
-};
-
 
 let newWorker = null;
 
@@ -58,15 +50,6 @@ if ('serviceWorker' in navigator) {
     });
   });
 }
-
-
-viewUpdateDetailsBtn.onclick = () => {
-  updateDetailsModal.classList.remove('hidden');
-};
-
-closeUpdateDetails.onclick = () => {
-  updateDetailsModal.classList.add('hidden');
-};
 
 const todayContainer = document.getElementById('todayContainer');
 const countTodayEl = document.getElementById('countToday');
@@ -994,14 +977,6 @@ applyUpdateBtn.onclick = () => {
     window.location.reload();
   });
 };
-
-
-applyUpdateBtn.onclick = async () => {
-  if (newWorker) {
-    newWorker.postMessage({ action: 'SKIP_WAITING' });
-  }
-};
-
 viewUpdateDetailsBtn.onclick = () => {
   updateDetailsModal.classList.remove('hidden');
 };
@@ -1009,5 +984,7 @@ viewUpdateDetailsBtn.onclick = () => {
 closeUpdateDetails.onclick = () => {
   updateDetailsModal.classList.add('hidden');
 };
+
+
 
 });
