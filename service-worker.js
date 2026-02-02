@@ -1,4 +1,4 @@
-const CACHE = 'neonote-v204';
+const CACHE = 'neonote-v205';
 
 const ASSETS = [
   './',
@@ -10,17 +10,29 @@ const ASSETS = [
   './icons/icon-512.png'
 ];
 
+
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE).then(cache => cache.addAll(ASSETS))
   );
 });
 
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(response => {
+      return response || Response.error();
+    })
+  );
+});
+
+
 self.addEventListener('message', event => {
   if (event.data?.action === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
+
 
 self.addEventListener('activate', event => {
   event.waitUntil(
