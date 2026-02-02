@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  loadUpdateDetails();
 
 document.querySelectorAll('.tab').forEach(tab => {
   tab.onclick = () => {
@@ -977,7 +978,38 @@ applyUpdateBtn.onclick = () => {
     window.location.reload();
   });
 };
+
+async function loadUpdateDetails() {
+  try {
+    const res = await fetch('./update-info.json', {
+      cache: 'no-store'
+    });
+
+    if (!res.ok) throw new Error('Failed to load update info');
+
+    const data = await res.json();
+
+    document.getElementById('updateTitle').textContent =
+      `Update ${data.version}`;
+
+    const list = document.getElementById('updateDetailsList');
+    list.innerHTML = '';
+
+    data.details.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      list.appendChild(li);
+    });
+
+  } catch (e) {
+    document.getElementById('updateDetailsList').innerHTML =
+      '<li>Unable to load update details</li>';
+  }
+}
+
+
 viewUpdateDetailsBtn.onclick = () => {
+  loadUpdateDetails(); 
   updateDetailsModal.classList.remove('hidden');
 };
 

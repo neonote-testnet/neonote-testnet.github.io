@@ -52,8 +52,8 @@ is an open-source offline note-taking app designed for efficient task management
 
   <header class="app-header">
 <div class="header-row">
-    <h1>Neonote-KKK</h1>
-    <span class="app-version">v1.2.4</span>
+    <h1>Neonote</h1>
+    <span class="app-version">v1.2.5</span>
   </div>
 <div class="search-wrapper">
   <input id="searchInput" type="text" placeholder="Search client name…" />
@@ -64,7 +64,7 @@ is an open-source offline note-taking app designed for efficient task management
 
 <main id="overview">
   <div class="tabs">
-  <button class="tab active" data-tab="today">Today-kkk</button>
+  <button class="tab active" data-tab="today">Today</button>
   <button class="tab" data-tab="all">All</button>
   <button class="tab" data-tab="done">Done</button>
 </div>
@@ -762,16 +762,14 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
 </div>
 
 <div id="updateDetailsModal" class="modal hidden">
-  <div class="modal-content retro-modal">
-    <h2>📦 What’s New</h2>
+  <div class="modal-content">
+    <button id="closeUpdateDetails">✖</button>
 
-    <ul id="updateNotes">
+    <h3 id="updateTitle">What's New</h3>
 
-      <li>Neo testing</li>
-
+    <ul id="updateDetailsList">
+      <li>Loading update details…</li>
     </ul>
-
-    <button id="closeUpdateDetails" class="secondary">Close</button>
   </div>
 </div>
 
