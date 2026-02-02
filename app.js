@@ -30,6 +30,14 @@ const closeUpdateDetails = document.getElementById('closeUpdateDetails');
 
 
 let newWorker = null;
+let updateApproved = false;
+
+navigator.serviceWorker.addEventListener('controllerchange', () => {
+  if (updateApproved) {
+    window.location.reload();
+  }
+});
+
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js').then(reg => {
@@ -972,12 +980,10 @@ hideBtn.onclick = () => {
 applyUpdateBtn.onclick = () => {
   if (!newWorker) return;
 
+  updateApproved = true;
   newWorker.postMessage({ action: 'SKIP_WAITING' });
-
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    window.location.reload();
-  });
 };
+
 
 async function loadUpdateDetails() {
   try {

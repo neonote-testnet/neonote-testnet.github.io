@@ -1,4 +1,4 @@
-const CACHE = 'neonote-v229';
+const CACHE = 'neonote-v230';
 
 const ASSETS = [
   './',
@@ -38,16 +38,18 @@ self.addEventListener('fetch', event => {
 self.addEventListener('message', event => {
   if (event.data?.action === 'SKIP_WAITING') {
     self.skipWaiting();
+
+    event.waitUntil(
+      caches.keys().then(keys =>
+        Promise.all(
+          keys.filter(k => k !== CACHE).map(k => caches.delete(k))
+        )
+      )
+    );
   }
 });
 
 
 self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(k => k !== CACHE).map(k => caches.delete(k))
-      )
-    )
-  );
+  
 });
