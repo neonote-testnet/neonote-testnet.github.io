@@ -1,4 +1,4 @@
-const CACHE = 'neonote-v217';
+const CACHE = 'neonote-v219';
 
 const ASSETS = [
   './',
@@ -13,15 +13,23 @@ const ASSETS = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE).then(cache => cache.addAll(ASSETS))
+    caches.open(CACHE).then(async cache => {
+
+      const requests = ASSETS.map(url =>
+        new Request(url, { cache: 'reload' })
+      );
+      await cache.addAll(requests);
+    })
   );
 });
 
 
 self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
     caches.match(event.request).then(response => {
-      return response || Response.error();
+      return response || fetch(event.request);
     })
   );
 });
