@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="google-site-verification" content="233SonpoRf0-4dunGutXuk4dw5KJLSkcTGwB9zeF-3c" />
+  <meta http-equiv="Content-Security-Policy"
+  content="
+  default-src 'self';
+  script-src 'self';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data:;
+  object-src 'none';
+  base-uri 'none';
+  frame-ancestors 'none';
+  ">
+  <title>NeonoteX</title>
+  <meta name="description" content="NeonoteX
+is an open-source offline note-taking app designed for efficient task management. Originally built for debt collectors, it allows users to create customized notes, schedule tasks, and track commitments with ease." />
+   <meta property="og:title" content="NeonoteX" />
+   <meta property="og:description" content="NeonoteX is an open-source offline note-taking app designed for efficient task management. Originally built for debt collectors, it allows users to create customized notes, schedule tasks, and track commitments with ease." />
+   <meta property="og:type" content="website" />
+   <meta property="og:url" content="https://neonotex.github.io/" />
+   <meta property="og:image" content="icons/favicon-96x96.png" />
+
+<link rel="canonical" href="https://neonotex.github.io/" />
+
+  <link rel="icon" type="image/png" href="icons/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+  <link rel="shortcut icon" href="icons/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+  
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="installBanner" class="install-banner hidden">
+  <span>Install NeonoteX for a better experience 🚀</span>
+  <button id="installBtn">Install</button>
+  <button id="dismissBtn">✕</button>
+</div>
+
+
+  <header class="app-header">
+    <h1>NeonoteX</h1>
+<div class="search-wrapper">
+  <input id="searchInput" type="text" placeholder="Search client name…" />
+  <button id="clearSearch" title="Clear">✕</button>
+</div>
+
+  </header>
+
+<main id="overview">
+  <div class="tabs">
+  <button class="tab active" data-tab="today">Today</button>
+  <button class="tab" data-tab="all">All</button>
+  <button class="tab" data-tab="done">Done</button>
+</div>
+
+<div id="countBar" class="count-bar">
+  <span id="countToday">Today [0]</span>
+  <span id="countAll">All [0]</span>
+  <span id="countAccount">Account [0]</span>
+</div>
+
+<section id="promiseSection">
+  <div id="allStickyHeader" class="all-header hidden">
+    <div>Name</div>
+    <div style="text-align:right;">PTP</div>
+  </div>
+
+  <div id="todayContainer" class="promise-scroll"></div>
+</section>
+
+</main>
+
+<button id="homeBtn" class="floating-btn home-btn">🏠</button>
+<button id="backupOpenBtn" class="floating-btn backup-btn">💾</button>
+<button id="addBtn" class="floating-btn">➕ </button>
+<button id="accountsBtn" class="floating-btn accounts-btn">👤</button>
+<button id="helpBtn" class="floating-btn help-btn">❓</button>
+<button id="hideBtn" class="floating-btn hide-btn">❯</button>
+<button id="settingsBtn" class="floating-btn settings-btn">⚙️</button>
+
+
+<div id="accountsModal" class="modal hidden">
+  <div class="modal-content retro-modal accounts-modal">
+    <h2>Accounts</h2>
+    <div class="accounts-header">
+      <button id="createAccountBtn">+ Create Account</button>
+      <button id="closeAccountsModal" class="secondary">Close</button>
+    </div>
+    <div id="accountsList" class="accounts-scroll"></div>
+  </div>
+</div>
+
+
+<div id="createAccountModal" class="modal hidden">
+  <div class="modal-content retro-modal">
+    <h2>Create Account</h2>
+    <input id="newAccountName" type="text" placeholder="Account name (max 10 chars)" maxlength="10" />
+    <button id="saveAccountBtn">Save</button>
+    <button id="cancelCreateAccountBtn" class="secondary">Cancel</button>
+  </div>
+</div>
+
+<div id="accountOptionsModal" class="modal hidden">
+  <div class="modal-content retro-modal">
+    <h2 id="accountOptionsTitle">Account</h2>
+    <button id="addClientBtn">Add Client</button>
+    <button id="viewAccountBtn">View Account</button>
+    <button id="cancelAccountOptionsBtn" class="secondary">Cancel</button>
+  </div>
+</div>
+
+<div id="addClientModal" class="modal hidden">
+  <div class="modal-content retro-modal">
+    <h2>Add Client</h2>
+    <input id="clientNameInput" type="text" placeholder="Client Name" />
+    <textarea id="clientDescInput" placeholder="Description"></textarea>
+    <button id="saveClientBtn">Save</button>
+    <button id="cancelAddClientBtn" class="secondary">Cancel</button>
+  </div>
+</div>
+
+<div id="helpModal" class="modal hidden">
+  <div class="modal-content retro-modal help-modal">
+
+    <div class="help-header">
+      <button id="closeHelpModal" class="secondary">Close</button>
+    </div>
+
+    <div class="help-scroll">
+
+      <h2>📘 NeonoteX User Guide</h2>
+
+      <p>
+       <strong> NeonoteX</strong> is an offline note-taking app designed for efficient task management. Originally built for debt collectors, it allows users to create customized notes, schedule tasks, and track commitments with ease.</p><p>
+
+For debt collectors, NeonoteX helps record and monitor promises and schedule follow-ups with just a few taps. Beyond debt collection, the app can be used for a wide range of task-management needs, making it a flexible and powerful productivity tool.
+      </p>
+      <p>This guide explains every feature and how to use it step-by-step.</p>
+
+      <h3>🏠 Home Button (🏠)</h3>
+      <p>
+        The Home button reloads the app instantly.  
+        Use this if the UI feels stuck or after heavy changes.
+      </p>
+      <p>It will also lock the app when click if the password is enabled.</p>
+      
+      <section id="settings-guide">
+  <h2>App Settings & Password Protection Guide</h2>
+
+  <h3>1.⚙️ Purpose of the Settings(⚙️)</h3>
+  <p>
+    The <strong>Settings</strong> button allows you to manage security and privacy features of the app.
+    Inside Settings, you can enable or disable the app password feature. This ensures that only authorized
+    users can access your promises, accounts, and clients.
+  </p>
+
+  <h3>2. Why Enable Password?</h3>
+  <ul>
+    <li><strong>Protect your data:</strong> Your promises, accounts, and client information are stored locally. Enabling a password ensures no one else can access them without your permission.</li>
+    <li><strong>Secure sensitive information:</strong> If your app contains confidential client details, the password keeps them safe.</li>
+
+  </ul>
+
+  <h3>3. What Happens When You Enable Password</h3>
+  <ol>
+    <li>
+      When you toggle <strong>Enable Password</strong> in Settings:
+      <ul>
+        <li>The app prompts you to create a new password.</li>
+        <li>You enter and confirm your password.</li>
+        <li>The password is securely stored in local storage under <code>neonote_app_password</code>.</li>
+        <li>The app will now require this password to unlock the app whenever it is opened or refreshed.</li>
+      </ul>
+    </li>
+    <li>
+      If you disable the password:
+      <ul>
+        <li>The stored password is removed from local storage.</li>
+        <li>All security prompts on app startup are turned off.</li>
+      </ul>
+    </li>
+    <li>
+      On app startup, if password protection is enabled:
+      <ul>
+        <li>An <strong>App Lock</strong> modal will appear, asking you to enter your password.</li>
+
+      </ul>
+    </li>
+  </ol>
+
+  <h3>4. Important Notes</h3>
+  <ul>
+    <li>Once a password is set, you must remember it. If you forget your password, you may lose access to your app data until you reset the app.</li>
+    <li>The password protects local app data only. Backups are encrypted separately with a password when exported.</li>
+    <li>For additional security, consider exporting encrypted backups regularly.</li>
+  </ul>
+
+  <h3>5. How Backup & Password Work Together</h3>
+  <p>
+    When exporting a backup, you are prompted to enter a <strong>backup password</strong>. This password encrypts your backup
+    file using AES-GCM encryption. When importing, the same password must be provided to decrypt the file.
+  </p>
+  <p>
+    This ensures that even if your backup file is shared, it cannot be opened without the correct password.
+  </p>
+
+  <h3>6. Summary</h3>
+  <p>
+    Enabling the app password provides a layer of security to protect your promises, accounts, and client information. It also allows the use of biometrics for easier access. Disabling the password removes these protections.
+  </p>
+</section>
+
+
+<h3>➕ Add Promise Button (＋)</h3>
+<p>
+  Tap this button to create a new <b>client promise</b>. This allows you to record commitments, deadlines, or tasks for your clients in an organized way.
+</p>
+
+<h4>What You Can Add for Each Promise</h4>
+<ul>
+  <li><b>Client Name</b> – The name of the person or client who made the promise.</li>
+  <li><b>Date</b> – The due date for the promise. This helps track what is due today, upcoming, or overdue.</li>
+  <li><b>Description</b> – Additional notes or reasons for the promise. Use this to add context or details about the client or promise.</li>
+</ul>
+
+<h4>How Promises & Clients Appear in NeonoteX</h4>
+<p>
+Once you add promises, they appear in the lists under the tabs: <b>Today</b>, <b>All</b>, <b>Done</b>, and inside specific <b>Accounts</b> if you organize clients there.
+</p>
+
+<p>
+Each listed promise or client is interactive:
+</p>
+
+<ul>
+  <li>Tap a listed <b>client name</b> to view all details about that client.</li>
+  <li>Tap a listed <b>promise name</b> to see its details, including the <b>Move Promise</b> button.</li>
+  <li>Move Promise lets you reschedule or edit an existing promise.</li>
+</ul>
+
+<h4>Visual Guide / Interaction Diagram</h4>
+<pre>
+[ Today Tab ]
+ ├─ Juan Pisot
+ │    Tap name → Show details
+ │    Move Promise button visible after tap
+ │
+ ├─ Maria Chismosa
+ │    Tap name → Show details
+ │    Move Promise button visible after tap
+ │
+ └─ Pedro Tamad
+      Tap name → Show details
+      Move Promise button visible after tap
+
+[ All Tab ]
+ ├─ Juan Pisot
+ ├─ Maria Chismosa
+ └─ Pedro Tamad
+   (Same tap-to-view details functionality)
+
+[ Done Tab ]
+ ├─ Completed promises
+ └─ Completed promises
+   (Details view available, Move button hidden)
+
+[ Account Tab (AREA-A) ]
+ ├─ Juan Dela Cruz
+ │    Tap name → Show details
+ │
+ └─ Maria Santos
+      Tap name → Show details
+</pre>
+
+<h4>Summary of Interactions</h4>
+<ul>
+  <li>All promises and clients are tappable for detailed view.</li>
+  <li>Promises in <b>Today</b> or <b>All</b> allow the user to access a <b>Move Promise</b> button after tapping.</li>
+  <li>Clients inside accounts behave the same: tap to see details.</li>
+  <li>This keeps your workflow clean, interactive, and organized.</li>
+</ul>
+ 
+ <h3>✅ Why this is useful:</h3>
+ <ul>
+   <li>Users can quickly view details without opening separate screens.</li>
+   <li>Move Promise allows rescheduling easily.</li>
+   <li>Accounts and tabs keep promises organized while maintaining the same interactive experience.</li>
+ </ul>
+
+      <h3>💾 Backup Button</h3>
+      <p>
+        Used to export or restore encrypted backups.
+      </p>
+      <ul>
+        <li>Export creates a password-protected file</li>
+        <li>Restore requires the same password</li>
+        <li>All data stays offline and secure</li>
+      </ul>
+      
+      <h3>💾 Backup & Restore (Why this is IMPORTANT)</h3>
+
+<p>
+NeonoteX is a <b>Progressive Web App (PWA)</b>. This means it runs inside your
+browser and stores all data <b>locally on your device</b>, not on the internet.
+</p>
+
+<p>
+Because of this, all of the following are saved inside your browser storage:
+</p>
+
+<ul>
+  <li>All promises</li>
+  <li>All accounts</li>
+  <li>All clients</li>
+</ul>
+
+<p>
+<b>WARNING:</b> If you clear your browser data, reset your browser,
+reinstall it, or switch devices, <b>ALL NeonoteX data will be permanently deleted</b>.
+</p>
+
+<h4>📦 Why You Need to Backup</h4>
+
+<p>
+Backup is your <b>only protection</b> against data loss.
+You should always create a backup before:
+</p>
+
+<ul>
+  <li>Clearing browser data or cache</li>
+  <li>Resetting your phone</li>
+  <li>Changing devices</li>
+  <li>Reinstalling the browser or app</li>
+</ul>
+
+<p>
+A backup file contains:
+</p>
+
+<ul>
+  <li>All promises</li>
+  <li>All accounts</li>
+  <li>All clients</li>
+</ul>
+
+<p>
+The backup file is <b>encrypted with a password (AES-256)</b>.
+No one can read or restore it without the correct password.
+</p>
+
+<h4>⬇️ How to Export a Backup</h4>
+
+<ol>
+  <li>Tap the <b>💾 Backup</b> button</li>
+  <li>Select <b>Export Backup</b></li>
+  <li>Set a password</li>
+  <li>Save the <code>.neonotex</code> file in a safe place</li>
+</ol>
+
+<p>
+<b>IMPORTANT:</b> Keep your password safe.
+If you forget it, the backup <b>cannot be restored</b>.
+</p>
+
+<h4>⬆️ How to Restore a Backup</h4>
+
+<ol>
+  <li>Tap the <b>💾 Backup</b> button</li>
+  <li>Select <b>Restore Backup</b></li>
+  <li>Choose your <code>.neonotex</code> backup file</li>
+  <li>Enter the backup password</li>
+</ol>
+
+<p>
+Once restored, <b>all promises, accounts, and clients</b>
+will return exactly as they were.
+</p>
+
+<h4>When doing backup and restore</h4>
+
+<ul>
+  <li>No internet required</li>
+  <li>No cloud storage</li>
+  <li>No servers involved</li>
+  <li>All backups are encrypted before saving</li>
+  <li>You fully control your data</li>
+</ul>
+
+
+<h3>👤 Accounts (Organize Clients & Notes)</h3>
+
+<p>
+The <b>Accounts</b> feature allows you to create multiple custom groups
+to organize your clients, promises, and notes in a clean and structured way.
+Instead of mixing everything together, accounts help you separate and manage
+your data more efficiently.
+</p>
+
+<h4>📌 Why You Need Accounts</h4>
+
+<p>
+As your data grows, managing many clients in one list can become confusing.
+Accounts solve this problem by letting you group related clients under a
+single category.
+</p>
+
+<p>
+This makes it easier to:
+</p>
+
+<ul>
+  <li>Track clients by location, area, or route</li>
+  <li>Separate work, personal, or side projects</li>
+  <li>Organize different types of notes</li>
+  <li>Quickly find the right information when needed</li>
+</ul>
+
+<h4>🗂️ How Accounts Work</h4>
+
+<p>
+Each account acts like a folder or category.
+Inside an account, you can store multiple clients, each with their own notes
+and records.
+</p>
+
+<ul>
+  <li>You can create unlimited accounts</li>
+  <li>Account names can be up to <b>10 characters</b></li>
+  <li>Each account can contain many clients</li>
+</ul>
+
+<h4>➕ Creating an Account</h4>
+
+<ol>
+  <li>Tap the <b>👤 Accounts</b> button</li>
+  <li>Tap <b>Create Account</b></li>
+  <li>Enter a short account name (max 10 characters)</li>
+  <li>Save the account</li>
+</ol>
+
+<p>
+Once created, the account will appear in your account list.
+</p>
+
+<h4>👥 Adding Clients Inside an Account</h4>
+
+<p>
+After selecting an account, you can add clients inside it.
+Each client can store notes, descriptions, or records.
+</p>
+
+<ol>
+  <li>Select an account</li>
+  <li>Tap <b>Add Client</b></li>
+  <li>Enter the client name</li>
+  <li>Add a description or notes</li>
+  <li>Save the client</li>
+</ol>
+
+<p>
+Clients are stored only inside their account, keeping everything organized.
+</p>
+
+<h4>📑 Viewing Accounts as Tabs</h4>
+
+<p>
+When you open an account, NeonoteX automatically creates a
+<b>temporary tab</b> at the top of the screen.
+</p>
+
+<p>
+This allows you to:
+</p>
+
+<ul>
+  <li>View only clients from that account</li>
+  <li>Switch back to Today, All, or Done anytime</li>
+  <li>Focus on one group without distractions</li>
+</ul>
+
+<p>
+The tab disappears when you reload the app, keeping the interface clean.
+</p>
+
+<h4>🧹 Managing & Deleting Data</h4>
+
+<ul>
+  <li>You can delete individual clients inside an account</li>
+  <li>You can delete an entire account (this removes all its clients)</li>
+  <li>Deletion always asks for confirmation to prevent mistakes</li>
+</ul>
+
+<h4>🌍 Real-World Usage Examples</h4>
+
+<p>
+Accounts are extremely flexible and can be used for many purposes, such as:
+</p>
+
+<ul>
+  <li>Creating accounts by <b>area or location</b> you travel to</li>
+  <li>Storing client lists per <b>route, zone, or barangay</b></li>
+  <li>Separating <b>work clients</b> and <b>personal notes</b></li>
+  <li>Using accounts as folders for <b>any kind of notes</b></li>
+  <li>Tracking projects, tasks, or reminders</li>
+</ul>
+
+<p>
+Because accounts are fully customizable, you are not limited to debt collection.
+This feature makes NeonoteX a <b>powerful general-purpose note organizer</b>.
+</p>
+
+<h4>✨ Why This Feature Is Powerful</h4>
+
+<ul>
+  <li>Keeps data clean and organized</li>
+  <li>Saves time when searching</li>
+  <li>Reduces mistakes and confusion</li>
+  <li>Works fully offline</li>
+  <li>Perfect for large or growing records</li>
+</ul>
+<h4>🧩 Account Structure (Simple Diagram)</h4>
+
+<p>
+Think of <b>Accounts</b> like folders, and <b>Clients</b> like files inside them:
+</p>
+
+<pre>
+👤 Accounts
+ ├─ 📁 AREA-A
+ │   ├─ 👤 Juan Pisot
+ │   ├─ 👤 Maria Chismosa
+ │   └─ 👤 Pedro Tamad
+ │
+ ├─ 📁 AREA-B
+ │   ├─ 👤 Ana Sikat
+ │   └─ 👤 Mark Kilat
+ │
+ └─ 📁 PERSONAL
+     ├─ 📝 Grocery Notes
+     └─ 📝 Reminders
+</pre>
+
+<p>
+Each account keeps its own list of clients or notes.
+Nothing gets mixed together.
+</p>
+
+<hr>
+
+<h4>🔄 How Accounts Appear in the App</h4>
+
+<pre>
+[ Today ] [ All ] [ Done ] [ AREA-A ]
+                          ↑
+                  Temporary Account Tab
+</pre>
+
+<p>
+When you open an account, NeonoteX creates a
+<b>temporary tab</b> for it.
+This lets you focus on one account at a time.
+</p>
+
+<p>
+Reloading the app removes the temporary tab to keep the interface clean.
+</p>
+
+<hr>
+
+<h4>🚀 First-Time Account Setup Guide</h4>
+
+<p>
+If this is your first time using NeonoteX, follow these steps
+to organize your data properly from the start.
+</p>
+
+<ol>
+  <li>
+    Tap the <b>👤 Accounts</b> button.
+  </li>
+  <li>
+    Create your first account.
+    <br>
+    Example:
+    <pre>AREA-A</pre>
+  </li>
+  <li>
+    Open the account you just created.
+  </li>
+  <li>
+    Tap <b>Add Client</b> and start adding names and notes.
+  </li>
+  <li>
+    Repeat the process for other areas or categories.
+  </li>
+</ol>
+
+<p>
+You can create as many accounts as you need,
+each representing a location, project, or category.
+</p>
+
+<hr>
+
+<h4>💡 Best Practice Tips</h4>
+
+<ul>
+  <li>Use short, clear account names (max 10 characters)</li>
+  <li>Create accounts based on areas you visit or routes you follow</li>
+  <li>Keep work and personal notes in separate accounts</li>
+  <li>Backup your data regularly</li>
+</ul>
+
+<p>
+Using accounts correctly from the beginning will make
+NeonoteX faster, cleaner, and easier to use as your data grows.
+</p>
+
+
+      <h3>📅 Tabs (Today / All / Done)</h3>
+      <ul>
+        <li><b>Today</b> – Promises due today</li>
+        <li><b>All</b> – All active promises</li>
+        <li><b>Done</b> – Completed or expired promises</li>
+      </ul>
+
+      <h3>☑️ Marking Promises as Done</h3>
+      <p>
+        Tap the ❌ checkbox beside a promise to mark it as completed.
+        Old completed promises are auto-limited to save storage.
+      </p>
+
+      <h3>🔁 Move Promise</h3>
+      <p>
+        Use “Move Promise” to reschedule or edit an existing promise.
+      </p>
+
+      <h3>🔍 Search Bar</h3>
+      <p>
+        Search works across promises and account clients.
+        Clears automatically after 10 seconds.
+      </p>
+
+      <h3>📲 Install App Banner</h3>
+      <p>
+        Install NeonoteX as a PWA for full-screen offline use.
+      </p>
+
+      <h3>🔐 Security & Privacy</h3>
+      <ul>
+        <li>No internet required</li>
+        <li>No tracking</li>
+        <li>All data stored locally</li>
+        <li>Backups are AES-256 encrypted</li>
+      </ul>
+<p><strong>Developer:</strong>KevinDGreat</p>
+<button id="sourceCodeBtn">📦 Source Code</button>
+
+
+    </div>
+  </div>
+</div>
+
+
+  <div id="promiseModal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Add / Move Promise</h2>
+<input id="clientName" type="text" placeholder="Client Name" />
+<div id="nameSuggestions" class="name-suggestions hidden"></div>
+
+      <input id="promiseDate" type="date" />
+      <textarea id="description" placeholder="Description / Reason"></textarea>
+      <button id="savePromise">Save Promise</button>
+      <button id="closeModal" class="secondary">Cancel</button>
+    </div>
+  </div>
+  
+  <div id="backupModal" class="modal hidden">
+  <div class="modal-content">
+    <h2>Backup & Restore</h2>
+
+    <button id="exportBackup">💾 Export Backup</button>
+    <button id="importBackup">📂 Restore Backup</button>
+
+    <input id="importFile" type="file" accept=".neonotex" hidden>
+
+    <button id="closeBackupModal" class="secondary">Close</button>
+  </div>
+</div>
+
+<div id="passwordModal" class="modal hidden">
+  <div class="modal-content retro-modal">
+    <h2 id="passwordModalTitle">Enter Password</h2>
+    <input id="passwordInput" type="password" placeholder="Password" />
+    <button id="passwordConfirmBtn">Confirm</button>
+    <button id="passwordCancelBtn" class="secondary">Cancel</button>
+  </div>
+</div>
+
+<div id="notificationModal" class="modal hidden">
+  <div class="modal-content retro-modal">
+    <p id="notificationText">Backup restored successfully!</p>
+    <button id="notificationCloseBtn" class="secondary">Close</button>
+  </div>
+</div>
+
+<div id="confirmModal" class="modal hidden">
+  <div class="modal-content retro-modal">
+    <p id="confirmText"></p>
+    <button id="confirmYes">Yes</button>
+    <button id="confirmNo" class="secondary">Cancel</button>
+  </div>
+</div>
+
+<div id="settingsModal" class="modal hidden">
+  <div class="modal-content retro-modal">
+    <h2>Settings</h2>
+
+    <div class="toggle-row">
+      <span>Enable Password</span>
+      <label class="switch">
+        <input type="checkbox" id="passwordToggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <button id="closeSettingsBtn" class="secondary">Close</button>
+  </div>
+</div>
+
+<div id="appLockModal" class="modal hidden lock-modal">
+  <div class="modal-content retro-modal">
+    <h2>🔒 Locked</h2>
+
+    <input
+      id="appPasswordInput"
+      type="password"
+      placeholder="Enter password"
+    />
+
+    <button id="unlockBtn">Unlock</button>
+    <button id="biometricBtn" class="secondary hidden">
+      🔐 Use Biometrics
+    </button>
+  </div>
+</div>
+
+
+  <script src="app.js"></script>
+</body>
+</html>
