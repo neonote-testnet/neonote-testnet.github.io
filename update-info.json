@@ -1,10 +1,10 @@
 {
-  "version": "v1.2.6",
+  "version": "v1.2.7",
   "title": "New feature update",
   "details": [
-    "Added client-based account management",
+    "Added new feature",
     "Improved promise sorting in All tab",
     "Performance optimizations",
-    "Minor UI polish"
+    "Minor UI polishing"
   ]
 }
