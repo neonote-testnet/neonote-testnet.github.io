@@ -1,4 +1,4 @@
-const CACHE = 'neonote-v199';
+const CACHE = 'neonote-v200';
 
 const ASSETS = [
   './',
@@ -26,6 +26,7 @@ self.addEventListener('message', event => {
 self.addEventListener('activate', e => {
   e.waitUntil(
     Promise.all([
+      self.clients.claim(),
       caches.keys().then(keys =>
         Promise.all(
           keys.filter(k => k !== CACHE).map(k => caches.delete(k))

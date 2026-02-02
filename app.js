@@ -26,7 +26,7 @@ if ('serviceWorker' in navigator) {
 
     if (reg.waiting) {
       newWorker = reg.waiting;
-      updateBanner.classList.remove('hidden'); 
+      updateBanner.classList.remove('hidden');
     }
 
     reg.addEventListener('updatefound', () => {
@@ -35,7 +35,7 @@ if ('serviceWorker' in navigator) {
       worker.addEventListener('statechange', () => {
         if (worker.state === 'installed' && navigator.serviceWorker.controller) {
           newWorker = worker;
-          updateBanner.classList.remove('hidden'); 
+          updateBanner.classList.remove('hidden');
         }
       });
     });
@@ -43,27 +43,13 @@ if ('serviceWorker' in navigator) {
 }
 
 
-applyUpdateBtn.onclick = () => {
-  if (newWorker) {
-    newWorker.postMessage({ action: 'skipWaiting' });
-
-    newWorker.addEventListener('statechange', () => {
-      if (newWorker.state === 'activated') {
-        window.location.reload();
-      }
-    });
-  }
+viewUpdateDetailsBtn.onclick = () => {
+  updateDetailsModal.classList.remove('hidden');
 };
 
-
-
-applyUpdateBtn.onclick = () => {
-  if (newWorker) {
-    newWorker.postMessage({ action: 'skipWaiting' });
-  }
+closeUpdateDetails.onclick = () => {
+  updateDetailsModal.classList.add('hidden');
 };
-
-
 
 const todayContainer = document.getElementById('todayContainer');
 const countTodayEl = document.getElementById('countToday');
@@ -124,6 +110,13 @@ const PASSWORD_ENABLED_KEY = 'neonote_password_enabled';
 const BIOMETRIC_ENABLED_KEY = 'neonote_biometric_enabled';
 const NAME_HISTORY_KEY = 'neonote_name_history';
 const nameSuggestions = document.getElementById('nameSuggestions');
+const updateBanner = document.getElementById('updateBanner');
+const applyUpdateBtn = document.getElementById('applyUpdate');
+
+const viewUpdateDetailsBtn = document.getElementById('viewUpdateDetails');
+
+const updateDetailsModal = document.getElementById('updateDetailsModal');
+const closeUpdateDetails = document.getElementById('closeUpdateDetails');
 
 
 
@@ -983,14 +976,6 @@ hideBtn.onclick = () => {
   }
 };
 
-
-const updateBanner = document.getElementById('updateBanner');
-const applyUpdateBtn = document.getElementById('applyUpdate');
-
-const viewUpdateDetailsBtn = document.getElementById('viewUpdateDetails');
-
-const updateDetailsModal = document.getElementById('updateDetailsModal');
-const closeUpdateDetails = document.getElementById('closeUpdateDetails');
 
 applyUpdateBtn.onclick = async () => {
   if (newWorker) {
