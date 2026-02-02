@@ -24,8 +24,6 @@ const updateBanner = document.getElementById('updateBanner');
 const applyUpdateBtn = document.getElementById('applyUpdate');
 
 const viewUpdateDetailsBtn = document.getElementById('viewUpdateDetails');
-const UPDATE_PENDING_KEY = 'neonote_update_pending';
-
 
 const updateDetailsModal = document.getElementById('updateDetailsModal');
 const closeUpdateDetails = document.getElementById('closeUpdateDetails');
@@ -33,11 +31,6 @@ const closeUpdateDetails = document.getElementById('closeUpdateDetails');
 
 let newWorker = null;
 let updateApproved = false;
-
-if (localStorage.getItem(UPDATE_PENDING_KEY) === 'true') {
-  updateBanner.classList.remove('hidden');
-}
-
 
 navigator.serviceWorker.addEventListener('controllerchange', () => {
   if (updateApproved) {
@@ -50,20 +43,18 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js').then(reg => {
 
     if (reg.waiting) {
-  newWorker = reg.waiting;
-  localStorage.setItem(UPDATE_PENDING_KEY, 'true');
-  updateBanner.classList.remove('hidden');
-}
+      newWorker = reg.waiting;
+      updateBanner.classList.remove('hidden');
+    }
 
     reg.addEventListener('updatefound', () => {
       const worker = reg.installing;
 
       worker.addEventListener('statechange', () => {
-     if (worker.state === 'installed' && navigator.serviceWorker.controller) {
-       newWorker = worker;
-       localStorage.setItem(UPDATE_PENDING_KEY, 'true');
-      updateBanner.classList.remove('hidden');
-       }
+        if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+          newWorker = worker;
+          updateBanner.classList.remove('hidden');
+        }
       });
     });
   });
@@ -990,9 +981,6 @@ applyUpdateBtn.onclick = () => {
   if (!newWorker) return;
 
   updateApproved = true;
-  localStorage.removeItem(UPDATE_PENDING_KEY);
-  updateBanner.classList.add('hidden');
-
   newWorker.postMessage({ action: 'SKIP_WAITING' });
 };
 
