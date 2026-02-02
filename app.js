@@ -24,12 +24,10 @@ let newWorker = null;
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js').then(reg => {
 
-
     if (reg.waiting) {
       newWorker = reg.waiting;
       updateBanner.classList.remove('hidden');
     }
-
 
     reg.addEventListener('updatefound', () => {
       const worker = reg.installing;
@@ -39,18 +37,27 @@ if ('serviceWorker' in navigator) {
           worker.state === 'installed' &&
           navigator.serviceWorker.controller
         ) {
+
           newWorker = worker;
           updateBanner.classList.remove('hidden');
         }
       });
     });
   });
-
-
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     window.location.reload();
   });
 }
+
+const applyUpdateBtn = document.getElementById('applyUpdate');
+
+applyUpdateBtn.onclick = () => {
+  if (newWorker) {
+    newWorker.postMessage({ action: 'skipWaiting' });
+  }
+};
+
+
 
 const todayContainer = document.getElementById('todayContainer');
 const countTodayEl = document.getElementById('countToday');
