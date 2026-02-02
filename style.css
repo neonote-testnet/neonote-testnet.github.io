@@ -751,3 +751,44 @@ button.secondary {
 .all-date-box {
   font-size: 0.9rem;   
 }
+
+
+.update-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--green);
+  color: #000;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10000;
+  font-size: 0.9rem;
+  border-bottom: 2px solid #000;
+}
+
+.update-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.update-banner button {
+  background: #000;
+  color: var(--green);
+  border: 2px solid #000;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.app-version {
+  font-size: 0.75rem;
+  color: #aaa;
+}
