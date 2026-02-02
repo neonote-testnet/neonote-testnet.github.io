@@ -26,28 +26,34 @@ if ('serviceWorker' in navigator) {
 
     if (reg.waiting) {
       newWorker = reg.waiting;
-      updateBanner.classList.remove('hidden');
+      updateBanner.classList.remove('hidden'); 
     }
 
     reg.addEventListener('updatefound', () => {
       const worker = reg.installing;
 
       worker.addEventListener('statechange', () => {
-        if (
-          worker.state === 'installed' &&
-          navigator.serviceWorker.controller
-        ) {
-
+        if (worker.state === 'installed' && navigator.serviceWorker.controller) {
           newWorker = worker;
-          updateBanner.classList.remove('hidden');
+          updateBanner.classList.remove('hidden'); 
         }
       });
     });
   });
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    window.location.reload();
-  });
 }
+
+const applyUpdateBtn = document.getElementById('applyUpdate');
+applyUpdateBtn.onclick = () => {
+  if (newWorker) {
+    newWorker.postMessage({ action: 'skipWaiting' });
+
+    newWorker.addEventListener('statechange', () => {
+      if (newWorker.state === 'activated') {
+        window.location.reload();
+      }
+    });
+  }
+};
 
 const applyUpdateBtn = document.getElementById('applyUpdate');
 
