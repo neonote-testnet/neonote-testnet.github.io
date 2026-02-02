@@ -19,45 +19,6 @@ if (sourceCodeBtn) {
   };
 }
 
-let newWorker = null;
-
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js').then(reg => {
-
-    if (reg.waiting) {
-      newWorker = reg.waiting;
-      updateBanner.classList.remove('hidden');
-    }
-
-    reg.addEventListener('updatefound', () => {
-      const worker = reg.installing;
-
-      worker.addEventListener('statechange', () => {
-        if (
-          worker.state === 'installed' &&
-          navigator.serviceWorker.controller
-        ) {
-
-          newWorker = worker;
-          updateBanner.classList.remove('hidden');
-        }
-      });
-    });
-  });
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    window.location.reload();
-  });
-}
-
-const applyUpdateBtn = document.getElementById('applyUpdate');
-
-applyUpdateBtn.onclick = () => {
-  if (newWorker) {
-    newWorker.postMessage({ action: 'skipWaiting' });
-  }
-};
-
-
 
 const todayContainer = document.getElementById('todayContainer');
 const countTodayEl = document.getElementById('countToday');
@@ -978,25 +939,8 @@ hideBtn.onclick = () => {
 };
 
 
-const updateBanner = document.getElementById('updateBanner');
-const applyUpdateBtn = document.getElementById('applyUpdate');
-const viewUpdateDetailsBtn = document.getElementById('viewUpdateDetails');
-
-const updateDetailsModal = document.getElementById('updateDetailsModal');
-const closeUpdateDetails = document.getElementById('closeUpdateDetails');
-
-applyUpdateBtn.onclick = async () => {
-  if (newWorker) {
-    newWorker.postMessage({ action: 'SKIP_WAITING' });
-  }
-};
-
-viewUpdateDetailsBtn.onclick = () => {
-  updateDetailsModal.classList.remove('hidden');
-};
-
-closeUpdateDetails.onclick = () => {
-  updateDetailsModal.classList.add('hidden');
-};
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js');
+}
 
 });
