@@ -19,6 +19,23 @@ if (sourceCodeBtn) {
   };
 }
 
+const updateBanner = document.getElementById('updateBanner');
+const applyUpdateBtn = document.getElementById('applyUpdate');
+
+const viewUpdateDetailsBtn = document.getElementById('viewUpdateDetails');
+
+const updateDetailsModal = document.getElementById('updateDetailsModal');
+const closeUpdateDetails = document.getElementById('closeUpdateDetails');
+
+viewUpdateDetailsBtn.onclick = () => {
+  updateDetailsModal.classList.remove('hidden');
+};
+
+closeUpdateDetails.onclick = () => {
+  updateDetailsModal.classList.add('hidden');
+};
+
+
 let newWorker = null;
 
 if ('serviceWorker' in navigator) {
@@ -110,14 +127,6 @@ const PASSWORD_ENABLED_KEY = 'neonote_password_enabled';
 const BIOMETRIC_ENABLED_KEY = 'neonote_biometric_enabled';
 const NAME_HISTORY_KEY = 'neonote_name_history';
 const nameSuggestions = document.getElementById('nameSuggestions');
-const updateBanner = document.getElementById('updateBanner');
-const applyUpdateBtn = document.getElementById('applyUpdate');
-
-const viewUpdateDetailsBtn = document.getElementById('viewUpdateDetails');
-
-const updateDetailsModal = document.getElementById('updateDetailsModal');
-const closeUpdateDetails = document.getElementById('closeUpdateDetails');
-
 
 
 let searchClearTimer = null;
@@ -974,6 +983,16 @@ hideBtn.onclick = () => {
     hideBtn.classList.remove('slide-right');
     hideBtn.textContent = '❯'; 
   }
+};
+
+applyUpdateBtn.onclick = () => {
+  if (!newWorker) return;
+
+  newWorker.postMessage({ action: 'SKIP_WAITING' });
+
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    window.location.reload();
+  });
 };
 
 
