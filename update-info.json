@@ -1,10 +1,10 @@
 {
-  "version": "v1.2.7",
+  "version": "v1.2.8",
   "title": "New feature update",
   "details": [
-    "Added new feature",
+    "Added Collection Mode for Account this will let users use account in different way.",
     "Improved promise sorting in All tab",
     "Performance optimizations",
-    "Minor UI polishing"
+    "Minor UI polish"
   ]
 }
