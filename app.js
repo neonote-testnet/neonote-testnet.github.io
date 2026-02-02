@@ -19,6 +19,22 @@ if (sourceCodeBtn) {
   };
 }
 
+let newWorker = null;
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    window.location.reload();
+  });
+
+  navigator.serviceWorker.addEventListener('message', event => {
+    if (event.data === 'NEW_VERSION') {
+      document.getElementById('updateBanner').classList.remove('hidden');
+    }
+  });
+}
+
 
 const todayContainer = document.getElementById('todayContainer');
 const countTodayEl = document.getElementById('countToday');
@@ -936,6 +952,28 @@ hideBtn.onclick = () => {
     hideBtn.classList.remove('slide-right');
     hideBtn.textContent = '❯'; 
   }
+};
+
+
+const updateBanner = document.getElementById('updateBanner');
+const applyUpdateBtn = document.getElementById('applyUpdate');
+const viewUpdateDetailsBtn = document.getElementById('viewUpdateDetails');
+
+const updateDetailsModal = document.getElementById('updateDetailsModal');
+const closeUpdateDetails = document.getElementById('closeUpdateDetails');
+
+applyUpdateBtn.onclick = async () => {
+  if (newWorker) {
+    newWorker.postMessage({ action: 'SKIP_WAITING' });
+  }
+};
+
+viewUpdateDetailsBtn.onclick = () => {
+  updateDetailsModal.classList.remove('hidden');
+};
+
+closeUpdateDetails.onclick = () => {
+  updateDetailsModal.classList.add('hidden');
 };
 
 

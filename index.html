@@ -41,8 +41,20 @@ is an open-source offline note-taking app designed for efficient task management
 </div>
 
 
+<div id="updateBanner" class="update-banner hidden">
+  <span>🚀 New update available</span>
+  <div class="update-actions">
+    <button id="viewUpdateDetails">View details</button>
+    <button id="applyUpdate">Update</button>
+  </div>
+</div>
+
+
   <header class="app-header">
+<div class="header-row">
     <h1>NeonoteX</h1>
+    <span class="app-version">v0.0.1</span>
+  </div>
 <div class="search-wrapper">
   <input id="searchInput" type="text" placeholder="Search client name…" />
   <button id="clearSearch" title="Clear">✕</button>
@@ -746,6 +758,21 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
     <button id="biometricBtn" class="secondary hidden">
       🔐 Use Biometrics
     </button>
+  </div>
+</div>
+
+<div id="updateDetailsModal" class="modal hidden">
+  <div class="modal-content retro-modal">
+    <h2>📦 What’s New</h2>
+
+    <ul id="updateNotes">
+
+      <li>test</li>
+      <li>test2</li>
+      <li>test3</li>
+    </ul>
+
+    <button id="closeUpdateDetails" class="secondary">Close</button>
   </div>
 </div>
 
