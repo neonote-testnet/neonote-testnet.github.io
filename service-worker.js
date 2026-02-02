@@ -1,4 +1,4 @@
-const CACHE = 'neonote-v236';
+const CACHE = 'neonote-v239';
 
 const ASSETS = [
   './',
@@ -51,5 +51,5 @@ self.addEventListener('message', event => {
 
 
 self.addEventListener('activate', event => {
-  
+  event.waitUntil(self.clients.claim());
 });
