@@ -22,19 +22,35 @@ if (sourceCodeBtn) {
 let newWorker = null;
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
+  navigator.serviceWorker.register('service-worker.js').then(reg => {
+
+
+    if (reg.waiting) {
+      newWorker = reg.waiting;
+      updateBanner.classList.remove('hidden');
+    }
+
+
+    reg.addEventListener('updatefound', () => {
+      const worker = reg.installing;
+
+      worker.addEventListener('statechange', () => {
+        if (
+          worker.state === 'installed' &&
+          navigator.serviceWorker.controller
+        ) {
+          newWorker = worker;
+          updateBanner.classList.remove('hidden');
+        }
+      });
+    });
+  });
+
 
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     window.location.reload();
   });
-
-  navigator.serviceWorker.addEventListener('message', event => {
-    if (event.data === 'NEW_VERSION') {
-      document.getElementById('updateBanner').classList.remove('hidden');
-    }
-  });
 }
-
 
 const todayContainer = document.getElementById('todayContainer');
 const countTodayEl = document.getElementById('countToday');
@@ -975,10 +991,5 @@ viewUpdateDetailsBtn.onclick = () => {
 closeUpdateDetails.onclick = () => {
   updateDetailsModal.classList.add('hidden');
 };
-
-
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js');
-}
 
 });
