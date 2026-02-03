@@ -899,7 +899,7 @@ button.secondary {
 }
 
 .panel-content input {
-  background: #333;
+  background: var(--red);
   color: #fdf6e3;
   border: 1px solid #ffcc00;
   padding: 4px;
