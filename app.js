@@ -1046,8 +1046,6 @@ closeUpdateDetails.onclick = () => {
 const notepadBtn = document.getElementById('notepadBtn');
 const notepadModal = document.getElementById('notepadModal');
 const closeNotepad = document.getElementById('closeNotepad');
-const collectionModal = document.getElementById('collectionModal');
-const collectionBtn = document.getElementById('collectionBtn');
 const noteTitle = document.getElementById('noteTitle');
 const noteContent = document.getElementById('noteContent');
 const charCount = document.getElementById('charCount');
@@ -1056,6 +1054,8 @@ const notesList = document.getElementById('notesList');
 const addNoteBtn = document.getElementById('addNoteBtn');
 const toggleNotes = document.getElementById('toggleNotes');
 const sidebar = document.querySelector('.notepad-sidebar');
+const collectionModal = document.getElementById('collectionModal');
+const collectionBtn = document.getElementById('collectionBtn');
 const expandPanelBtn = document.getElementById('expandPanelBtn');
 const panelContent = document.getElementById('panelContent');
 const addPaymentBtn = document.getElementById('addPaymentBtn');
