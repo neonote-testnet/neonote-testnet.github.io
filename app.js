@@ -144,6 +144,8 @@ clientName.addEventListener('input', () => {
 
 const NOTES_KEY = 'neonote_notes';
 const NOTE_LIMIT = 20000;
+const NOTE_TITLE_LIMIT = 18;
+
 
 let notes = JSON.parse(localStorage.getItem(NOTES_KEY) || '[]');
 let currentNoteId = null;
@@ -1142,22 +1144,38 @@ function updateCharCount() {
 }
 
 
-noteTitle.oninput = noteContent.oninput = (e) => {
+noteTitle.oninput = (e) => {
   if (!currentNoteId) {
-
     noNoteModal.classList.remove('hidden');
+    e.target.value = '';
+    return;
+  }
 
+  if (e.target.value.length > NOTE_TITLE_LIMIT) {
+    e.target.value = e.target.value.slice(0, NOTE_TITLE_LIMIT);
+  }
+
+  const n = notes.find(x => x.id === currentNoteId);
+  if (!n) return;
+
+  n.title = e.target.value;
+  saveNotes();
+};
+
+noteContent.oninput = (e) => {
+  if (!currentNoteId) {
+    noNoteModal.classList.remove('hidden');
     e.target.value = '';
     updateCharCount();
     return;
   }
 
   updateCharCount();
+
   const n = notes.find(x => x.id === currentNoteId);
   if (!n) return;
 
-  n.title = noteTitle.value;
-  n.content = noteContent.value.slice(0, NOTE_LIMIT);
+  n.content = e.target.value.slice(0, NOTE_LIMIT);
   saveNotes();
 };
 
