@@ -42,10 +42,9 @@ navigator.serviceWorker.addEventListener('controllerchange', () => {
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js').then(reg => {
 
-    // 🔥 FORCE update check (installed PWA needs this)
     setInterval(() => {
       reg.update();
-    }, 60 * 1000); // every 60 seconds
+    }, 60 * 1000); 
 
     if (reg.waiting) {
       newWorker = reg.waiting;
@@ -124,6 +123,12 @@ const PASSWORD_ENABLED_KEY = 'neonote_password_enabled';
 const BIOMETRIC_ENABLED_KEY = 'neonote_biometric_enabled';
 const NAME_HISTORY_KEY = 'neonote_name_history';
 const nameSuggestions = document.getElementById('nameSuggestions');
+const noNoteModal = document.getElementById('noNoteModal');
+const closeNoNoteModal = document.getElementById('closeNoNoteModal');
+
+closeNoNoteModal.onclick = () => {
+  noNoteModal.classList.add('hidden');
+};
 
 
 let searchClearTimer = null;
@@ -1137,10 +1142,17 @@ function updateCharCount() {
 }
 
 
-noteTitle.oninput = noteContent.oninput = () => {
-  updateCharCount();
+noteTitle.oninput = noteContent.oninput = (e) => {
+  if (!currentNoteId) {
 
-  if (!currentNoteId) return;
+    noNoteModal.classList.remove('hidden');
+
+    e.target.value = '';
+    updateCharCount();
+    return;
+  }
+
+  updateCharCount();
   const n = notes.find(x => x.id === currentNoteId);
   if (!n) return;
 
@@ -1148,6 +1160,7 @@ noteTitle.oninput = noteContent.oninput = () => {
   n.content = noteContent.value.slice(0, NOTE_LIMIT);
   saveNotes();
 };
+
 
 addNoteBtn.onclick = () => {
   const n = {
