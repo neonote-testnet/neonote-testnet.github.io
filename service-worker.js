@@ -1,4 +1,4 @@
-const CACHE = 'neonote-v280';
+const CACHE = 'neonote-v281';
 
 const ASSETS = [
   './',

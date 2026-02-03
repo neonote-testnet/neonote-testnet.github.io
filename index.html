@@ -846,27 +846,34 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
         </div>
       </div>
 
-      <!-- Current Month & Quota Info -->
-      <div class="month-quota-section">
-        <div class="input-row">
-          <label>Current Month:</label>
-          <input type="month" id="collectionMonth"/>
-        </div>
-        <button id="collectionHistoryBtn">History</button>
-        <div class="input-row">
-          <label>Quota:</label>
-          <input type="number" id="collectionQuota"/>
-        </div>
-        <div class="input-row">
-          <label>Balance:</label>
-          <input type="number" id="collectionTotalBalance" disabled/>
-        </div>
-        <div class="input-row">
-          <label>Running:</label>
-          <input type="number" id="collectionRunning" disabled/>
-        </div>
-        <button id="saveCollectionQuota">Save</button>
-      </div>
+<!-- Current Month & Quota Info -->
+<div id="collectionInfoBlock" class="month-quota-section">
+
+  <div class="input-row">
+    <label>Current Month:</label>
+    <input type="month" id="collectionMonth"/>
+  </div>
+
+  <button id="collectionHistoryBtn">History</button>
+
+  <div class="input-row">
+    <label>Quota:</label>
+    <input type="number" id="collectionQuota"/>
+  </div>
+
+  <div class="input-row">
+    <label>Balance:</label>
+    <input type="number" id="collectionTotalBalance" disabled/>
+  </div>
+
+  <div class="input-row">
+    <label>Running:</label>
+    <input type="number" id="collectionRunning" disabled/>
+  </div>
+
+  <button id="saveCollectionQuota">Save</button>
+
+</div>
 
       <button id="closeCollectionModal" class="close-btn">X</button>
     </div>

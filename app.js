@@ -1241,11 +1241,17 @@ let quotaData = JSON.parse(localStorage.getItem('collectionQuotaData') || '{}');
 collectionBtn.onclick = () => collectionModal.classList.remove('hidden');
 closeCollectionModal.onclick = () => collectionModal.classList.add('hidden');
 
-// EXPAND/COLLAPSE PANEL
+const infoBlock = document.getElementById('collectionInfoBlock');
 expandPanelBtn.onclick = () => {
-  panelContent.classList.toggle('visible');
-  expandPanelBtn.textContent = panelContent.classList.contains('visible') ? '<' : '>';
+  const expanded = panelContent.classList.toggle('visible');
+
+  // hide top info ONLY
+  infoBlock.classList.toggle('hidden', expanded);
+
+  // arrow direction
+  expandPanelBtn.textContent = expanded ? '<' : '>';
 };
+
 
 // SAVE QUOTA
 saveCollectionQuota.onclick = () => {

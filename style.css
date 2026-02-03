@@ -970,3 +970,15 @@ button.secondary {
   cursor: pointer;
 }
 
+/* Hide Collection Info when panel is expanded */
+#collectionInfoBlock {
+  transition: max-height 0.3s ease, opacity 0.2s ease;
+}
+
+#collectionInfoBlock.hidden {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
