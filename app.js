@@ -1055,14 +1055,33 @@ function saveNotes() {
 
 function renderNotesList() {
   notesList.innerHTML = '';
+
+  if (!notes.length) {
+    const empty = document.createElement('p');
+    empty.className = 'empty-state';
+    empty.textContent = 'No notes yet. Add one!';
+    notesList.appendChild(empty);
+    return;
+  }
+
   notes.forEach(n => {
     const div = document.createElement('div');
-    div.textContent = n.title || 'Untitled';
-    div.onclick = () => loadNote(n.id);
+    div.className = 'promise'; 
+    div.style.cursor = 'pointer';
 
-    const del = document.createElement('button');
-    del.textContent = '❌';
-    del.onclick = e => {
+    div.innerHTML = `
+      <div class="promise-header">
+        <strong>${n.title || 'Untitled'}</strong>
+        <button class="delete-client">❌</button>
+      </div>
+    `;
+
+    div.querySelector('.promise-header').onclick = e => {
+      if (e.target.classList.contains('delete-client')) return;
+      loadNote(n.id);
+    };
+
+    div.querySelector('.delete-client').onclick = e => {
       e.stopPropagation();
       notes = notes.filter(x => x.id !== n.id);
       if (currentNoteId === n.id) clearEditor();
@@ -1070,10 +1089,10 @@ function renderNotesList() {
       renderNotesList();
     };
 
-    div.appendChild(del);
     notesList.appendChild(div);
   });
 }
+
 
 function loadNote(id) {
   const n = notes.find(x => x.id === id);
