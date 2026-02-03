@@ -601,7 +601,7 @@ passwordConfirmBtn.onclick = async () => {
       created: Date.now(),
       promises,
       accounts,
-      nameHistory: getNameHistory()
+      nameHistory: getNameHistory(),
       notes
     });
 
