@@ -1207,6 +1207,149 @@ notepadBtn.onclick = () => {
 closeNotepad.onclick = () => {
   notepadModal.classList.add('hidden');
 };
+// COLLECTION FEATURE
+const collectionBtn = document.getElementById('collectionBtn');
+const collectionModal = document.getElementById('collectionModal');
+const closeCollectionModal = document.getElementById('closeCollectionModal');
+
+const expandPanelBtn = document.getElementById('expandPanelBtn');
+const panelContent = document.getElementById('panelContent');
+
+const collectionSearch = document.getElementById('collectionSearch');
+const collectionName = document.getElementById('collectionName');
+const collectionBalance = document.getElementById('collectionBalance');
+const collectionDate = document.getElementById('collectionDate');
+const collectionLastPaid = document.getElementById('collectionLastPaid');
+const collectionPayment = document.getElementById('collectionPayment');
+const addCollectionPayment = document.getElementById('addCollectionPayment');
+
+const collectionMonth = document.getElementById('collectionMonth');
+const collectionQuota = document.getElementById('collectionQuota');
+const collectionTotalBalance = document.getElementById('collectionTotalBalance');
+const collectionRunning = document.getElementById('collectionRunning');
+const saveCollectionQuota = document.getElementById('saveCollectionQuota');
+const collectionHistoryBtn = document.getElementById('collectionHistoryBtn');
+
+const collectionNamesList = document.getElementById('collectionNamesList');
+const collectionTabs = document.querySelectorAll('.collection-tab');
+
+let collectionData = JSON.parse(localStorage.getItem('collectionData') || '[]');
+let currentCollectionTab = '3NM';
+let quotaData = JSON.parse(localStorage.getItem('collectionQuotaData') || '{}');
+
+// OPEN/CLOSE MODAL
+collectionBtn.onclick = () => collectionModal.classList.remove('hidden');
+closeCollectionModal.onclick = () => collectionModal.classList.add('hidden');
+
+// EXPAND/COLLAPSE PANEL
+expandPanelBtn.onclick = () => {
+  panelContent.classList.toggle('visible');
+  expandPanelBtn.textContent = panelContent.classList.contains('visible') ? '<' : '>';
+};
+
+// SAVE QUOTA
+saveCollectionQuota.onclick = () => {
+  const month = collectionMonth.value;
+  const quota = Number(collectionQuota.value || 0);
+  quotaData[month] = { quota, balance: quota, running: 0 };
+  localStorage.setItem('collectionQuotaData', JSON.stringify(quotaData));
+  collectionTotalBalance.value = quota;
+  collectionRunning.value = 0;
+};
+
+// ADD PAYMENT
+addCollectionPayment.onclick = () => {
+  const name = collectionName.value.trim();
+  const balance = Number(collectionBalance.value || 0);
+  const date = collectionDate.value;
+  const payment = Number(collectionPayment.value || 0);
+
+  if (!name || !date || !payment) return;
+
+  let record = collectionData.find(r => r.name === name);
+  if (!record) {
+    record = { name, lastPaid: date, payments: [] };
+    collectionData.push(record);
+  }
+  record.lastPaid = date;
+  record.payments.push({ amount: payment, date });
+
+  // Update quota running and balance
+  const month = collectionMonth.value;
+  if (quotaData[month]) {
+    quotaData[month].balance -= payment;
+    quotaData[month].running += payment;
+  }
+
+  localStorage.setItem('collectionData', JSON.stringify(collectionData));
+  localStorage.setItem('collectionQuotaData', JSON.stringify(quotaData));
+  collectionTotalBalance.value = quotaData[month]?.balance || 0;
+  collectionRunning.value = quotaData[month]?.running || 0;
+
+  renderCollectionNames();
+};
+
+// RENDER NAMES
+function renderCollectionNames(filter = '') {
+  collectionNamesList.innerHTML = '';
+  const filtered = collectionData
+    .filter(r => r.name.toLowerCase().includes(filter.toLowerCase()))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  filtered.forEach(record => {
+    const div = document.createElement('div');
+    div.className = 'promise';
+    div.textContent = `${record.name} - Last Paid: ${record.lastPaid}`;
+    div.onclick = () => {
+      collectionName.value = record.name;
+      collectionLastPaid.value = record.lastPaid;
+    };
+    collectionNamesList.appendChild(div);
+  });
+
+  updateTabCounts();
+}
+
+// SEARCH
+collectionSearch.oninput = () => renderCollectionNames(collectionSearch.value);
+
+// TABS
+collectionTabs.forEach(tab => {
+  tab.onclick = () => {
+    collectionTabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentCollectionTab = tab.dataset.tab;
+    renderCollectionNames();
+  };
+});
+
+// UPDATE TAB COUNTS
+function updateTabCounts() {
+  const counts = { '3NM':0,'6NM':0,'9NM':0,'12NM':0,'Moving':0,'Total':0 };
+  const now = new Date();
+
+  collectionData.forEach(r => {
+    const last = new Date(r.lastPaid);
+    const months = (now.getFullYear() - last.getFullYear())*12 + (now.getMonth()-last.getMonth());
+
+    if (months >= 12) counts['12NM']++;
+    else if (months >= 9) counts['9NM']++;
+    else if (months >= 6) counts['6NM']++;
+    else if (months >= 3) counts['3NM']++;
+    else counts['Moving']++;
+  });
+
+  counts['Total'] = collectionData.length;
+
+  document.getElementById('count3NM').textContent = counts['3NM'];
+  document.getElementById('count6NM').textContent = counts['6NM'];
+  document.getElementById('count9NM').textContent = counts['9NM'];
+  document.getElementById('count12NM').textContent = counts['12NM'];
+  document.getElementById('countMoving').textContent = counts['Moving'];
+  document.getElementById('countTotal').textContent = counts['Total'];
+}
+
+renderCollectionNames();
 
 
 });

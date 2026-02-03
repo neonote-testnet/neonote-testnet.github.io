@@ -808,6 +808,93 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
   </div>
 </div>
 
+<!-- Floating Collection Button -->
+<button id="collectionBtn" class="floating-btn left-of-notepad">💼</button>
+
+<!-- Collection Modal -->
+<div id="collectionModal" class="modal hidden">
+  <div class="collection-container">
+
+    <!-- Top Header with Quota Info -->
+    <div class="collection-top">
+      <div class="expand-panel">
+        <button id="expandPanelBtn">></button>
+        <div id="panelContent" class="panel-content hidden">
+          <!-- Search and Input Section -->
+          <input type="text" id="collectionSearch" placeholder="Search Name" class="search-bar"/>
+          <div class="input-row">
+            <label>Name:</label>
+            <input type="text" id="collectionName"/>
+          </div>
+          <div class="input-row">
+            <label>Balance:</label>
+            <input type="number" id="collectionBalance"/>
+          </div>
+          <div class="input-row">
+            <label>Date:</label>
+            <input type="date" id="collectionDate"/>
+          </div>
+          <div class="input-row">
+            <label>Last Date Paid:</label>
+            <input type="text" id="collectionLastPaid" disabled/>
+          </div>
+          <div class="input-row">
+            <label>Add Payment:</label>
+            <input type="number" id="collectionPayment"/>
+            <button id="addCollectionPayment">Add Payment</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Current Month & Quota Info -->
+      <div class="month-quota-section">
+        <div class="input-row">
+          <label>Current Month:</label>
+          <input type="month" id="collectionMonth"/>
+        </div>
+        <button id="collectionHistoryBtn">History</button>
+        <div class="input-row">
+          <label>Quota:</label>
+          <input type="number" id="collectionQuota"/>
+        </div>
+        <div class="input-row">
+          <label>Balance:</label>
+          <input type="number" id="collectionTotalBalance" disabled/>
+        </div>
+        <div class="input-row">
+          <label>Running:</label>
+          <input type="number" id="collectionRunning" disabled/>
+        </div>
+        <button id="saveCollectionQuota">Save</button>
+      </div>
+
+      <button id="closeCollectionModal" class="close-btn">X</button>
+    </div>
+
+    <!-- Tabs Section -->
+    <div class="collection-tabs">
+      <button class="collection-tab" data-tab="3NM">3NM</button>
+      <button class="collection-tab" data-tab="6NM">6NM</button>
+      <button class="collection-tab" data-tab="9NM">9NM</button>
+      <button class="collection-tab" data-tab="12NM">12NM</button>
+      <button class="collection-tab" data-tab="Moving">Moving</button>
+      <button class="collection-tab" data-tab="Total">Total</button>
+    </div>
+    <div class="collection-tab-counts">
+      <span id="count3NM">0</span>
+      <span id="count6NM">0</span>
+      <span id="count9NM">0</span>
+      <span id="count12NM">0</span>
+      <span id="countMoving">0</span>
+      <span id="countTotal">0</span>
+    </div>
+
+    <!-- Scrollable Names List -->
+    <div id="collectionNamesList" class="collection-names-list"></div>
+
+  </div>
+</div>
+
 
   <script src="app.js"></script>
 </body>

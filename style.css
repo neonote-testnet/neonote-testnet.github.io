@@ -837,3 +837,136 @@ button.secondary {
   z-index: 1001; 
 }
 
+/* Collection Floating Button */
+.floating-btn.left-of-notepad {
+  left: 10px; /* Position left of notepad button */
+  bottom: 80px;
+  position: fixed;
+  z-index: 1001;
+}
+
+/* Collection Modal */
+#collectionModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 97%;
+  max-width: 1200px;
+  height: 700px;
+  background: #1a1a1a;
+  color: #f0f0f0;
+  border: 2px solid #ffcc00;
+  border-radius: 10px;
+  padding: 20px;
+  z-index: 1000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Close Button */
+#closeCollectionModal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: #ff0000;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+/* Expandable Panel */
+.expand-panel {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+#expandPanelBtn {
+  background: #333;
+  color: #ffcc00;
+  border: 1px solid #ffcc00;
+  padding: 4px 8px;
+  cursor: pointer;
+  width: 30px;
+}
+.panel-content {
+  margin-top: 10px;
+  border: 1px solid #ffcc00;
+  padding: 10px;
+  display: none;
+}
+.panel-content.visible {
+  display: block;
+}
+
+/* Input Rows */
+.input-row {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.input-row input {
+  background: #222;
+  border: 1px solid #ffcc00;
+  color: #fff;
+  padding: 4px 6px;
+  width: 60%;
+  border-radius: 4px;
+}
+
+/* Search Bar */
+.search-bar {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid #ffcc00;
+  background: #222;
+  color: #fff;
+}
+
+/* Tabs */
+.collection-tabs {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
+.collection-tab {
+  flex: 1;
+  padding: 5px 0;
+  background: #333;
+  border: 1px solid #ffcc00;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 4px;
+}
+.collection-tab.active {
+  background: #ffcc00;
+  color: #000;
+}
+
+/* Tab Counts */
+.collection-tab-counts {
+  display: flex;
+  gap: 5px;
+  justify-content: space-between;
+  margin: 5px 0 10px;
+}
+
+/* Scrollable Names List */
+.collection-names-list {
+  flex: 1;
+  overflow-y: auto;
+  border-top: 1px solid #ffcc00;
+  padding-top: 10px;
+}
+.collection-names-list .promise {
+  padding: 5px;
+  border-bottom: 1px solid #ffcc00;
+  cursor: pointer;
+}
+
