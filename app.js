@@ -1056,6 +1056,39 @@ const addNoteBtn = document.getElementById('addNoteBtn');
 const toggleNotes = document.getElementById('toggleNotes');
 const sidebar = document.querySelector('.notepad-sidebar');
 
+const collectionModal = document.getElementById('collectionModal');
+const collectionBtn = document.getElementById('collectionBtn');
+const expandPanelBtn = document.getElementById('expandPanelBtn');
+const panelContent = document.getElementById('panelContent');
+const addPaymentBtn = document.getElementById('addPaymentBtn');
+const namesList = document.getElementById('namesList');
+const nameInput = document.getElementById('nameInput');
+const balanceInput = document.getElementById('balanceInput');
+const dateInput = document.getElementById('dateInput');
+const lastPaid = document.getElementById('lastPaid');
+const paymentInput = document.getElementById('paymentInput');
+
+const currentMonthInput = document.getElementById('currentMonthInput');
+const historyBtn = document.getElementById('historyBtn');
+const quotaInput = document.getElementById('quotaInput');
+const quotaBalance = document.getElementById('quotaBalance');
+const runningInput = document.getElementById('runningInput');
+const saveQuotaBtn = document.getElementById('saveQuotaBtn');
+
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabNamesList = document.getElementById('tabNamesList');
+const tabCounts = {
+  "3NM": document.getElementById('count3NM'),
+  "6NM": document.getElementById('count6NM'),
+  "9NM": document.getElementById('count9NM'),
+  "12NM": document.getElementById('count12NM'),
+  "Moving": document.getElementById('countMoving'),
+  "Total": document.getElementById('countTotal')
+};
+
+let collectionData = JSON.parse(localStorage.getItem('collectionData')) || { names: [], quota: 0, balance: 0, running: 0 };
+
+
 function saveNotes() {
   localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
 }
@@ -1207,6 +1240,138 @@ notepadBtn.onclick = () => {
 closeNotepad.onclick = () => {
   notepadModal.classList.add('hidden');
 };
+
+collectionBtn.onclick = () => {
+  collectionModal.classList.toggle('hidden');
+};
+
+expandPanelBtn.onclick = () => {
+  panelContent.classList.toggle('hidden');
+  expandPanelBtn.textContent = panelContent.classList.contains('hidden') ? '>' : '<';
+};
+
+
+function saveCollectionData() {
+  localStorage.setItem('collectionData', JSON.stringify(collectionData));
+}
+
+function renderNames() {
+  namesList.innerHTML = '';
+  collectionData.names.forEach(item => {
+    const div = document.createElement('div');
+    div.textContent = `${item.name} - Balance: ${item.balance} - Last Paid: ${item.lastPaid}`;
+    div.style.cursor = 'pointer';
+    div.onclick = () => {
+      nameInput.value = item.name;
+      balanceInput.value = item.balance;
+      dateInput.value = item.date;
+      lastPaid.value = item.lastPaid;
+    };
+    namesList.appendChild(div);
+  });
+  updateTabs();
+}
+
+addPaymentBtn.onclick = () => {
+  const name = nameInput.value.trim();
+  const balance = parseFloat(balanceInput.value);
+  const date = dateInput.value;
+  const payment = parseFloat(paymentInput.value);
+
+  if (!name || isNaN(balance) || !date || isNaN(payment)) return alert("Fill all fields");
+
+  const existing = collectionData.names.find(n => n.name === name);
+  if (existing) {
+    existing.balance -= payment;
+    existing.lastPaid = date;
+  } else {
+    collectionData.names.push({ name, balance: balance - payment, date, lastPaid: date });
+  }
+
+  collectionData.balance -= payment;
+  collectionData.running += payment;
+  quotaBalance.value = collectionData.balance;
+  runningInput.value = collectionData.running;
+
+  saveCollectionData();
+  renderNames();
+  paymentInput.value = '';
+};
+
+saveQuotaBtn.onclick = () => {
+  const month = currentMonthInput.value;
+  const quota = parseFloat(quotaInput.value);
+  if (!month || isNaN(quota)) return alert("Fill all fields");
+
+  collectionData.quota = quota;
+  collectionData.balance = quota;
+  collectionData.running = 0;
+
+  quotaBalance.value = collectionData.balance;
+  runningInput.value = collectionData.running;
+
+  saveCollectionData();
+  alert("Quota saved!");
+};
+
+function updateTabs() {
+  const now = new Date();
+  const counts = { "3NM":0, "6NM":0, "9NM":0, "12NM":0, "Moving":0, "Total":0 };
+  tabNamesList.innerHTML = '';
+
+  collectionData.names.forEach(n => {
+    const last = new Date(n.lastPaid);
+    const diffMonths = (now.getFullYear() - last.getFullYear())*12 + (now.getMonth() - last.getMonth());
+
+    if (diffMonths < 3) counts["Moving"]++;
+    else if (diffMonths < 6) counts["3NM"]++;
+    else if (diffMonths < 9) counts["6NM"]++;
+    else if (diffMonths < 12) counts["9NM"]++;
+    else counts["12NM"]++;
+    counts["Total"]++;
+  });
+
+  for (const key in tabCounts) tabCounts[key].textContent = counts[key];
+}
+
+tabButtons.forEach(btn => {
+  btn.onclick = () => {
+    tabButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderTabNames(btn.dataset.tab);
+  };
+});
+
+function renderTabNames(tab) {
+  tabNamesList.innerHTML = '';
+  const now = new Date();
+
+  collectionData.names.forEach(n => {
+    const last = new Date(n.lastPaid);
+    const diffMonths = (now.getFullYear() - last.getFullYear())*12 + (now.getMonth() - last.getMonth());
+    let add = false;
+
+    switch(tab){
+      case "Moving": if(diffMonths < 3) add = true; break;
+      case "3NM": if(diffMonths >=3 && diffMonths <6) add = true; break;
+      case "6NM": if(diffMonths >=6 && diffMonths <9) add = true; break;
+      case "9NM": if(diffMonths >=9 && diffMonths <12) add = true; break;
+      case "12NM": if(diffMonths >=12) add = true; break;
+      case "Total": add = true; break;
+    }
+
+    if(add){
+      const div = document.createElement('div');
+      div.textContent = `${n.name} - Last Paid: ${n.lastPaid}`;
+      tabNamesList.appendChild(div);
+    }
+  });
+}
+
+
+quotaBalance.value = collectionData.balance;
+runningInput.value = collectionData.running;
+renderNames();
 
 
 });

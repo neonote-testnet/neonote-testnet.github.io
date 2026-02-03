@@ -837,3 +837,82 @@ button.secondary {
   z-index: 1001; 
 }
 
+.collection-btn {
+  left: 20px;
+  bottom: 100px;
+  background-color: #ffa500;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  position: fixed;
+  z-index: 999;
+  cursor: pointer;
+}
+
+.modal.hidden { display: none; }
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 97%;
+  height: 700px;
+  background: #fff;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  z-index: 1000;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+.collection-left-panel {
+  width: 20%;
+  border-right: 1px solid #ccc;
+  padding: 10px;
+  position: relative;
+}
+
+.expand-btn {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  cursor: pointer;
+}
+
+.panel-content.hidden { display: none; }
+.panel-content { margin-top: 40px; }
+
+.form-group { margin-bottom: 10px; }
+.form-group input { width: 90%; padding: 5px; border: 1px solid #aaa; border-radius: 4px; }
+
+.scrollable-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.quota-section { margin-top: 20px; }
+.quota-section input { width: 90%; }
+
+.collection-right-panel {
+  width: 80%;
+  padding: 10px;
+}
+
+.collection-tabs { display: flex; gap: 5px; margin-bottom: 5px; }
+.tab-btn {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #aaa;
+  background-color: #eee;
+  cursor: pointer;
+}
+.tab-btn.active { background-color: #ffa500; color: #fff; }
+
+.tab-counts { display: flex; gap: 10px; margin-bottom: 10px; }
+.tab-counts span { flex: 1; text-align: center; }
+
+#tabNamesList { height: 500px; overflow-y: auto; border: 1px solid #ccc; padding: 5px; }

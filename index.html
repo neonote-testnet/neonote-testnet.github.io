@@ -96,6 +96,7 @@ is an open-source offline note-taking app designed for efficient task management
 <button id="notepadBtn" class="floating-btn note-btn">
   📝
 </button>
+<button id="collectionBtn" class="collection-btn">C</button>
 
 
 <div id="accountsModal" class="modal hidden">
@@ -805,6 +806,89 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
     <p>You must first add a new note or select existing note before you can write anything here.<br>
        Click the ❯ button → then click "＋ New" or "Select existing Note" → then ❮ to start writing.</p>
     <button id="closeNoNoteModal">OK</button>
+  </div>
+</div>
+
+<div id="collectionModal" class="modal hidden">
+
+  <div class="collection-left-panel">
+    <button id="expandPanelBtn" class="expand-btn">></button>
+    <div id="panelContent" class="panel-content hidden">
+
+      <div class="form-group">
+        <input type="text" id="searchName" placeholder="Search Name...">
+      </div>
+
+      <div class="form-group">
+        <label>Name:</label>
+        <input type="text" id="nameInput">
+      </div>
+      <div class="form-group">
+        <label>Balance:</label>
+        <input type="number" id="balanceInput">
+      </div>
+      <div class="form-group">
+        <label>Date:</label>
+        <input type="date" id="dateInput">
+      </div>
+      <div class="form-group">
+        <label>Last Date Paid:</label>
+        <input type="text" id="lastPaid" disabled>
+      </div>
+      <div class="form-group">
+        <label>Add Payment:</label>
+        <input type="number" id="paymentInput">
+        <button id="addPaymentBtn">Add Payment</button>
+      </div>
+      <div class="scrollable-list" id="namesList"></div>
+
+
+      <div class="quota-section">
+        <div class="form-group">
+          <label>Current Month:</label>
+          <input type="month" id="currentMonthInput">
+        </div>
+        <div class="form-group">
+          <button id="historyBtn">History</button>
+        </div>
+        <div class="form-group">
+          <label>Quota:</label>
+          <input type="number" id="quotaInput">
+        </div>
+        <div class="form-group">
+          <label>Balance:</label>
+          <input type="number" id="quotaBalance" disabled>
+        </div>
+        <div class="form-group">
+          <label>Running:</label>
+          <input type="number" id="runningInput" disabled>
+        </div>
+        <div class="form-group">
+          <button id="saveQuotaBtn">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="collection-right-panel">
+    <div class="collection-tabs">
+      <button class="tab-btn" data-tab="3NM">3NM</button>
+      <button class="tab-btn" data-tab="6NM">6NM</button>
+      <button class="tab-btn" data-tab="9NM">9NM</button>
+      <button class="tab-btn" data-tab="12NM">12NM</button>
+      <button class="tab-btn" data-tab="Moving">Moving</button>
+      <button class="tab-btn" data-tab="Total">Total</button>
+    </div>
+    <div class="tab-counts">
+      <span id="count3NM">0</span>
+      <span id="count6NM">0</span>
+      <span id="count9NM">0</span>
+      <span id="count12NM">0</span>
+      <span id="countMoving">0</span>
+      <span id="countTotal">0</span>
+    </div>
+    <div id="tabNamesList" class="scrollable-list"></div>
   </div>
 </div>
 
