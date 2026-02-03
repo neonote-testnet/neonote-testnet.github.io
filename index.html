@@ -53,7 +53,7 @@ is an open-source offline note-taking app designed for efficient task management
   <header class="app-header">
 <div class="header-row">
     <h1>NeonoteX</h1>
-    <span class="app-version">v1.3.10</span>
+    <span class="app-version">v1.4.0</span>
   </div>
 <div class="search-wrapper">
   <input id="searchInput" type="text" placeholder="Search client name…" />
@@ -93,6 +93,9 @@ is an open-source offline note-taking app designed for efficient task management
 <button id="helpBtn" class="floating-btn help-btn">❓</button>
 <button id="hideBtn" class="floating-btn hide-btn">❯</button>
 <button id="settingsBtn" class="floating-btn settings-btn">⚙️</button>
+<button id="notepadBtn" class="floating-btn">
+  📝
+</button>
 
 
 <div id="accountsModal" class="modal hidden">
@@ -770,6 +773,29 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
     <ul id="updateDetailsList">
       <li>Loading update details…</li>
     </ul>
+  </div>
+</div>
+<div id="notepadModal" class="modal hidden">
+  <div class="modal-content notepad-modal">
+
+    <div class="notepad-sidebar collapsed">
+      <button id="toggleNotes">❯</button>
+      <button id="addNoteBtn" class="hidden">＋ New</button>
+      <div id="notesList"></div>
+    </div>
+
+    <div class="notepad-main">
+      <input id="noteTitle" placeholder="Note title…" />
+
+      <div class="note-meta">
+        <span id="charCount">0 / 20000</span>
+      </div>
+
+      <textarea id="noteContent" placeholder="Write something…"></textarea>
+
+      <button id="closeNotepad">Close</button>
+    </div>
+
   </div>
 </div>
 

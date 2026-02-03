@@ -132,6 +132,12 @@ clientName.addEventListener('input', () => {
   showNameSuggestions(clientName.value.trim());
 });
 
+const NOTES_KEY = 'neonote_notes';
+const NOTE_LIMIT = 20000;
+
+let notes = JSON.parse(localStorage.getItem(NOTES_KEY) || '[]');
+let currentNoteId = null;
+
 
 let editIndex = null;
 let promises = JSON.parse(localStorage.getItem('neonote_promises') || '[]');
@@ -596,6 +602,7 @@ passwordConfirmBtn.onclick = async () => {
       promises,
       accounts,
       nameHistory: getNameHistory()
+      notes
     });
 
     const encrypted = await crypto.subtle.encrypt(
@@ -629,10 +636,11 @@ passwordConfirmBtn.onclick = async () => {
       const parsed = JSON.parse(new TextDecoder().decode(decrypted));
 promises = parsed.promises || [];
 accounts = parsed.accounts || [];
+notes = parsed.notes || [];
+localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
 if (parsed.nameHistory) {
-  localStorage.setItem(NAME_HISTORY_KEY, JSON.stringify(parsed.nameHistory)); 
+  localStorage.setItem(NAME_HISTORY_KEY, JSON.stringify(parsed.nameHistory));
 }
-
 save();  
 localStorage.setItem('neonote_accounts', JSON.stringify(accounts)); 
 
@@ -1023,6 +1031,107 @@ closeUpdateDetails.onclick = () => {
   updateDetailsModal.classList.add('hidden');
 };
 
+const notepadBtn = document.getElementById('notepadBtn');
+const notepadModal = document.getElementById('notepadModal');
+const closeNotepad = document.getElementById('closeNotepad');
+
+const noteTitle = document.getElementById('noteTitle');
+const noteContent = document.getElementById('noteContent');
+const charCount = document.getElementById('charCount');
+
+const notesList = document.getElementById('notesList');
+const addNoteBtn = document.getElementById('addNoteBtn');
+const toggleNotes = document.getElementById('toggleNotes');
+const sidebar = document.querySelector('.notepad-sidebar');
+
+function saveNotes() {
+  localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
+}
+
+function renderNotesList() {
+  notesList.innerHTML = '';
+  notes.forEach(n => {
+    const div = document.createElement('div');
+    div.textContent = n.title || 'Untitled';
+    div.onclick = () => loadNote(n.id);
+
+    const del = document.createElement('button');
+    del.textContent = '❌';
+    del.onclick = e => {
+      e.stopPropagation();
+      notes = notes.filter(x => x.id !== n.id);
+      if (currentNoteId === n.id) clearEditor();
+      saveNotes();
+      renderNotesList();
+    };
+
+    div.appendChild(del);
+    notesList.appendChild(div);
+  });
+}
+
+function loadNote(id) {
+  const n = notes.find(x => x.id === id);
+  if (!n) return;
+
+  currentNoteId = id;
+  noteTitle.value = n.title;
+  noteContent.value = n.content;
+  updateCharCount();
+}
+
+function clearEditor() {
+  currentNoteId = null;
+  noteTitle.value = '';
+  noteContent.value = '';
+  updateCharCount();
+}
+
+function updateCharCount() {
+  const len = noteContent.value.length;
+  charCount.textContent = `${len} / ${NOTE_LIMIT}`;
+  noteContent.disabled = len >= NOTE_LIMIT;
+}
+
+noteTitle.oninput = noteContent.oninput = () => {
+  updateCharCount();
+
+  if (!currentNoteId) return;
+  const n = notes.find(x => x.id === currentNoteId);
+  if (!n) return;
+
+  n.title = noteTitle.value;
+  n.content = noteContent.value.slice(0, NOTE_LIMIT);
+  saveNotes();
+};
+
+addNoteBtn.onclick = () => {
+  const n = {
+    id: 'note_' + Date.now(),
+    title: '',
+    content: ''
+  };
+  notes.unshift(n);
+  saveNotes();
+  renderNotesList();
+  loadNote(n.id);
+};
+
+toggleNotes.onclick = () => {
+  sidebar.classList.toggle('collapsed');
+  toggleNotes.textContent =
+    sidebar.classList.contains('collapsed') ? '❯' : '❮';
+  addNoteBtn.classList.toggle('hidden');
+};
+
+notepadBtn.onclick = () => {
+  notepadModal.classList.remove('hidden');
+  renderNotesList();
+};
+
+closeNotepad.onclick = () => {
+  notepadModal.classList.add('hidden');
+};
 
 
 });
