@@ -144,7 +144,7 @@ clientName.addEventListener('input', () => {
 
 const NOTES_KEY = 'neonote_notes';
 const NOTE_LIMIT = 20000;
-const NOTE_TITLE_LIMIT = 18;
+const NOTE_TITLE_LIMIT = 50;
 
 
 let notes = JSON.parse(localStorage.getItem(NOTES_KEY) || '[]');
