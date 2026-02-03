@@ -828,3 +828,9 @@ button.secondary {
   font-size: 12px;
   opacity: 0.7;
 }
+.note-btn {
+  right: 108px;
+  bottom: 88px;
+  background: var(--green);
+  color: #000;
+}
