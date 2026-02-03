@@ -853,133 +853,78 @@ button.secondary {
   max-width: 1200px;
   height: 700px;
   transform: translate(-50%, -50%);
-  background: #fdf6e3;
-  border: 3px solid #333;
+  background: #1a1a1a; /* retro modal bg same as other modals */
+  border: 3px solid #ffcc00; /* retro border */
   border-radius: 10px;
   z-index: 1100;
   display: flex;
-  overflow: hidden;
   font-family: 'Courier New', monospace;
+  color: #fdf6e3; /* text retro visible */
+  overflow: hidden;
 }
 
-.collection-container {
-  display: flex;
-  height: 100%;
-}
-
-/* Left Panel */
-.collection-left {
-  width: 20%;
-  border-right: 2px solid #333;
-  background: #eee8d5;
-  position: relative;
-}
-
+/* Expand button */
 .expand-btn {
   position: absolute;
   top: 10px;
-  right: -20px;
-  width: 20px;
+  left: 10px;
+  width: 30px;
   height: 30px;
   cursor: pointer;
   font-weight: bold;
+  background: #1a1a1a;
+  border: 2px solid #ffcc00;
+  color: #fdf6e3;
+  z-index: 1110;
 }
 
+/* Panel Content sliding */
 .panel-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100%;
+  background: #222;
+  border-right: 2px solid #ffcc00;
   padding: 10px;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  color: #fdf6e3;
+  overflow-y: auto;
 }
 
-.input-group {
-  margin-bottom: 8px;
+.panel-content.show {
+  transform: translateX(0);
 }
 
-.input-group label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 2px;
-}
-
-.input-group input {
+.panel-content input {
+  background: #333;
+  color: #fdf6e3;
+  border: 1px solid #ffcc00;
+  padding: 4px;
   width: 100%;
-  padding: 5px;
-  border: 1px solid #333;
   border-radius: 4px;
-  background: #fdf6e3;
-}
-
-#namesList {
-  max-height: 200px;
-  overflow-y: auto;
-  margin-top: 10px;
-  border-top: 1px solid #333;
-}
-
-/* Right Panel */
-.collection-right {
-  width: 80%;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-}
-
-.top-controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-}
-
-.input-group-inline {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.tabs-container {
-  margin-top: 15px;
-}
-
-.tabs {
-  display: flex;
-  gap: 5px;
-}
-
-.tab-btn {
-  padding: 5px 10px;
-  border: 1px solid #333;
-  background: #eee8d5;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.tab-btn.active {
-  background: #b58900;
-  color: #fff;
-}
-
-.tab-counts {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 5px;
-  font-weight: bold;
-}
-
-.tab-content {
-  margin-top: 10px;
-  flex-grow: 1;
-  overflow-y: auto;
-  border: 1px solid #333;
-  padding: 5px;
 }
 
 .scrollable-list > div {
-  border: 1px solid #333;
-  padding: 5px;
-  margin-bottom: 5px;
+  color: #fdf6e3;
+  background: #111;
+  border: 1px solid #ffcc00;
+  padding: 4px;
+  margin-bottom: 4px;
   cursor: pointer;
-  background: #fdf6e3;
 }
 
+/* Right Side */
+.collection-right {
+  flex-grow: 1;
+  padding: 10px;
+  overflow-y: auto;
+  margin-left: 0; /* panel slides over, right side full width */
+}
+
+/* Close Button */
 .close-btn {
   position: absolute;
   top: 5px;

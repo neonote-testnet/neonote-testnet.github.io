@@ -1255,9 +1255,10 @@ collectionBtn.onclick = () => {
 closeCollection.onclick = () => collectionModal.classList.add('hidden');
 
 // Expand/collapse left panel
+// Expand/collapse left panel with slide
 expandPanelBtn.onclick = () => {
-  panelContent.classList.toggle('hidden');
-  expandPanelBtn.textContent = panelContent.classList.contains('hidden') ? '>' : '<';
+  panelContent.classList.toggle('show');
+  expandPanelBtn.textContent = panelContent.classList.contains('show') ? '<' : '>';
 };
 
 // Add Payment

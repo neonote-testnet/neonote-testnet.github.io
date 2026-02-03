@@ -809,38 +809,40 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
   </div>
 </div>
 
+<!-- Collection Modal -->
 <div id="collectionModal" class="modal hidden">
   <div class="collection-container">
-    <!-- Left Panel (20%) -->
-    <div class="collection-left">
-      <button id="expandPanelBtn" class="expand-btn">></button>
-      <div id="panelContent" class="panel-content hidden">
-        <input type="text" id="collectionSearch" placeholder="Search Name..." />
-        <div class="input-group">
-          <label>Name:</label>
-          <input type="text" id="collectionName" />
-        </div>
-        <div class="input-group">
-          <label>Balance:</label>
-          <input type="number" id="collectionBalance" />
-        </div>
-        <div class="input-group">
-          <label>Date:</label>
-          <input type="date" id="collectionDate" />
-        </div>
-        <div class="input-group">
-          <label>Last Payment:</label>
-          <input type="text" id="lastPayment" readonly />
-        </div>
-        <div class="input-group">
-          <label>Add Payment:</label>
-          <input type="number" id="paymentAmount" />
-          <button id="addPaymentBtn">Add Payment</button>
-        </div>
-        <div id="namesList" class="scrollable-list"></div>
+    <!-- Expandable panel button -->
+    <button id="expandPanelBtn" class="expand-btn">></button>
+
+    <!-- Panel Content -->
+    <div id="panelContent" class="panel-content hidden">
+      <input type="text" id="collectionSearch" placeholder="Search Name..." />
+      <div class="input-group">
+        <label>Name:</label>
+        <input type="text" id="collectionName" />
       </div>
+      <div class="input-group">
+        <label>Balance:</label>
+        <input type="number" id="collectionBalance" />
+      </div>
+      <div class="input-group">
+        <label>Date:</label>
+        <input type="date" id="collectionDate" />
+      </div>
+      <div class="input-group">
+        <label>Last Payment:</label>
+        <input type="text" id="lastPayment" readonly />
+      </div>
+      <div class="input-group">
+        <label>Add Payment:</label>
+        <input type="number" id="paymentAmount" />
+        <button id="addPaymentBtn">Add Payment</button>
+      </div>
+      <div id="namesList" class="scrollable-list"></div>
     </div>
 
+    <!-- Right Side -->
     <div class="collection-right">
       <div class="top-controls">
         <div class="input-group-inline">
@@ -883,10 +885,11 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
         <div id="tabContent" class="tab-content scrollable-list"></div>
       </div>
     </div>
+
+    <!-- Close Button -->
     <button id="closeCollection" class="close-btn">✖</button>
   </div>
 </div>
-
 
   <script src="app.js"></script>
 </body>
