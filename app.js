@@ -1066,13 +1066,26 @@ function renderNotesList() {
 
   notes.forEach(n => {
     const div = document.createElement('div');
-    div.className = 'promise'; 
+    div.className = 'promise';
     div.style.cursor = 'pointer';
 
     div.innerHTML = `
-      <div class="promise-header">
+      <div class="promise-header" style="display: flex; justify-content: space-between; align-items: center;">
         <strong>${n.title || 'Untitled'}</strong>
-        <button class="delete-client">❌</button>
+        <button class="delete-client" style="
+          width: 32px;
+          height: 32px;
+          min-width: 32px;
+          min-height: 32px;
+          max-width: 32px;
+          max-height: 32px;
+          padding: 0;
+          margin: 0;
+          font-size: 18px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        ">❌</button>
       </div>
     `;
 
@@ -1083,10 +1096,13 @@ function renderNotesList() {
 
     div.querySelector('.delete-client').onclick = e => {
       e.stopPropagation();
-      notes = notes.filter(x => x.id !== n.id);
-      if (currentNoteId === n.id) clearEditor();
-      saveNotes();
-      renderNotesList();
+
+      showConfirm('Are you sure you want to delete this note?', () => {
+        notes = notes.filter(x => x.id !== n.id);
+        if (currentNoteId === n.id) clearEditor();
+        saveNotes();
+        renderNotesList();
+      });
     };
 
     notesList.appendChild(div);
