@@ -42,6 +42,11 @@ navigator.serviceWorker.addEventListener('controllerchange', () => {
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js').then(reg => {
 
+    // 🔥 FORCE update check (installed PWA needs this)
+    setInterval(() => {
+      reg.update();
+    }, 60 * 1000); // every 60 seconds
+
     if (reg.waiting) {
       newWorker = reg.waiting;
       updateBanner.classList.remove('hidden');
@@ -1090,8 +1095,12 @@ function clearEditor() {
 function updateCharCount() {
   const len = noteContent.value.length;
   charCount.textContent = `${len} / ${NOTE_LIMIT}`;
-  noteContent.disabled = len >= NOTE_LIMIT;
+
+  if (len > NOTE_LIMIT) {
+    noteContent.value = noteContent.value.slice(0, NOTE_LIMIT);
+  }
 }
+
 
 noteTitle.oninput = noteContent.oninput = () => {
   updateCharCount();

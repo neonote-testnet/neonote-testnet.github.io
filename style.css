@@ -829,7 +829,7 @@ button.secondary {
   opacity: 0.7;
 }
 .note-btn {
-  right: 108px;
+  right: 160px;
   bottom: 88px;
   background: var(--green);
   color: #000;
