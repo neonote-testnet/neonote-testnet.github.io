@@ -14,21 +14,28 @@ document.querySelectorAll('.tab').forEach(tab => {
 });
 const sourceCodeBtn = document.getElementById('sourceCodeBtn');
 
-  const expandBtn = document.querySelector('.expand-btn');
-  const panelContent = document.querySelector('.panel-content');
-
   if (expandBtn && panelContent) {
     expandBtn.addEventListener('click', () => {
       panelContent.classList.toggle('show');
     });
   }
 
-
 if (sourceCodeBtn) {
   sourceCodeBtn.onclick = () => {
     window.open('https://github.com/Neonotex/neonotex.github.io', '_blank');
   };
 }
+
+// Collection panel toggle
+const collectionExpandBtn = document.querySelector('.expand-btn');
+const collectionPanel = document.querySelector('.panel-content');
+
+if (collectionExpandBtn && collectionPanel) {
+  collectionExpandBtn.addEventListener('click', () => {
+    collectionPanel.classList.toggle('show');
+  });
+}
+
 
 const updateBanner = document.getElementById('updateBanner');
 const applyUpdateBtn = document.getElementById('applyUpdate');
