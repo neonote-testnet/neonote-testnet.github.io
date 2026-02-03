@@ -1370,3 +1370,13 @@ renderCollectionNames();
 
 
 });
+document.addEventListener('DOMContentLoaded', () => {
+  const expandBtn = document.getElementById('expandPanelBtn');
+  const panel = document.getElementById('panelContent');
+
+  expandBtn.addEventListener('click', () => {
+    panel.classList.toggle('hidden');
+    // Optional: change button text from > to < when expanded
+    expandBtn.textContent = panel.classList.contains('hidden') ? '>' : '<';
+  });
+});
