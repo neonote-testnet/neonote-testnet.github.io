@@ -1273,7 +1273,6 @@ addCollectionPayment.onclick = () => {
   if (!name || !date || !payment) return;
 
   let record = collectionData.find(r => r.name === name);
-  let record = collectionData.find(r => r.name === name);
 
 if (!record) {
   record = {
@@ -1370,14 +1369,4 @@ function updateTabCounts() {
 renderCollectionNames();
 
 
-});
-document.addEventListener('DOMContentLoaded', () => {
-  const expandBtn = document.getElementById('expandPanelBtn');
-  const panel = document.getElementById('panelContent');
-
-  expandBtn.addEventListener('click', () => {
-    panel.classList.toggle('hidden');
-    // Optional: change button text from > to < when expanded
-    expandBtn.textContent = panel.classList.contains('hidden') ? '>' : '<';
-  });
 });
