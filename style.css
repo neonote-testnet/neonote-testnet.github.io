@@ -834,3 +834,11 @@ button.secondary {
   background: var(--green);
   color: #000;
 }
+
+#confirmModal {
+  z-index: 1001; 
+}
+
+#notepadModal {
+  z-index: 1000; 
+}
