@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,7 +64,7 @@ is an open-source offline note-taking app designed for efficient task management
 
 <main id="overview">
   <div class="tabs">
-  <button class="tab active" data-tab="today">TodayZZ</button>
+  <button class="tab active" data-tab="today">Today</button>
   <button class="tab" data-tab="all">All</button>
   <button class="tab" data-tab="done">Done</button>
 </div>
@@ -97,7 +96,7 @@ is an open-source offline note-taking app designed for efficient task management
 <button id="notepadBtn" class="floating-btn note-btn">
   📝
 </button>
-<button id="collectionBtn" class="floating-btn collection-btn">C</button>
+<button id="collectionBtn" class="floating-btn left-btn">📁</button>
 
 
 <div id="accountsModal" class="modal hidden">
@@ -810,86 +809,81 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
   </div>
 </div>
 
-<div id="collectionModal" class="collection-modal hidden">
-
-  <div class="collection-left-panel">
-    <button id="expandPanelBtn" class="expand-btn">></button>
-    <div id="panelContent" class="panel-content hidden">
-
-      <div class="form-group">
-        <input type="text" id="searchName" placeholder="Search Name...">
-      </div>
-
-      <div class="form-group">
-        <label>Name:</label>
-        <input type="text" id="nameInput">
-      </div>
-      <div class="form-group">
-        <label>Balance:</label>
-        <input type="number" id="balanceInput">
-      </div>
-      <div class="form-group">
-        <label>Date:</label>
-        <input type="date" id="dateInput">
-      </div>
-      <div class="form-group">
-        <label>Last Date Paid:</label>
-        <input type="text" id="lastPaid" disabled>
-      </div>
-      <div class="form-group">
-        <label>Add Payment:</label>
-        <input type="number" id="paymentInput">
-        <button id="addPaymentBtn">Add Payment</button>
-      </div>
-      <div class="scrollable-list" id="namesList"></div>
-
-
-      <div class="quota-section">
-        <div class="form-group">
-          <label>Current Month:</label>
-          <input type="month" id="currentMonthInput">
+<div id="collectionModal" class="modal hidden">
+  <div class="collection-container">
+    <!-- Left Panel (20%) -->
+    <div class="collection-left">
+      <button id="expandPanelBtn" class="expand-btn">></button>
+      <div id="panelContent" class="panel-content hidden">
+        <input type="text" id="collectionSearch" placeholder="Search Name..." />
+        <div class="input-group">
+          <label>Name:</label>
+          <input type="text" id="collectionName" />
         </div>
-        <div class="form-group">
-          <button id="historyBtn">History</button>
-        </div>
-        <div class="form-group">
-          <label>Quota:</label>
-          <input type="number" id="quotaInput">
-        </div>
-        <div class="form-group">
+        <div class="input-group">
           <label>Balance:</label>
-          <input type="number" id="quotaBalance" disabled>
+          <input type="number" id="collectionBalance" />
         </div>
-        <div class="form-group">
-          <label>Running:</label>
-          <input type="number" id="runningInput" disabled>
+        <div class="input-group">
+          <label>Date:</label>
+          <input type="date" id="collectionDate" />
         </div>
-        <div class="form-group">
-          <button id="saveQuotaBtn">Save</button>
+        <div class="input-group">
+          <label>Last Payment:</label>
+          <input type="text" id="lastPayment" readonly />
         </div>
+        <div class="input-group">
+          <label>Add Payment:</label>
+          <input type="number" id="paymentAmount" />
+          <button id="addPaymentBtn">Add Payment</button>
+        </div>
+        <div id="namesList" class="scrollable-list"></div>
       </div>
     </div>
-  </div>
 
+    <div class="collection-right">
+      <div class="top-controls">
+        <div class="input-group-inline">
+          <label>Current Month:</label>
+          <input type="month" id="currentMonth" />
+        </div>
+        <button id="historyBtn">History</button>
+        <div class="input-group">
+          <label>Quota:</label>
+          <input type="number" id="quotaInput" />
+        </div>
+        <div class="input-group">
+          <label>Balance:</label>
+          <input type="number" id="quotaBalance" readonly />
+        </div>
+        <div class="input-group">
+          <label>Running:</label>
+          <input type="number" id="quotaRunning" readonly />
+        </div>
+        <button id="saveQuotaBtn">Save</button>
+      </div>
 
-  <div class="collection-right-panel">
-    <div class="collection-tabs">
-      <button class="tab-btn" data-tab="3NM">3NM</button>
-      <button class="tab-btn" data-tab="6NM">6NM</button>
-      <button class="tab-btn" data-tab="9NM">9NM</button>
-      <button class="tab-btn" data-tab="12NM">12NM</button>
-      <button class="tab-btn" data-tab="Moving">Moving</button>
-      <button class="tab-btn" data-tab="Total">Total</button>
+      <div class="tabs-container">
+        <div class="tabs">
+          <button class="tab-btn" data-tab="3nm">3NM</button>
+          <button class="tab-btn" data-tab="6nm">6NM</button>
+          <button class="tab-btn" data-tab="9nm">9NM</button>
+          <button class="tab-btn" data-tab="12nm">12NM</button>
+          <button class="tab-btn" data-tab="moving">Moving</button>
+          <button class="tab-btn" data-tab="total">Total</button>
+        </div>
+        <div class="tab-counts">
+          <span id="count3NM">0</span>
+          <span id="count6NM">0</span>
+          <span id="count9NM">0</span>
+          <span id="count12NM">0</span>
+          <span id="countMoving">0</span>
+          <span id="countTotal">0</span>
+        </div>
+        <div id="tabContent" class="tab-content scrollable-list"></div>
+      </div>
     </div>
-    <div class="tab-counts">
-      <span id="count3NM">0</span>
-      <span id="count6NM">0</span>
-      <span id="count9NM">0</span>
-      <span id="count12NM">0</span>
-      <span id="countMoving">0</span>
-      <span id="countTotal">0</span>
-    </div>
-    <div id="tabNamesList" class="scrollable-list"></div>
+    <button id="closeCollection" class="close-btn">✖</button>
   </div>
 </div>
 
