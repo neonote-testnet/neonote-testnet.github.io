@@ -1273,12 +1273,22 @@ addCollectionPayment.onclick = () => {
   if (!name || !date || !payment) return;
 
   let record = collectionData.find(r => r.name === name);
-  if (!record) {
-    record = { name, lastPaid: date, payments: [] };
-    collectionData.push(record);
-  }
+  let record = collectionData.find(r => r.name === name);
+
+if (!record) {
+  record = {
+    name,
+    lastPaid: date,
+    balance: balance,          // 👈 initial balance when first added
+    payments: []
+  };
+  collectionData.push(record);
+}
+
   record.lastPaid = date;
   record.payments.push({ amount: payment, date });
+  record.balance -= payment;
+if (record.balance < 0) record.balance = 0;
 
   // Update quota running and balance
   const month = collectionMonth.value;
@@ -1305,11 +1315,13 @@ function renderCollectionNames(filter = '') {
   filtered.forEach(record => {
     const div = document.createElement('div');
     div.className = 'promise';
-    div.textContent = `${record.name} - Last Paid: ${record.lastPaid}`;
+    div.textContent = `${record.name} | Bal: ${record.balance} | Last: ${record.lastPaid}`;
     div.onclick = () => {
-      collectionName.value = record.name;
-      collectionLastPaid.value = record.lastPaid;
-    };
+  collectionName.value = record.name;
+  collectionLastPaid.value = record.lastPaid || '';
+  collectionBalance.value = record.balance ?? 0;
+};
+
     collectionNamesList.appendChild(div);
   });
 
