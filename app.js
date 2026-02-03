@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  loadUpdateDetails();
 
 document.querySelectorAll('.tab').forEach(tab => {
   tab.onclick = () => {
@@ -19,6 +20,49 @@ if (sourceCodeBtn) {
   };
 }
 
+const updateBanner = document.getElementById('updateBanner');
+const applyUpdateBtn = document.getElementById('applyUpdate');
+
+const viewUpdateDetailsBtn = document.getElementById('viewUpdateDetails');
+
+const updateDetailsModal = document.getElementById('updateDetailsModal');
+const closeUpdateDetails = document.getElementById('closeUpdateDetails');
+
+
+let newWorker = null;
+let updateApproved = false;
+
+navigator.serviceWorker.addEventListener('controllerchange', () => {
+  if (updateApproved) {
+    window.location.reload();
+  }
+});
+
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js').then(reg => {
+
+    setInterval(() => {
+      reg.update();
+    }, 60 * 1000); 
+
+    if (reg.waiting) {
+      newWorker = reg.waiting;
+      updateBanner.classList.remove('hidden');
+    }
+
+    reg.addEventListener('updatefound', () => {
+      const worker = reg.installing;
+
+      worker.addEventListener('statechange', () => {
+        if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+          newWorker = worker;
+          updateBanner.classList.remove('hidden');
+        }
+      });
+    });
+  });
+}
 
 const todayContainer = document.getElementById('todayContainer');
 const countTodayEl = document.getElementById('countToday');
@@ -79,7 +123,12 @@ const PASSWORD_ENABLED_KEY = 'neonote_password_enabled';
 const BIOMETRIC_ENABLED_KEY = 'neonote_biometric_enabled';
 const NAME_HISTORY_KEY = 'neonote_name_history';
 const nameSuggestions = document.getElementById('nameSuggestions');
+const noNoteModal = document.getElementById('noNoteModal');
+const closeNoNoteModal = document.getElementById('closeNoNoteModal');
 
+closeNoNoteModal.onclick = () => {
+  noNoteModal.classList.add('hidden');
+};
 
 
 let searchClearTimer = null;
@@ -92,6 +141,14 @@ const description = document.getElementById('description');
 clientName.addEventListener('input', () => {
   showNameSuggestions(clientName.value.trim());
 });
+
+const NOTES_KEY = 'neonote_notes';
+const NOTE_LIMIT = 20000;
+const NOTE_TITLE_LIMIT = 100;
+
+
+let notes = JSON.parse(localStorage.getItem(NOTES_KEY) || '[]');
+let currentNoteId = null;
 
 
 let editIndex = null;
@@ -556,7 +613,8 @@ passwordConfirmBtn.onclick = async () => {
       created: Date.now(),
       promises,
       accounts,
-      nameHistory: getNameHistory()
+      nameHistory: getNameHistory(),
+      notes
     });
 
     const encrypted = await crypto.subtle.encrypt(
@@ -590,10 +648,11 @@ passwordConfirmBtn.onclick = async () => {
       const parsed = JSON.parse(new TextDecoder().decode(decrypted));
 promises = parsed.promises || [];
 accounts = parsed.accounts || [];
+notes = parsed.notes || [];
+localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
 if (parsed.nameHistory) {
-  localStorage.setItem(NAME_HISTORY_KEY, JSON.stringify(parsed.nameHistory)); 
+  localStorage.setItem(NAME_HISTORY_KEY, JSON.stringify(parsed.nameHistory));
 }
-
 save();  
 localStorage.setItem('neonote_accounts', JSON.stringify(accounts)); 
 
@@ -938,9 +997,394 @@ hideBtn.onclick = () => {
   }
 };
 
+applyUpdateBtn.onclick = () => {
+  if (!newWorker) return;
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js');
+  updateApproved = true;
+  newWorker.postMessage({ action: 'SKIP_WAITING' });
+};
+
+
+async function loadUpdateDetails() {
+  try {
+    const res = await fetch('./update-info.json', {
+      cache: 'no-store'
+    });
+
+    if (!res.ok) throw new Error('Failed to load update info');
+
+    const data = await res.json();
+
+    document.getElementById('updateTitle').textContent =
+      `Update ${data.version}`;
+
+    const list = document.getElementById('updateDetailsList');
+    list.innerHTML = '';
+
+    data.details.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      list.appendChild(li);
+    });
+
+  } catch (e) {
+    document.getElementById('updateDetailsList').innerHTML =
+      '<li>Unable to load update details</li>';
+  }
 }
+
+
+viewUpdateDetailsBtn.onclick = () => {
+  loadUpdateDetails(); 
+  updateDetailsModal.classList.remove('hidden');
+};
+
+closeUpdateDetails.onclick = () => {
+  updateDetailsModal.classList.add('hidden');
+};
+
+const notepadBtn = document.getElementById('notepadBtn');
+const notepadModal = document.getElementById('notepadModal');
+const closeNotepad = document.getElementById('closeNotepad');
+const collectionModal = document.getElementById('collectionModal');
+const collectionBtn = document.getElementById('collectionBtn');
+const noteTitle = document.getElementById('noteTitle');
+const noteContent = document.getElementById('noteContent');
+const charCount = document.getElementById('charCount');
+
+const notesList = document.getElementById('notesList');
+const addNoteBtn = document.getElementById('addNoteBtn');
+const toggleNotes = document.getElementById('toggleNotes');
+const sidebar = document.querySelector('.notepad-sidebar');
+const expandPanelBtn = document.getElementById('expandPanelBtn');
+const panelContent = document.getElementById('panelContent');
+const addPaymentBtn = document.getElementById('addPaymentBtn');
+const namesList = document.getElementById('namesList');
+const nameInput = document.getElementById('nameInput');
+const balanceInput = document.getElementById('balanceInput');
+const dateInput = document.getElementById('dateInput');
+const lastPaid = document.getElementById('lastPaid');
+const paymentInput = document.getElementById('paymentInput');
+
+const currentMonthInput = document.getElementById('currentMonthInput');
+const historyBtn = document.getElementById('historyBtn');
+const quotaInput = document.getElementById('quotaInput');
+const quotaBalance = document.getElementById('quotaBalance');
+const runningInput = document.getElementById('runningInput');
+const saveQuotaBtn = document.getElementById('saveQuotaBtn');
+
+const tabButtons = document.querySelectorAll('.tab-btn');
+const tabNamesList = document.getElementById('tabNamesList');
+const tabCounts = {
+  "3NM": document.getElementById('count3NM'),
+  "6NM": document.getElementById('count6NM'),
+  "9NM": document.getElementById('count9NM'),
+  "12NM": document.getElementById('count12NM'),
+  "Moving": document.getElementById('countMoving'),
+  "Total": document.getElementById('countTotal')
+};
+
+let collectionData = JSON.parse(localStorage.getItem('collectionData')) || { names: [], quota: 0, balance: 0, running: 0 };
+
+
+function saveNotes() {
+  localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
+}
+
+function renderNotesList() {
+  notesList.innerHTML = '';
+
+  if (!notes.length) {
+    const empty = document.createElement('p');
+    empty.className = 'empty-state';
+    empty.textContent = 'No notes yet. Add one!';
+    notesList.appendChild(empty);
+    return;
+  }
+
+  notes.forEach(n => {
+    const div = document.createElement('div');
+    div.className = 'promise';
+    div.style.cursor = 'pointer';
+
+    div.innerHTML = `
+      <div class="promise-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <strong>${n.title || 'Untitled'}</strong>
+        <button class="delete-client" style="
+          width: 32px;
+          height: 32px;
+          min-width: 32px;
+          min-height: 32px;
+          max-width: 32px;
+          max-height: 32px;
+          padding: 0;
+          margin: 0;
+          font-size: 18px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        ">❌</button>
+      </div>
+    `;
+
+    div.querySelector('.promise-header').onclick = e => {
+      if (e.target.classList.contains('delete-client')) return;
+      loadNote(n.id);
+    };
+
+    div.querySelector('.delete-client').onclick = e => {
+      e.stopPropagation();
+
+      showConfirm('Are you sure you want to delete this note?', () => {
+        notes = notes.filter(x => x.id !== n.id);
+        if (currentNoteId === n.id) clearEditor();
+        saveNotes();
+        renderNotesList();
+      });
+    };
+
+    notesList.appendChild(div);
+  });
+}
+
+
+function loadNote(id) {
+  const n = notes.find(x => x.id === id);
+  if (!n) return;
+
+  currentNoteId = id;
+  noteTitle.value = n.title;
+  noteContent.value = n.content;
+  updateCharCount();
+}
+
+function clearEditor() {
+  currentNoteId = null;
+  noteTitle.value = '';
+  noteContent.value = '';
+  updateCharCount();
+}
+
+function updateCharCount() {
+  const len = noteContent.value.length;
+  charCount.textContent = `${len} / ${NOTE_LIMIT}`;
+
+  if (len > NOTE_LIMIT) {
+    noteContent.value = noteContent.value.slice(0, NOTE_LIMIT);
+  }
+}
+
+
+noteTitle.oninput = (e) => {
+  if (!currentNoteId) {
+    noNoteModal.classList.remove('hidden');
+    e.target.value = '';
+    return;
+  }
+
+  if (e.target.value.length > NOTE_TITLE_LIMIT) {
+    e.target.value = e.target.value.slice(0, NOTE_TITLE_LIMIT);
+  }
+
+  const n = notes.find(x => x.id === currentNoteId);
+  if (!n) return;
+
+  n.title = e.target.value;
+  saveNotes();
+};
+
+noteContent.oninput = (e) => {
+  if (!currentNoteId) {
+    noNoteModal.classList.remove('hidden');
+    e.target.value = '';
+    updateCharCount();
+    return;
+  }
+
+  updateCharCount();
+
+  const n = notes.find(x => x.id === currentNoteId);
+  if (!n) return;
+
+  n.content = e.target.value.slice(0, NOTE_LIMIT);
+  saveNotes();
+};
+
+
+addNoteBtn.onclick = () => {
+  const n = {
+    id: 'note_' + Date.now(),
+    title: '',
+    content: ''
+  };
+  notes.unshift(n);
+  saveNotes();
+  renderNotesList();
+  loadNote(n.id);
+};
+
+toggleNotes.onclick = () => {
+  sidebar.classList.toggle('collapsed');
+  toggleNotes.textContent =
+    sidebar.classList.contains('collapsed') ? '❯' : '❮';
+  addNoteBtn.classList.toggle('hidden');
+};
+
+notepadBtn.onclick = () => {
+  notepadModal.classList.remove('hidden');
+  renderNotesList();
+};
+
+closeNotepad.onclick = () => {
+  notepadModal.classList.add('hidden');
+};
+
+
+collectionBtn.classList.add('floating-btn');
+
+collectionBtn.onclick = () => {
+
+  if (!notepadModal.classList.contains('hidden')) {
+    notepadModal.classList.add('hidden');
+  }
+
+  collectionModal.classList.toggle('hidden');
+};
+
+collectionModal.addEventListener('click', (e) => {
+  if (e.target === collectionModal) {
+    collectionModal.classList.add('hidden');
+  }
+});
+
+
+expandPanelBtn.onclick = () => {
+  panelContent.classList.toggle('hidden');
+  expandPanelBtn.textContent = panelContent.classList.contains('hidden') ? '>' : '<';
+};
+
+
+function saveCollectionData() {
+  localStorage.setItem('collectionData', JSON.stringify(collectionData));
+}
+
+function renderNames() {
+  namesList.innerHTML = '';
+  collectionData.names.forEach(item => {
+    const div = document.createElement('div');
+    div.textContent = `${item.name} - Balance: ${item.balance} - Last Paid: ${item.lastPaid}`;
+    div.style.cursor = 'pointer';
+    div.onclick = () => {
+      nameInput.value = item.name;
+      balanceInput.value = item.balance;
+      dateInput.value = item.date;
+      lastPaid.value = item.lastPaid;
+    };
+    namesList.appendChild(div);
+  });
+  updateTabs();
+}
+
+addPaymentBtn.onclick = () => {
+  const name = nameInput.value.trim();
+  const balance = parseFloat(balanceInput.value);
+  const date = dateInput.value;
+  const payment = parseFloat(paymentInput.value);
+
+  if (!name || isNaN(balance) || !date || isNaN(payment)) return alert("Fill all fields");
+
+  const existing = collectionData.names.find(n => n.name === name);
+  if (existing) {
+    existing.balance -= payment;
+    existing.lastPaid = date;
+  } else {
+    collectionData.names.push({ name, balance: balance - payment, date, lastPaid: date });
+  }
+
+  collectionData.balance -= payment;
+  collectionData.running += payment;
+  quotaBalance.value = collectionData.balance;
+  runningInput.value = collectionData.running;
+
+  saveCollectionData();
+  renderNames();
+  paymentInput.value = '';
+};
+
+saveQuotaBtn.onclick = () => {
+  const month = currentMonthInput.value;
+  const quota = parseFloat(quotaInput.value);
+  if (!month || isNaN(quota)) return alert("Fill all fields");
+
+  collectionData.quota = quota;
+  collectionData.balance = quota;
+  collectionData.running = 0;
+
+  quotaBalance.value = collectionData.balance;
+  runningInput.value = collectionData.running;
+
+  saveCollectionData();
+  alert("Quota saved!");
+};
+
+function updateTabs() {
+  const now = new Date();
+  const counts = { "3NM":0, "6NM":0, "9NM":0, "12NM":0, "Moving":0, "Total":0 };
+  tabNamesList.innerHTML = '';
+
+  collectionData.names.forEach(n => {
+    const last = new Date(n.lastPaid);
+    const diffMonths = (now.getFullYear() - last.getFullYear())*12 + (now.getMonth() - last.getMonth());
+
+    if (diffMonths < 3) counts["Moving"]++;
+    else if (diffMonths < 6) counts["3NM"]++;
+    else if (diffMonths < 9) counts["6NM"]++;
+    else if (diffMonths < 12) counts["9NM"]++;
+    else counts["12NM"]++;
+    counts["Total"]++;
+  });
+
+  for (const key in tabCounts) tabCounts[key].textContent = counts[key];
+}
+
+tabButtons.forEach(btn => {
+  btn.onclick = () => {
+    tabButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderTabNames(btn.dataset.tab);
+  };
+});
+
+function renderTabNames(tab) {
+  tabNamesList.innerHTML = '';
+  const now = new Date();
+
+  collectionData.names.forEach(n => {
+    const last = new Date(n.lastPaid);
+    const diffMonths = (now.getFullYear() - last.getFullYear())*12 + (now.getMonth() - last.getMonth());
+    let add = false;
+
+    switch(tab){
+      case "Moving": if(diffMonths < 3) add = true; break;
+      case "3NM": if(diffMonths >=3 && diffMonths <6) add = true; break;
+      case "6NM": if(diffMonths >=6 && diffMonths <9) add = true; break;
+      case "9NM": if(diffMonths >=9 && diffMonths <12) add = true; break;
+      case "12NM": if(diffMonths >=12) add = true; break;
+      case "Total": add = true; break;
+    }
+
+    if(add){
+      const div = document.createElement('div');
+      div.textContent = `${n.name} - Last Paid: ${n.lastPaid}`;
+      tabNamesList.appendChild(div);
+    }
+  });
+}
+
+
+quotaBalance.value = collectionData.balance;
+runningInput.value = collectionData.running;
+renderNames();
+
 
 });
