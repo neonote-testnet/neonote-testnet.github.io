@@ -837,7 +837,7 @@ button.secondary {
   z-index: 1300; 
 }
 
-.floating-btn.collectionbtn {
+.collectionbtn {
   right: 230px; 
   bottom: 88px;
   
