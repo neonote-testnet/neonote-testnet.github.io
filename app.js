@@ -1354,20 +1354,55 @@ function renderCollectionNames(filter = '') {
   }
 
   filtered.forEach(record => {
-    const div = document.createElement('div');
-    div.className = 'promise';
+  const div = document.createElement('div');
+  div.className = 'promise';
+  div.style.display = 'flex';
+  div.style.justifyContent = 'space-between';
+  div.style.alignItems = 'center';
+  div.style.padding = '5px 10px';
 
-    div.textContent =
-      `${record.name} | Bal: ${record.balance} | Last: ${record.lastPaid}`;
+  // Left: collection info
+  const infoDiv = document.createElement('div');
+  infoDiv.textContent = `${record.name} | Bal: ${record.balance} | Last: ${record.lastPaid}`;
+  infoDiv.style.flex = '1';
+  infoDiv.style.cursor = 'pointer';
+  infoDiv.onclick = () => {
+    collectionName.value = record.name;
+    collectionLastPaid.value = record.lastPaid || '';
+    collectionBalance.value = record.balance ?? 0;
+  };
 
-    div.onclick = () => {
-      collectionName.value = record.name;
-      collectionLastPaid.value = record.lastPaid || '';
-      collectionBalance.value = record.balance ?? 0;
-    };
+  // Right: delete button
+  const deleteBtn = document.createElement('button');
+  deleteBtn.innerHTML = '❌';
+  deleteBtn.style.width = '32px';
+  deleteBtn.style.height = '32px';
+  deleteBtn.style.minWidth = '32px';
+  deleteBtn.style.minHeight = '32px';
+  deleteBtn.style.maxWidth = '32px';
+  deleteBtn.style.maxHeight = '32px';
+  deleteBtn.style.padding = '0';
+  deleteBtn.style.marginLeft = '10px';
+  deleteBtn.style.fontSize = '18px';
+  deleteBtn.style.display = 'flex';
+  deleteBtn.style.justifyContent = 'center';
+  deleteBtn.style.alignItems = 'center';
+  deleteBtn.style.cursor = 'pointer';
 
-    collectionNamesList.appendChild(div);
-  });
+  deleteBtn.onclick = e => {
+    e.stopPropagation(); // prevent triggering infoDiv click
+    showConfirm(`Are you sure you want to delete "${record.name}"?`, () => {
+      collectionData = collectionData.filter(r => r.name !== record.name);
+      localStorage.setItem('collectionData', JSON.stringify(collectionData));
+      renderCollectionNames(collectionSearch.value); // refresh list
+    });
+  };
+
+  div.appendChild(infoDiv);
+  div.appendChild(deleteBtn);
+  collectionNamesList.appendChild(div);
+});
+
 }
 
 function restoreCollectionUI() {
