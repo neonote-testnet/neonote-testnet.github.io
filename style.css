@@ -910,7 +910,7 @@ button.secondary {
   border: 1px solid #ffcc00;
   color: #fff;
   padding: 4px 6px;
-  width: 90%;
+  width: 60%;
   border-radius: 4px;
 }
 
@@ -991,3 +991,23 @@ button.secondary {
   pointer-events: none;
 }
 
+#addCollectionPayment {
+  padding: 6px 10px;
+  margin-left: 6px;
+  background: var(--green);
+  color: #000;
+  border: 2px solid #000;
+  border-radius: 6px;     
+  font-size: 0.9rem;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 0 0 1px #000;  
+  transition: transform 0.1s ease, background 0.1s ease;
+}
+#addCollectionPayment:hover {
+  background: #3bbfa5; 
+}
+#addCollectionPayment:active {
+  transform: scale(1.08);
+}
