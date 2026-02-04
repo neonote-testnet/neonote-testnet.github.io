@@ -839,8 +839,8 @@ button.secondary {
 
 /* Collection Floating Button */
 .floating-btn.left-of-notepad {
-  left: 10px; /* Position left of notepad button */
-  bottom: 80px;
+  righg: 176px; /* Position left of notepad button */
+  bottom: 88px;
   position: fixed;
   z-index: 1001;
 }
@@ -856,13 +856,13 @@ button.secondary {
   height: 700px;
   background: #1a1a1a;
   color: #f0f0f0;
-  border: 2px solid #ffcc00;
+  border: 2px solid var(--green);
   border-radius: 10px;
   padding: 20px;
-  z-index: 1000;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+    z-index: 1100;
 }
 
 /* Close Button */
@@ -938,15 +938,15 @@ button.secondary {
 .collection-tab {
   flex: 1;
   padding: 5px 0;
-  background: #333;
-  border: 1px solid #ffcc00;
+  background: var(--green);
+  border: 2px solid var(--green);
   cursor: pointer;
   text-align: center;
   border-radius: 4px;
 }
 .collection-tab.active {
-  background: #ffcc00;
-  color: #000;
+  background: var(--bg);
+  color: var(--green);
 }
 
 /* Tab Counts */
