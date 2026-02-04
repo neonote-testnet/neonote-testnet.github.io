@@ -140,6 +140,7 @@ button,
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
 
 .modal.hidden {
@@ -871,7 +872,7 @@ button.collectionbtn {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-    z-index: 1100;
+    z-index: 700;
 }
 
 #closeCollectionModal {
