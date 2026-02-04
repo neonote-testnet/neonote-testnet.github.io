@@ -1019,3 +1019,7 @@ button.secondary {
   border: none;
   border-radius: 5px;
 }
+button.collectionbtn {
+  bottom: 88px !important;
+  right: 88px !important;
+}
