@@ -1317,22 +1317,42 @@ collectionName.focus();
 
 };
 
-// RENDER NAMES
 function renderCollectionNames(filter = '') {
   collectionNamesList.innerHTML = '';
+
   const filtered = collectionData
-    .filter(r => r.name.toLowerCase().includes(filter.toLowerCase()))
+    .filter(r => {
+      // search filter
+      const matchSearch =
+        r.name.toLowerCase().includes(filter.toLowerCase());
+
+      if (!matchSearch) return false;
+
+      // tab filter
+      if (currentCollectionTab === 'Total') return true;
+
+      return getMonthBucket(r) === currentCollectionTab;
+    })
     .sort((a, b) => a.name.localeCompare(b.name));
+
+  if (!filtered.length) {
+    collectionNamesList.innerHTML =
+      '<p class="empty-state">No records in this category</p>';
+    return;
+  }
 
   filtered.forEach(record => {
     const div = document.createElement('div');
     div.className = 'promise';
-    div.textContent = `${record.name} | Bal: ${record.balance} | Last: ${record.lastPaid}`;
+
+    div.textContent =
+      `${record.name} | Bal: ${record.balance} | Last: ${record.lastPaid}`;
+
     div.onclick = () => {
-  collectionName.value = record.name;
-  collectionLastPaid.value = record.lastPaid || '';
-  collectionBalance.value = record.balance ?? 0;
-};
+      collectionName.value = record.name;
+      collectionLastPaid.value = record.lastPaid || '';
+      collectionBalance.value = record.balance ?? 0;
+    };
 
     collectionNamesList.appendChild(div);
   });
@@ -1399,6 +1419,24 @@ function updateTabCounts() {
   document.getElementById('countMoving').textContent = counts['Moving'];
   document.getElementById('countTotal').textContent = counts['Total'];
 }
+
+function getMonthBucket(record) {
+  if (!record.lastPaid) return 'Moving';
+
+  const now = new Date();
+  const last = new Date(record.lastPaid);
+
+  const months =
+    (now.getFullYear() - last.getFullYear()) * 12 +
+    (now.getMonth() - last.getMonth());
+
+  if (months >= 12) return '12NM';
+  if (months >= 9)  return '9NM';
+  if (months >= 6)  return '6NM';
+  if (months >= 3)  return '3NM';
+  return 'Moving';
+}
+
 
 renderCollectionNames();
 restoreCollectionUI();
