@@ -1340,6 +1340,27 @@ function renderCollectionNames(filter = '') {
   updateTabCounts();
 }
 
+function restoreCollectionUI() {
+  // Restore date
+  const today = new Date().toISOString().split('T')[0];
+  collectionDate.value = today;
+
+  // Restore selected month
+  const month = collectionMonth.value;
+
+  if (quotaData[month]) {
+    collectionQuota.value = quotaData[month].quota ?? 0;
+    collectionTotalBalance.value = quotaData[month].balance ?? 0;
+    collectionRunning.value = quotaData[month].running ?? 0;
+  } else {
+    collectionQuota.value = '';
+    collectionTotalBalance.value = '';
+    collectionRunning.value = '';
+  }
+}
+collectionMonth.onchange = restoreCollectionUI;
+
+
 // SEARCH
 collectionSearch.oninput = () => renderCollectionNames(collectionSearch.value);
 
@@ -1380,6 +1401,7 @@ function updateTabCounts() {
 }
 
 renderCollectionNames();
+restoreCollectionUI();
 
 
 });
