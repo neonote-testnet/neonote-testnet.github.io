@@ -1011,3 +1011,36 @@ button.secondary {
 #addCollectionPayment:active {
   transform: scale(1.08);
 }
+
+.collection-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+
+  background: #000;
+  border: 2px solid var(--green);
+  border-top: none;
+
+  max-height: 180px;
+  overflow-y: auto;
+  z-index: 50;
+
+  box-shadow: 0 0 0 2px #000;
+}
+
+.collection-suggestions.hidden {
+  display: none;
+}
+
+.collection-suggestions div {
+  padding: 6px 8px;
+  cursor: pointer;
+  border-bottom: 1px solid #222;
+  color: var(--light);
+}
+
+.collection-suggestions div:hover {
+  background: var(--green);
+  color: #000;
+}

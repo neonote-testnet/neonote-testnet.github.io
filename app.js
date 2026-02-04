@@ -1216,6 +1216,8 @@ const expandPanelBtn = document.getElementById('expandPanelBtn');
 const panelContent = document.getElementById('panelContent');
 
 const collectionSearch = document.getElementById('collectionSearch');
+const collectionSuggestions =
+  document.getElementById('collectionSuggestions');
 const collectionName = document.getElementById('collectionName');
 const collectionBalance = document.getElementById('collectionBalance');
 const collectionDate = document.getElementById('collectionDate');
@@ -1392,7 +1394,17 @@ collectionMonth.onchange = restoreCollectionUI;
 
 
 // SEARCH
-collectionSearch.oninput = () => renderCollectionNames(collectionSearch.value);
+collectionSearch.oninput = () => {
+  const q = collectionSearch.value.trim();
+
+  showCollectionSuggestions(q);
+
+  // optional: keep list hidden unless tab clicked
+  if (!collectionNamesVisible) {
+    collectionNamesList.innerHTML = '';
+  }
+};
+
 
 // TABS
 collectionTabs.forEach(tab => {
@@ -1408,6 +1420,52 @@ collectionTabs.forEach(tab => {
     renderCollectionNames();
   };
 });
+
+function showCollectionSuggestions(query) {
+  collectionSuggestions.innerHTML = '';
+
+  if (!query) {
+    collectionSuggestions.classList.add('hidden');
+    return;
+  }
+
+  const matches = collectionData
+    .filter(r =>
+      r.name.toLowerCase().includes(query.toLowerCase())
+    )
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .slice(0, 8); // limit suggestions
+
+  if (!matches.length) {
+    collectionSuggestions.classList.add('hidden');
+    return;
+  }
+
+  matches.forEach(record => {
+    const div = document.createElement('div');
+
+    div.textContent =
+      `${record.name} | Bal: ${record.balance}`;
+
+    div.onclick = () => {
+      // 🔁 SAME behavior as clicking list item
+      collectionName.value = record.name;
+      collectionBalance.value = record.balance ?? 0;
+      collectionLastPaid.value = record.lastPaid || '';
+
+      // optional: auto-fill date to today
+      collectionDate.value =
+        new Date().toISOString().split('T')[0];
+
+      collectionSuggestions.classList.add('hidden');
+      collectionSearch.value = record.name;
+    };
+
+    collectionSuggestions.appendChild(div);
+  });
+
+  collectionSuggestions.classList.remove('hidden');
+}
 
 
 // UPDATE TAB COUNTS
@@ -1456,6 +1514,14 @@ function getMonthBucket(record) {
 collectionNamesVisible = false;
 renderCollectionNames();
 restoreCollectionUI();
+document.addEventListener('click', e => {
+  if (
+    !collectionSearch.contains(e.target) &&
+    !collectionSuggestions.contains(e.target)
+  ) {
+    collectionSuggestions.classList.add('hidden');
+  }
+});
 
 
 });
