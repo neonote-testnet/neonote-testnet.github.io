@@ -839,7 +839,7 @@ button.secondary {
 
 /* Collection Floating Button */
 .floating-btn.left-of-notepad {
-  right: 210px; /* Position left of notepad button */
+  right: 220px; /* Position left of notepad button */
   bottom: 88px;
   position: fixed;
   z-index: 1001;
@@ -864,6 +864,7 @@ button.secondary {
   flex-direction: column;
     z-index: 1100;
 }
+
 
 /* Close Button */
 #closeCollectionModal {
@@ -959,11 +960,31 @@ button.secondary {
 
 /* Scrollable Names List */
 .collection-names-list {
-  flex: 1;
+  height: 100px;
+  max-height: 100px;
+  flex: none;
   overflow-y: auto;
   border-top: 1px solid #ffcc00;
-  padding-top: 10px;
+  padding-top: 6px;
+  background: #000;
 }
+
+/* Retro Scrollbar */
+.collection-names-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.collection-names-list::-webkit-scrollbar-track {
+  background: #000;
+  border-left: 2px solid #000;
+}
+
+.collection-names-list::-webkit-scrollbar-thumb {
+  background: var(--green);
+  border: 2px solid #000;
+  box-shadow: inset 0 0 0 1px #000;
+}
+
 .collection-names-list .promise {
   padding: 5px;
   border-bottom: 1px solid #ffcc00;
