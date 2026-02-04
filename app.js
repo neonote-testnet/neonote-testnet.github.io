@@ -1255,15 +1255,8 @@ const COLLECTION_TAB_TITLES = {
 };
 let collectionNamesVisible = false;
 
-collectionBtn.onclick = () => {
-  document.body.classList.add('modal-blur');
-  collectionModal.classList.remove('hidden');
-};
-
-closeCollectionModal.onclick = () => {
-  document.body.classList.remove('modal-blur');
-  collectionModal.classList.add('hidden');
-};
+collectionBtn.onclick = () => collectionModal.classList.remove('hidden');
+closeCollectionModal.onclick = () => collectionModal.classList.add('hidden');
 
 const infoBlock = document.getElementById('collectionInfoBlock');
 expandPanelBtn.onclick = () => {
