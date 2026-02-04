@@ -1228,6 +1228,7 @@ const collectionQuota = document.getElementById('collectionQuota');
 const collectionTotalBalance = document.getElementById('collectionTotalBalance');
 const collectionRunning = document.getElementById('collectionRunning');
 const saveCollectionQuota = document.getElementById('saveCollectionQuota');
+const collectionPercent = document.getElementById('collectionPercent');
 const collectionHistoryBtn = document.getElementById('collectionHistoryBtn');
 
 const collectionNamesList = document.getElementById('collectionNamesList');
@@ -1254,10 +1255,22 @@ expandPanelBtn.onclick = () => {
 saveCollectionQuota.onclick = () => {
   const month = collectionMonth.value;
   const quota = Number(collectionQuota.value || 0);
-  quotaData[month] = { quota, balance: quota, running: 0 };
-  localStorage.setItem('collectionQuotaData', JSON.stringify(quotaData));
-  collectionTotalBalance.value = quota;
-  collectionRunning.value = 0;
+
+  quotaData[month] = {
+    quota,
+    balance: quota - (quotaData[month]?.running || 0),
+    running: quotaData[month]?.running || 0
+  };
+
+  localStorage.setItem(
+    'collectionQuotaData',
+    JSON.stringify(quotaData)
+  );
+
+  collectionTotalBalance.value = quotaData[month].balance;
+  collectionRunning.value = quotaData[month].running;
+
+  updateCollectionPercentage(month);
 };
 
 addCollectionPayment.onclick = () => {
@@ -1295,6 +1308,7 @@ if (record.balance < 0) record.balance = 0;
   localStorage.setItem('collectionQuotaData', JSON.stringify(quotaData));
   collectionTotalBalance.value = quotaData[month]?.balance || 0;
   collectionRunning.value = quotaData[month]?.running || 0;
+  updateCollectionPercentage(month);
 
     collectionNamesVisible = false;
   updateTabCounts();
@@ -1389,6 +1403,22 @@ function renderCollectionNames(filter = '') {
 
 }
 
+function updateCollectionPercentage(month) {
+  const data = quotaData[month];
+
+  if (!data || !data.quota || data.quota <= 0) {
+    collectionPercent.textContent = '0%';
+    return;
+  }
+
+  const percent = Math.min(
+    100,
+    Math.round((data.running / data.quota) * 100)
+  );
+
+  collectionPercent.textContent = percent + '%';
+}
+
 function restoreCollectionUI() {
   const today = new Date().toISOString().split('T')[0];
   collectionDate.value = today;
@@ -1404,7 +1434,10 @@ function restoreCollectionUI() {
     collectionTotalBalance.value = '';
     collectionRunning.value = '';
   }
+  updateCollectionPercentage(month);
+
 }
+
 collectionMonth.onchange = restoreCollectionUI;
 
 collectionSearch.oninput = () => renderCollectionNames(collectionSearch.value);
