@@ -837,15 +837,13 @@ button.secondary {
   z-index: 1001; 
 }
 
-/* Collection Floating Button */
 .floating-btn.left-of-notepad {
-  right: 220px; /* Position left of notepad button */
+  right: 230px; 
   bottom: 88px;
   position: fixed;
   z-index: 1001;
 }
 
-/* Collection Modal */
 #collectionModal {
   position: fixed;
   top: 50%;
@@ -865,8 +863,6 @@ button.secondary {
     z-index: 1100;
 }
 
-
-/* Close Button */
 #closeCollectionModal {
   position: absolute;
   top: 10px;
@@ -880,7 +876,6 @@ button.secondary {
   padding: 4px 8px;
 }
 
-/* Expandable Panel */
 .expand-panel {
   display: flex;
   flex-direction: column;
@@ -904,7 +899,6 @@ button.secondary {
   display: block;
 }
 
-/* Input Rows */
 .input-row {
   margin: 5px 0;
   display: flex;
@@ -920,7 +914,6 @@ button.secondary {
   border-radius: 4px;
 }
 
-/* Search Bar */
 .search-bar {
   width: 100%;
   margin-bottom: 10px;
@@ -930,7 +923,6 @@ button.secondary {
   color: #fff;
 }
 
-/* Tabs */
 .collection-tabs {
   display: flex;
   gap: 5px;
@@ -950,7 +942,6 @@ button.secondary {
   color: var(--green);
 }
 
-/* Tab Counts */
 .collection-tab-counts {
   display: flex;
   gap: 5px;
@@ -958,18 +949,16 @@ button.secondary {
   margin: 5px 0 10px;
 }
 
-/* Scrollable Names List */
 .collection-names-list {
-  height: 100px;
-  max-height: 100px;
+  height: 200px;
+  max-height: 200px;
   flex: none;
   overflow-y: auto;
-  border-top: 1px solid #ffcc00;
+  border-top: 5px solid var(--green);
   padding-top: 6px;
   background: #000;
 }
 
-/* Retro Scrollbar */
 .collection-names-list::-webkit-scrollbar {
   width: 10px;
 }
@@ -991,7 +980,6 @@ button.secondary {
   cursor: pointer;
 }
 
-/* Hide Collection Info when panel is expanded */
 #collectionInfoBlock {
   transition: max-height 0.3s ease, opacity 0.2s ease;
 }
