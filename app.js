@@ -653,6 +653,8 @@ accounts = parsed.accounts || [];
 notes = parsed.notes || [];
 collectionData = parsed.collectionData || [];
 quotaData = parsed.quotaData || {};
+localStorage.setItem('collectionData', JSON.stringify(collectionData));
+localStorage.setItem('collectionQuotaData', JSON.stringify(quotaData));
 localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
 if (parsed.nameHistory) {
   localStorage.setItem(NAME_HISTORY_KEY, JSON.stringify(parsed.nameHistory));
