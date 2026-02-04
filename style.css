@@ -839,7 +839,7 @@ button.secondary {
 
 /* Collection Floating Button */
 .floating-btn.left-of-notepad {
-  right: 196px; /* Position left of notepad button */
+  right: 210px; /* Position left of notepad button */
   bottom: 88px;
   position: fixed;
   z-index: 1001;
