@@ -1396,13 +1396,9 @@ collectionMonth.onchange = restoreCollectionUI;
 // SEARCH
 collectionSearch.oninput = () => {
   const q = collectionSearch.value.trim();
-
+  collectionNamesVisible = true; // force showing the list
   showCollectionSuggestions(q);
-
-  // optional: keep list hidden unless tab clicked
-  if (!collectionNamesVisible) {
-    collectionNamesList.innerHTML = '';
-  }
+  renderCollectionNames(q);
 };
 
 
