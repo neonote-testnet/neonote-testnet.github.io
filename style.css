@@ -950,8 +950,8 @@ button.secondary {
 }
 
 .collection-names-list {
-  height: 200px;
-  max-height: 200px;
+  height: 300px;
+  max-height: 300px;
   flex: none;
   overflow-y: auto;
   border-top: 5px solid var(--green);
@@ -965,7 +965,7 @@ button.secondary {
 
 .collection-names-list::-webkit-scrollbar-track {
   background: #000;
-  border-left: 2px solid #000;
+  border-left: 2px solid var(--green);
 }
 
 .collection-names-list::-webkit-scrollbar-thumb {
