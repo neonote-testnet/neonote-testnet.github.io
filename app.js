@@ -1207,7 +1207,7 @@ notepadBtn.onclick = () => {
 closeNotepad.onclick = () => {
   notepadModal.classList.add('hidden');
 };
-// COLLECTION FEATURE
+
 const collectionBtn = document.getElementById('collectionBtn');
 const collectionModal = document.getElementById('collectionModal');
 const closeCollectionModal = document.getElementById('closeCollectionModal');
@@ -1238,8 +1238,6 @@ let currentCollectionTab = '3NM';
 let quotaData = JSON.parse(localStorage.getItem('collectionQuotaData') || '{}');
 let collectionNamesVisible = false;
 
-
-// OPEN/CLOSE MODAL
 collectionBtn.onclick = () => collectionModal.classList.remove('hidden');
 closeCollectionModal.onclick = () => collectionModal.classList.add('hidden');
 
@@ -1247,15 +1245,12 @@ const infoBlock = document.getElementById('collectionInfoBlock');
 expandPanelBtn.onclick = () => {
   const expanded = panelContent.classList.toggle('visible');
 
-  // hide top info ONLY
   infoBlock.classList.toggle('hidden', expanded);
 
-  // arrow direction
-  expandPanelBtn.textContent = expanded ? '<' : '>';
+  expandPanelBtn.textContent = expanded ? '>' : '<';
 };
 
 
-// SAVE QUOTA
 saveCollectionQuota.onclick = () => {
   const month = collectionMonth.value;
   const quota = Number(collectionQuota.value || 0);
@@ -1265,7 +1260,6 @@ saveCollectionQuota.onclick = () => {
   collectionRunning.value = 0;
 };
 
-// ADD PAYMENT
 addCollectionPayment.onclick = () => {
   const name = collectionName.value.trim();
   const balance = Number(collectionBalance.value || 0);
@@ -1280,7 +1274,7 @@ if (!record) {
   record = {
     name,
     lastPaid: date,
-    balance: balance,          // 👈 initial balance when first added
+    balance: balance,          
     payments: []
   };
   collectionData.push(record);
@@ -1291,7 +1285,6 @@ if (!record) {
   record.balance -= payment;
 if (record.balance < 0) record.balance = 0;
 
-  // Update quota running and balance
   const month = collectionMonth.value;
   if (quotaData[month]) {
     quotaData[month].balance -= payment;
@@ -1307,26 +1300,18 @@ if (record.balance < 0) record.balance = 0;
   updateTabCounts();
   collectionNamesList.innerHTML = '';
 
-  // CLEAR INPUTS AFTER ADD PAYMENT
 collectionName.value = '';
 collectionBalance.value = '';
 collectionPayment.value = '';
 collectionLastPaid.value = '';
-
-// reset date to today
 const today = new Date().toISOString().split('T')[0];
 collectionDate.value = today;
-
-// optional: focus back to name field
 collectionName.focus();
 
 };
 
 function renderCollectionNames(filter = '') {
-  // 🔢 counts ALWAYS update
   updateTabCounts();
-
-  // 👶 if names are hidden → show nothing
   if (!collectionNamesVisible) {
     collectionNamesList.innerHTML = '';
     return;
@@ -1361,7 +1346,7 @@ function renderCollectionNames(filter = '') {
   div.style.alignItems = 'center';
   div.style.padding = '5px 10px';
 
-  // Left: collection info
+
   const infoDiv = document.createElement('div');
   infoDiv.textContent = `${record.name} | Bal: ${record.balance} | Last: ${record.lastPaid}`;
   infoDiv.style.flex = '1';
@@ -1372,7 +1357,6 @@ function renderCollectionNames(filter = '') {
     collectionBalance.value = record.balance ?? 0;
   };
 
-  // Right: delete button
   const deleteBtn = document.createElement('button');
   deleteBtn.innerHTML = '❌';
   deleteBtn.style.width = '32px';
@@ -1390,11 +1374,11 @@ function renderCollectionNames(filter = '') {
   deleteBtn.style.cursor = 'pointer';
 
   deleteBtn.onclick = e => {
-    e.stopPropagation(); // prevent triggering infoDiv click
+    e.stopPropagation(); 
     showConfirm(`Are you sure you want to delete "${record.name}"?`, () => {
       collectionData = collectionData.filter(r => r.name !== record.name);
       localStorage.setItem('collectionData', JSON.stringify(collectionData));
-      renderCollectionNames(collectionSearch.value); // refresh list
+      renderCollectionNames(collectionSearch.value); 
     });
   };
 
@@ -1406,11 +1390,9 @@ function renderCollectionNames(filter = '') {
 }
 
 function restoreCollectionUI() {
-  // Restore date
   const today = new Date().toISOString().split('T')[0];
   collectionDate.value = today;
 
-  // Restore selected month
   const month = collectionMonth.value;
 
   if (quotaData[month]) {
@@ -1425,11 +1407,8 @@ function restoreCollectionUI() {
 }
 collectionMonth.onchange = restoreCollectionUI;
 
-
-// SEARCH
 collectionSearch.oninput = () => renderCollectionNames(collectionSearch.value);
 
-// TABS
 collectionTabs.forEach(tab => {
   tab.onclick = () => {
     collectionTabs.forEach(t => t.classList.remove('active'));
@@ -1437,15 +1416,11 @@ collectionTabs.forEach(tab => {
 
     currentCollectionTab = tab.dataset.tab;
 
-    // 👀 SHOW NAMES when user clicks tab
     collectionNamesVisible = true;
-
     renderCollectionNames();
   };
 });
 
-
-// UPDATE TAB COUNTS
 function updateTabCounts() {
   const counts = { '3NM':0,'6NM':0,'9NM':0,'12NM':0,'Moving':0,'Total':0 };
   const now = new Date();
@@ -1500,7 +1475,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   expandBtn.addEventListener('click', () => {
     panel.classList.toggle('hidden');
-    // Optional: change button text from > to < when expanded
     expandBtn.textContent = panel.classList.contains('hidden') ? '>' : '<';
   });
 });
