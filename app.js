@@ -1236,6 +1236,8 @@ const collectionTabs = document.querySelectorAll('.collection-tab');
 let collectionData = JSON.parse(localStorage.getItem('collectionData') || '[]');
 let currentCollectionTab = '3NM';
 let quotaData = JSON.parse(localStorage.getItem('collectionQuotaData') || '{}');
+let collectionNamesVisible = false;
+
 
 // OPEN/CLOSE MODAL
 collectionBtn.onclick = () => collectionModal.classList.remove('hidden');
@@ -1301,7 +1303,10 @@ if (record.balance < 0) record.balance = 0;
   collectionTotalBalance.value = quotaData[month]?.balance || 0;
   collectionRunning.value = quotaData[month]?.running || 0;
 
-  renderCollectionNames();
+    collectionNamesVisible = false;
+  updateTabCounts();
+  collectionNamesList.innerHTML = '';
+
   // CLEAR INPUTS AFTER ADD PAYMENT
 collectionName.value = '';
 collectionBalance.value = '';
@@ -1318,17 +1323,24 @@ collectionName.focus();
 };
 
 function renderCollectionNames(filter = '') {
+  // 🔢 counts ALWAYS update
+  updateTabCounts();
+
+  // 👶 if names are hidden → show nothing
+  if (!collectionNamesVisible) {
+    collectionNamesList.innerHTML = '';
+    return;
+  }
+
   collectionNamesList.innerHTML = '';
 
   const filtered = collectionData
     .filter(r => {
-      // search filter
       const matchSearch =
         r.name.toLowerCase().includes(filter.toLowerCase());
 
       if (!matchSearch) return false;
 
-      // tab filter
       if (currentCollectionTab === 'Total') return true;
 
       return getMonthBucket(r) === currentCollectionTab;
@@ -1356,8 +1368,6 @@ function renderCollectionNames(filter = '') {
 
     collectionNamesList.appendChild(div);
   });
-
-  updateTabCounts();
 }
 
 function restoreCollectionUI() {
@@ -1389,10 +1399,16 @@ collectionTabs.forEach(tab => {
   tab.onclick = () => {
     collectionTabs.forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
+
     currentCollectionTab = tab.dataset.tab;
+
+    // 👀 SHOW NAMES when user clicks tab
+    collectionNamesVisible = true;
+
     renderCollectionNames();
   };
 });
+
 
 // UPDATE TAB COUNTS
 function updateTabCounts() {
@@ -1437,7 +1453,7 @@ function getMonthBucket(record) {
   return 'Moving';
 }
 
-
+collectionNamesVisible = false;
 renderCollectionNames();
 restoreCollectionUI();
 
