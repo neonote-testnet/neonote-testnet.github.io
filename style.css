@@ -1064,11 +1064,13 @@ button.collectionbtn {
   cursor: pointer;
 }
 
-body.modal-blur > *:not(#collectionModal):not(.retro-modal) {
-  filter: blur(6px);
-  pointer-events: none;
-  user-select: none;
+body.modal-blur > *:not(#collectionModal),
+#collectionModal .retro-modal {
+  filter: none !important;
+  pointer-events: auto !important;
+  user-select: auto !important;
 }
+
 
 body > * {
   transition: filter 0.25s ease;
