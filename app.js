@@ -614,7 +614,9 @@ passwordConfirmBtn.onclick = async () => {
       promises,
       accounts,
       nameHistory: getNameHistory(),
-      notes
+      notes,
+      collectionData,     
+      quotaData           
     });
 
     const encrypted = await crypto.subtle.encrypt(
@@ -659,6 +661,8 @@ localStorage.setItem('neonote_accounts', JSON.stringify(accounts));
 markOverduePromisesDone();
 render();
 updateCounts();
+restoreCollectionUI();  
+renderCollectionNames();
 
 backupModal.classList.add('hidden');
 showNotification('Backup restored successfully');
