@@ -834,14 +834,14 @@ button.secondary {
 }
 
 #confirmModal {
-  z-index: 1001; 
+  z-index: 1300; 
 }
 
 .floating-btn.left-of-notepad {
   right: 230px; 
   bottom: 88px;
   position: fixed;
-  z-index: 1001;
+  
 }
 
 #collectionModal {
