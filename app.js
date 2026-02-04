@@ -1270,7 +1270,7 @@ addCollectionPayment.onclick = () => {
   const date = collectionDate.value;
   const payment = Number(collectionPayment.value || 0);
 
-  if (!name || !date || !payment) return;
+  if (!name || !date || isNaN(payment) || payment < 0) return;
 
   let record = collectionData.find(r => r.name === name);
 
@@ -1302,6 +1302,19 @@ if (record.balance < 0) record.balance = 0;
   collectionRunning.value = quotaData[month]?.running || 0;
 
   renderCollectionNames();
+  // CLEAR INPUTS AFTER ADD PAYMENT
+collectionName.value = '';
+collectionBalance.value = '';
+collectionPayment.value = '';
+collectionLastPaid.value = '';
+
+// reset date to today
+const today = new Date().toISOString().split('T')[0];
+collectionDate.value = today;
+
+// optional: focus back to name field
+collectionName.focus();
+
 };
 
 // RENDER NAMES
