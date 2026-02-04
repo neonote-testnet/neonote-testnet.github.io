@@ -316,6 +316,7 @@ button.secondary {
   font-family: "Courier New", monospace;
   color: var(--light);
   box-shadow: 0 0 0 2px #000;
+  
 }
 
 .retro-modal h2 {
@@ -1037,7 +1038,7 @@ button.collectionbtn {
   font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
-  z-index: 3000;
+  z-index: 9999;
 }
 
 #closeCollectionModal {
@@ -1064,8 +1065,29 @@ button.collectionbtn {
   cursor: pointer;
 }
 
-body.modal-blur > *:not(#collectionModal),
-#collectionModal .retro-modal {
+/* Blur everything except the collection modal */
+body.modal-blur > *:not(#collectionModal) {
+  filter: blur(6px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Keep collection modal interactive */
+#collectionModal {
+  filter: none;
+  pointer-events: auto;
+  user-select: auto;
+  position: relative; /* ensure nested modals can be positioned absolutely relative to this */
+  z-index: 700; /* same as your current collection modal */
+}
+
+/* Nested modal inside collection modal (e.g., copy modal) */
+#collectionModal > .retro-modal {
+  position: absolute; /* place it above collection modal content */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* above the collection modal */
   filter: none !important;
   pointer-events: auto !important;
   user-select: auto !important;
