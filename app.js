@@ -1211,6 +1211,8 @@ closeNotepad.onclick = () => {
 const collectionBtn = document.getElementById('collectionBtn');
 const collectionModal = document.getElementById('collectionModal');
 const closeCollectionModal = document.getElementById('closeCollectionModal');
+const copyCollectionBtn = document.getElementById('copyCollectionBtn');
+
 
 const expandPanelBtn = document.getElementById('expandPanelBtn');
 const panelContent = document.getElementById('panelContent');
@@ -1237,6 +1239,14 @@ const collectionTabs = document.querySelectorAll('.collection-tab');
 let collectionData = JSON.parse(localStorage.getItem('collectionData') || '[]');
 let currentCollectionTab = '3NM';
 let quotaData = JSON.parse(localStorage.getItem('collectionQuotaData') || '{}');
+const COLLECTION_TAB_TITLES = {
+  '3NM': '3 Months Non-moving Accs',
+  '6NM': '6 Months Non-moving Accs',
+  '9NM': '9 Months Non-moving Accs',
+  '12NM': '12 Months Non-moving Accs',
+  'Moving': 'Moving Accounts',
+  'Total': 'All Accounts'
+};
 let collectionNamesVisible = false;
 
 collectionBtn.onclick = () => collectionModal.classList.remove('hidden');
@@ -1403,6 +1413,52 @@ function renderCollectionNames(filter = '') {
 
 }
 
+function buildCollectionCopyText() {
+  if (!currentCollectionTab) return null;
+
+  const title = COLLECTION_TAB_TITLES[currentCollectionTab];
+  if (!title) return null;
+
+  const records = collectionData
+    .filter(r => {
+      if (currentCollectionTab === 'Total') return true;
+      return getMonthBucket(r) === currentCollectionTab;
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  if (!records.length) return null;
+
+  let text = `These are your ${title}:\n\n`;
+
+  records.forEach((r, i) => {
+    text += `${i + 1}. ${r.name} | Bal: ${r.balance} | Last: ${r.lastPaid}\n`;
+  });
+
+  return text.trim();
+}
+
+copyCollectionBtn.onclick = async () => {
+  const text = buildCollectionCopyText();
+
+  if (!text) {
+    showNotification(
+      'Please select the tab you want to copy:\n\n' +
+      '3NM, 6NM, 9NM, 12NM\n\n' +
+      'Tap or select the tab, then click Copy.'
+    );
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(text);
+    showNotification('Copied to clipboard successfully ✅');
+  } catch {
+    showNotification('Failed to copy. Please try again.');
+  }
+};
+
+
+
 function updateCollectionPercentage(month) {
   const data = quotaData[month];
 
@@ -1511,3 +1567,4 @@ document.addEventListener('DOMContentLoaded', () => {
     expandBtn.textContent = panel.classList.contains('hidden') ? '>' : '<';
   });
 });
+

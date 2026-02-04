@@ -1023,3 +1023,6 @@ button.collectionbtn {
   transform: scale(1.08);
 }
 
+#copyCollectionBtn {
+  margin-right: 10px;
+}
