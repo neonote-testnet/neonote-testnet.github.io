@@ -837,10 +837,10 @@ button.secondary {
   z-index: 1300; 
 }
 
-.floating-btn.left-of-notepad {
+.floating-btn.collectionbtn {
   right: 230px; 
   bottom: 88px;
-  position: fixed;
+  
   
 }
 
