@@ -651,6 +651,8 @@ passwordConfirmBtn.onclick = async () => {
 promises = parsed.promises || [];
 accounts = parsed.accounts || [];
 notes = parsed.notes || [];
+collectionData = parsed.collectionData || [];
+quotaData = parsed.quotaData || {};
 localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
 if (parsed.nameHistory) {
   localStorage.setItem(NAME_HISTORY_KEY, JSON.stringify(parsed.nameHistory));
