@@ -837,22 +837,7 @@ button.secondary {
   z-index: 1300; 
 }
 
-.collectionbtn {
-  position: fixed;
-  bottom: 88px; 
-  right: 88px;  
-  width: 56px;
-  height: 56px;
-  font-size: 2rem;
-  background: var(--green);
-  color: #000;
-  border: none;
-  border-radius: 5px;
-}
 
-  
-  
-}
 
 #collectionModal {
   position: fixed;
@@ -1020,4 +1005,17 @@ button.secondary {
 }
 #addCollectionPayment:active {
   transform: scale(1.08);
+}
+
+.collectionbtn {
+  position: fixed;
+  bottom: 88px; 
+  right: 88px;  
+  width: 56px;
+  height: 56px;
+  font-size: 2rem;
+  background: var(--green);
+  color: #000;
+  border: none;
+  border-radius: 5px;
 }
