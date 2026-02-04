@@ -838,8 +838,18 @@ button.secondary {
 }
 
 .collectionbtn {
-  right: 230px; 
-  bottom: 88px;
+  position: fixed;
+  bottom: 88px; 
+  right: 88px;  
+  width: 56px;
+  height: 56px;
+  font-size: 2rem;
+  background: var(--green);
+  color: #000;
+  border: none;
+  border-radius: 5px;
+}
+
   
   
 }
