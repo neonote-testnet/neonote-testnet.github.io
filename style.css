@@ -885,6 +885,7 @@ button.collectionbtn {
   cursor: pointer;
   border-radius: 4px;
   padding: 4px 8px;
+  z-index: 3000;
 }
 
 .expand-panel {
