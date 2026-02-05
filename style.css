@@ -963,8 +963,8 @@ button.collectionbtn {
 }
 
 .collection-names-list {
-  height: 270px;
-  max-height: 270px;
+  height: 260px;
+  max-height: 260px;
   flex: none;
   overflow-y: auto;
   border-top: 5px solid var(--green);
