@@ -1408,12 +1408,11 @@ if (record.balance < 0) record.balance = 0;
   const monthKey = month;
 const monthData = monthlyAccountCounts[monthKey];
 
+const totalAccInput = document.getElementById('collectionTotalAcc');
 if (monthData) {
-  document.getElementById('countTotalAcc').textContent =
-    `Total Acc: ${monthData.Total}`;
+  totalAccInput.value = monthData.Total;
 } else {
-  document.getElementById('countTotalAcc').textContent =
-    'Total Acc: 0';
+  totalAccInput.value = 0;
 }
 
   updateCollectionPercentage(month);
