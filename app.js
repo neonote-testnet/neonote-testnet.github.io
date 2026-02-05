@@ -1553,8 +1553,10 @@ function setCountWithPercent(elId, count, pct) {
   if (!el) return;
 
   el.innerHTML = `
-    ${count}
-    <span class="tab-percent">${pct}%</span>
+    <div class="tab-metric">
+      <div class="tab-percent">${pct}%</div>
+      <div class="tab-count">${count}</div>
+    </div>
   `;
 }
 
