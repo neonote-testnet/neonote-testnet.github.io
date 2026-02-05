@@ -1232,6 +1232,8 @@ const collectionDate = document.getElementById('collectionDate');
 const collectionLastPaid = document.getElementById('collectionLastPaid');
 const collectionPayment = document.getElementById('collectionPayment');
 const addCollectionPayment = document.getElementById('addCollectionPayment');
+const updateCollectionRecord = document.getElementById('updateCollectionRecord');
+
 
 const collectionMonth = document.getElementById('collectionMonth');
 const collectionQuota = document.getElementById('collectionQuota');
@@ -1289,6 +1291,46 @@ saveCollectionQuota.onclick = () => {
   collectionRunning.value = quotaData[month].running;
 
   updateCollectionPercentage(month);
+};
+
+updateCollectionRecord.onclick = () => {
+  const name = collectionName.value.trim();
+  const balance = Number(collectionBalance.value || 0);
+  const date = collectionDate.value;
+
+  if (!name || !date || isNaN(balance)) return;
+
+  let record = collectionData.find(r => r.name === name);
+
+  if (!record) {
+    record = {
+      name,
+      lastPaid: date,
+      balance: balance,
+      payments: [] 
+    };
+    collectionData.push(record);
+  } else {
+
+    record.lastPaid = date;
+    record.balance = balance;
+  }
+
+  localStorage.setItem('collectionData', JSON.stringify(collectionData));
+
+  collectionNamesVisible = false;
+  updateTabCounts();
+  collectionNamesList.innerHTML = '';
+
+  collectionName.value = '';
+  collectionBalance.value = '';
+  collectionLastPaid.value = '';
+  const today = new Date().toISOString().split('T')[0];
+  collectionDate.value = today;
+
+  collectionName.focus();
+
+  showNotification('Record updated successfully ✅');
 };
 
 addCollectionPayment.onclick = () => {
@@ -1439,7 +1481,12 @@ function buildCollectionCopyText() {
   let text = `These are your ${title}:\n\n`;
 
   records.forEach((r, i) => {
-    text += `${i + 1}. ${r.name} | Bal: ${r.balance} | Last: ${r.lastPaid}\n`;
+    text +=
+`${i + 1}. ${r.name}
+   Bal: ${r.balance}
+   Last: ${r.lastPaid}
+
+`;
   });
 
   return text.trim();
