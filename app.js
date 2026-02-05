@@ -1249,6 +1249,41 @@ const collectionTabs = document.querySelectorAll('.collection-tab');
 let collectionData = JSON.parse(localStorage.getItem('collectionData') || '[]');
 let currentCollectionTab = '3NM';
 let quotaData = JSON.parse(localStorage.getItem('collectionQuotaData') || '{}');
+let monthlyAccountCounts =
+  JSON.parse(localStorage.getItem('monthlyAccountCounts') || '{}');
+
+function getMonthKey(dateStr) {
+  const d = new Date(dateStr);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+}
+
+function registerAccountCount(name, date) {
+  const monthKey = getMonthKey(date);
+
+  if (!monthlyAccountCounts[monthKey]) {
+    monthlyAccountCounts[monthKey] = {
+      Total: 0,
+      entries: {} 
+    };
+  }
+
+  if (!monthlyAccountCounts[monthKey].entries[date]) {
+    monthlyAccountCounts[monthKey].entries[date] = [];
+  }
+
+  const dayEntries = monthlyAccountCounts[monthKey].entries[date];
+
+  if (dayEntries.includes(name)) return;
+  dayEntries.push(name);
+  monthlyAccountCounts[monthKey].Total++;
+
+  localStorage.setItem(
+    'monthlyAccountCounts',
+    JSON.stringify(monthlyAccountCounts)
+  );
+}
+
+
 const COLLECTION_TAB_TITLES = {
   '3NM': '3 Months Non-moving Accs',
   '6NM': '6 Months Non-moving Accs',
@@ -1356,6 +1391,8 @@ if (!record) {
   record.lastPaid = date;
   record.payments.push({ amount: payment, date });
   record.balance -= payment;
+  registerAccountCount(name, date);
+
 if (record.balance < 0) record.balance = 0;
 
   const month = collectionMonth.value;
@@ -1368,6 +1405,17 @@ if (record.balance < 0) record.balance = 0;
   localStorage.setItem('collectionQuotaData', JSON.stringify(quotaData));
   collectionTotalBalance.value = quotaData[month]?.balance || 0;
   collectionRunning.value = quotaData[month]?.running || 0;
+  const monthKey = month;
+const monthData = monthlyAccountCounts[monthKey];
+
+if (monthData) {
+  document.getElementById('countTotalAcc').textContent =
+    `Total Acc: ${monthData.Total}`;
+} else {
+  document.getElementById('countTotalAcc').textContent =
+    'Total Acc: 0';
+}
+
   updateCollectionPercentage(month);
 
     collectionNamesVisible = false;
