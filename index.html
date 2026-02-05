@@ -96,9 +96,7 @@ is an open-source offline note-taking app designed for efficient task management
 <button id="notepadBtn" class="floating-btn note-btn">
   📝
 </button>
-<!-- Floating Collection Button -->
 <button id="collectionBtn" class="floating-btn collectionbtn">🗿</button>
-
 
 <div id="accountsModal" class="modal hidden">
   <div class="modal-content retro-modal accounts-modal">
@@ -158,7 +156,7 @@ For debt collectors, NeonoteX helps record and monitor promises and schedule fol
       </p>
       <p>This guide explains every feature and how to use it step-by-step.</p>
 
-      <h3>🏠 Home Button (🏠)</h3>
+      <h3>🏚 Home Button (🏚)</h3>
       <p>
         The Home button reloads the app instantly.  
         Use this if the UI feels stuck or after heavy changes.
@@ -229,6 +227,232 @@ For debt collectors, NeonoteX helps record and monitor promises and schedule fol
   <p>
     Enabling the app password provides a layer of security to protect your promises, accounts, and client information. It also allows the use of biometrics for easier access. Disabling the password removes these protections.
   </p>
+</section>
+
+<section class="guide-section">
+  <h2>📝 Notepad Guide</h2>
+
+  <p>
+    The <strong>Notepad</strong> is a built-in space where you can write, store,
+    and manage personal notes inside the app. It is designed for quick ideas,
+    reminders, drafts, or any text you want to keep without creating a promise
+    or record.
+  </p>
+
+  <h3>📌 Purpose of the Notepad</h3>
+  <ul>
+    <li>Store unlimited personal notes directly in the app</li>
+    <li>Quickly write thoughts, reminders, or temporary information</li>
+    <li>Keep everything saved locally and available anytime</li>
+    <li>Switch easily between multiple notes</li>
+  </ul>
+
+  <h3>➕ Creating Your First Note</h3>
+  <p>
+    <strong>You must create a note before you can write.</strong>
+  </p>
+  <ol>
+    <li>Open the <strong>Notepad</strong> using the Notepad button</li>
+    <li>Tap the <strong>➕ New</strong> button</li>
+    <li>A new empty note will be created and opened automatically</li>
+    <li>You can now start typing a title and content</li>
+  </ol>
+
+  <p>
+    If you try to type without selecting or creating a note, the app will notify
+    you to add a note first.
+  </p>
+
+  <h3>✍️ Writing & Editing Notes</h3>
+  <ul>
+    <li>Each note has a <strong>Title</strong> and a <strong>Content</strong> area</li>
+    <li>The title helps you identify notes in the list</li>
+    <li>The content area is where you write your main text</li>
+    <li>There is a character counter to show how much text you have used</li>
+  </ul>
+
+  <h3>💾 Auto-Save Behavior</h3>
+  <p>
+    The Notepad <strong>automatically saves</strong> everything you type.
+    There is no save button.
+  </p>
+  <ul>
+    <li>Text is saved instantly while you type</li>
+    <li>Titles and content are stored in local storage</li>
+    <li>Closing the Notepad or the app will not delete your notes</li>
+    <li>Your notes remain available when you reopen the app</li>
+  </ul>
+
+  <h3>📂 Managing Multiple Notes</h3>
+  <p>
+    The Notepad includes a sliding side panel that contains all your notes.
+  </p>
+  <ul>
+    <li>Slide or toggle the panel to show or hide your notes list</li>
+    <li>Tap any note to instantly switch to it</li>
+    <li>Use the <strong>➕ New</strong> button to create new notes</li>
+    <li>Notes are listed with their titles for easy identification</li>
+  </ul>
+
+  <h3>🗑️ Deleting Notes</h3>
+  <p>
+    Each note in the list includes a delete button.
+  </p>
+  <ul>
+    <li>Tap the ❌ icon next to a note</li>
+    <li>Confirm the deletion when prompted</li>
+    <li>Deleted notes are permanently removed</li>
+  </ul>
+
+  <h3>ℹ️ Important Notes</h3>
+  <ul>
+    <li>You cannot type unless a note is selected</li>
+    <li>All notes are saved locally on your device</li>
+    <li>There is a maximum character limit per note</li>
+    <li>Notes are independent from promises and accounts</li>
+  </ul>
+</section>
+
+<section class="guide-section">
+  <h2>📊 Collection Logic Guide</h2>
+
+  <p>
+    The <strong>Collection</strong> feature is designed to help you track
+    payments, balances, and collection performance over time.
+    It allows you to set monthly quotas, monitor running collections,
+    and organize accounts based on how long they have been non-moving.
+  </p>
+
+  <h3>🎯 Purpose of the Collection Feature</h3>
+  <ul>
+    <li>Track total collections against a monthly quota</li>
+    <li>Monitor remaining balance and running collections</li>
+    <li>Record individual account payments and balances</li>
+    <li>Automatically group accounts by non-moving duration</li>
+    <li>Easily copy categorized collection lists</li>
+  </ul>
+
+  <h3>📂 Opening the Collection Modal</h3>
+  <ol>
+    <li>Tap the <strong> 🗿 Collection</strong> button</li>
+    <li>The Collection modal will open</li>
+    <li>The current month is selected by default</li>
+  </ol>
+
+  <h3>💰 Step 1: Set Your Monthly Quota</h3>
+  <p>
+    Before adding any collection records, you must first define a
+    <strong>monthly quota</strong>.
+  </p>
+
+  <ol>
+    <li>Select the target month</li>
+    <li>Enter your <strong>Collection Quota</strong></li>
+    <li>Tap <strong>Save Quota</strong></li>
+  </ol>
+
+  <p>
+    Once saved, the following will automatically update:
+  </p>
+  <ul>
+    <li><strong>Running</strong> – total amount collected so far</li>
+    <li><strong>Balance</strong> – remaining amount to reach the quota</li>
+    <li><strong>Percentage</strong> – progress toward the quota</li>
+  </ul>
+
+  <h3>📈 Understanding the Quota Summary</h3>
+  <ul>
+    <li><strong>Quota</strong>: Target collection amount for the selected month</li>
+    <li><strong>Running</strong>: Total payments collected</li>
+    <li><strong>Balance</strong>: Quota minus total payments</li>
+    <li><strong>Percentage</strong>: Running divided by Quota</li>
+  </ul>
+
+  <h3>➡️ Step 2: Expand the Collection Panel</h3>
+  <p>
+    Tap the <strong>&gt;</strong> button to slide open the Collection panel.
+  </p>
+  <ul>
+    <li>The panel reveals account-level collection tools</li>
+    <li>This is where individual names and payments are managed</li>
+    <li>The main quota summary remains visible</li>
+  </ul>
+
+  <h3>👤 Step 3: Add Collection Records (Names)</h3>
+  <p>
+    Inside the expanded panel, you can add individual collection records.
+  </p>
+
+  <ol>
+    <li>Enter the <strong>Name</strong></li>
+    <li>Enter the <strong>Current Balance</strong></li>
+    <li>Select the <strong>Date Paid</strong></li>
+    <li>Enter the <strong>Payment Amount</strong></li>
+    <li>Tap <strong>Add Payment</strong></li>
+  </ol>
+
+  <p>
+    When a payment is added:
+  </p>
+  <ul>
+    <li>The name is created if it does not yet exist</li>
+    <li>The payment is recorded with its date</li>
+    <li>The account balance is reduced</li>
+    <li>The monthly running total increases</li>
+    <li>The quota balance and percentage update automatically</li>
+  </ul>
+
+  <h3>📋 Viewing & Selecting Existing Names</h3>
+  <ul>
+    <li>Existing names appear in the list under the panel</li>
+    <li>Tap a name to auto-fill its balance and last paid date</li>
+    <li>This makes adding repeat payments faster</li>
+  </ul>
+
+  <h3>🗂️ Collection Tabs & Categories</h3>
+  <p>
+    The Collection feature automatically groups names into categories
+    based on how long they have been non-moving.
+  </p>
+
+  <ul>
+    <li><strong>Moving</strong> – recently paid accounts</li>
+    <li><strong>3NM</strong> – 3 months non-moving</li>
+    <li><strong>6NM</strong> – 6 months non-moving</li>
+    <li><strong>9NM</strong> – 9 months non-moving</li>
+    <li><strong>12NM</strong> – 12+ months non-moving</li>
+    <li><strong>Total</strong> – all accounts</li>
+  </ul>
+
+  <p>
+    Each tab shows the count of names under that category.
+  </p>
+
+  <h3>🔍 Searching & Managing Names</h3>
+  <ul>
+    <li>Use the search box to filter names</li>
+    <li>Names are sorted alphabetically</li>
+    <li>You can delete a name using the ❌ button</li>
+  </ul>
+
+  <h3>📋 Copying Collection Lists</h3>
+  <p>
+    You can copy the visible category list for sharing or reporting.
+  </p>
+  <ol>
+    <li>Select a collection tab (3NM, 6NM, etc.)</li>
+    <li>Tap <strong>Copy</strong></li>
+    <li>The formatted list is copied to your clipboard</li>
+  </ol>
+
+  <h3>⚠️ Important Notes</h3>
+  <ul>
+    <li>Quota must be saved before tracking collections</li>
+    <li>All data is saved automatically</li>
+    <li>Payments update balances in real time</li>
+    <li>Deleting a name permanently removes its history</li>
+    <li>Each month has its own quota and progress</li>
+  </ul>
 </section>
 
 
@@ -308,7 +532,7 @@ Each listed promise or client is interactive:
    <li>Accounts and tabs keep promises organized while maintaining the same interactive experience.</li>
  </ul>
 
-      <h3>💾 Backup Button</h3>
+      <h3>🔃 Backup Button</h3>
       <p>
         Used to export or restore encrypted backups.
       </p>
@@ -318,7 +542,7 @@ Each listed promise or client is interactive:
         <li>All data stays offline and secure</li>
       </ul>
       
-      <h3>💾 Backup & Restore (Why this is IMPORTANT)</h3>
+      <h3>🔃 Backup & Restore (Why this is IMPORTANT)</h3>
 
 <p>
 NeonoteX is a <b>Progressive Web App (PWA)</b>. This means it runs inside your
@@ -372,7 +596,7 @@ No one can read or restore it without the correct password.
 <h4>⬇️ How to Export a Backup</h4>
 
 <ol>
-  <li>Tap the <b>💾 Backup</b> button</li>
+  <li>Tap the <b>🔃 Backup</b> button</li>
   <li>Select <b>Export Backup</b></li>
   <li>Set a password</li>
   <li>Save the <code>.neonotex</code> file in a safe place</li>
@@ -386,7 +610,7 @@ If you forget it, the backup <b>cannot be restored</b>.
 <h4>⬆️ How to Restore a Backup</h4>
 
 <ol>
-  <li>Tap the <b>💾 Backup</b> button</li>
+  <li>Tap the <b>🔃 Backup</b> button</li>
   <li>Select <b>Restore Backup</b></li>
   <li>Choose your <code>.neonotex</code> backup file</li>
   <li>Enter the backup password</li>
@@ -408,7 +632,7 @@ will return exactly as they were.
 </ul>
 
 
-<h3>👤 Accounts (Organize Clients & Notes)</h3>
+<h3>📓 Accounts (Organize Clients & Notes)</h3>
 
 <p>
 The <b>Accounts</b> feature allows you to create multiple custom groups
@@ -436,7 +660,7 @@ This makes it easier to:
   <li>Quickly find the right information when needed</li>
 </ul>
 
-<h4>🗂️ How Accounts Work</h4>
+<h4>📓️ How Accounts Work</h4>
 
 <p>
 Each account acts like a folder or category.
@@ -453,7 +677,7 @@ and records.
 <h4>➕ Creating an Account</h4>
 
 <ol>
-  <li>Tap the <b>👤 Accounts</b> button</li>
+  <li>Tap the <b>📓 Accounts</b> button</li>
   <li>Tap <b>Create Account</b></li>
   <li>Enter a short account name (max 10 characters)</li>
   <li>Save the account</li>
@@ -546,7 +770,7 @@ Think of <b>Accounts</b> like folders, and <b>Clients</b> like files inside them
 </p>
 
 <pre>
-👤 Accounts
+📓 Accounts
  ├─ 📁 AREA-A
  │   ├─ 👤 Juan Pisot
  │   ├─ 👤 Maria Chismosa
@@ -568,7 +792,7 @@ Nothing gets mixed together.
 
 <hr>
 
-<h4>🔄 How Accounts Appear in the App</h4>
+<h4>📓 How Accounts Appear in the App</h4>
 
 <pre>
 [ Today ] [ All ] [ Done ] [ AREA-A ]
@@ -597,7 +821,7 @@ to organize your data properly from the start.
 
 <ol>
   <li>
-    Tap the <b>👤 Accounts</b> button.
+    Tap the <b>📓 Accounts</b> button.
   </li>
   <li>
     Create your first account.
@@ -795,7 +1019,7 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
 
       <textarea id="noteContent" placeholder="Write something…"></textarea>
 
-      <button id="closeNotepad">Save</button>
+      <button id="closeNotepad">Close</button>
     </div>
 
   </div>
@@ -810,8 +1034,6 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
   </div>
 </div>
 
-
-<!-- Collection Modal -->
 <div id="collectionModal" class="modal hidden">
   <div class="collection-container">
    <div class="collection-header">
@@ -819,13 +1041,10 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
   <button id="closeCollectionModal">X</button>
 </div>
 
-
-    <!-- Top Header with Quota Info -->
     <div class="collection-top">
       <div class="expand-panel">
         <button id="expandPanelBtn">></button>
         <div id="panelContent" class="panel-content hidden">
-          <!-- Search and Input Section -->
           <input type="text" id="collectionSearch" placeholder="Search Name" class="search-bar"/>
           <div class="input-row">
             <label>Name:</label>
@@ -851,7 +1070,6 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
         </div>
       </div>
 
-<!-- Current Month & Quota Info -->
 <div id="collectionInfoBlock" class="month-quota-section">
 
   <div class="input-row">
@@ -885,7 +1103,6 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
 
     </div>
 
-    <!-- Tabs Section -->
     <div class="collection-tabs">
       <button class="collection-tab" data-tab="3NM">3NM</button>
       <button class="collection-tab" data-tab="6NM">6NM</button>
@@ -903,13 +1120,9 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
       <span id="countTotal">0</span>
     </div>
 
-    <!-- Scrollable Names List -->
     <div id="collectionNamesList" class="collection-names-list"></div>
-
   </div>
 </div>
-
-
   <script src="app.js"></script>
 </body>
 </html>
