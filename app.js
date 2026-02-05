@@ -1592,6 +1592,15 @@ function restoreCollectionUI() {
     collectionTotalBalance.value = '';
     collectionRunning.value = '';
   }
+  
+  const monthData = monthlyAccountCounts[month];
+  const totalAccInput = document.getElementById('collectionTotalAcc');
+  if (monthData) {
+    totalAccInput.value = monthData.Total ?? 0;
+  } else {
+    totalAccInput.value = 0;
+  }
+  
   updateCollectionPercentage(month);
 
 }
