@@ -1537,9 +1537,15 @@ function updateTabCounts() {
   counts['Total'] = collectionData.length;
 
   const total = counts['Total'] || 1;
-  function percent(val) {
-    return Math.round((val / total) * 100);
-  }
+  const total = counts['Total'] || 1;
+
+setCountWithPercent('count3NM', counts['3NM'], percent(counts['3NM'], total));
+setCountWithPercent('count6NM', counts['6NM'], percent(counts['6NM'], total));
+setCountWithPercent('count9NM', counts['9NM'], percent(counts['9NM'], total));
+setCountWithPercent('count12NM', counts['12NM'], percent(counts['12NM'], total));
+setCountWithPercent('countMoving', counts['Moving'], percent(counts['Moving'], total));
+setCountWithPercent('countTotal', counts['Total'], 100);
+
 
   setCountWithPercent('count3NM', counts['3NM'], percent(counts['3NM']));
   setCountWithPercent('count6NM', counts['6NM'], percent(counts['6NM']));
