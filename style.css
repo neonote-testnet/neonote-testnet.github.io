@@ -1064,3 +1064,9 @@ button.collectionbtn {
   cursor: pointer;
 }
 
+.tab-percent {
+  margin-left: 6px;
+  font-size: 0.85em;
+  color: #6fffe9; 
+  font-weight: bold;
+}
