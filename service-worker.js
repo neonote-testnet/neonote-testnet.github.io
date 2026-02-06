@@ -1,26 +1,21 @@
-const CACHE = 'neonote-v357';
+const CACHE = 'neonote-v358';
 
 self.addEventListener('install', event => {
   
 });
 
-
 self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET' || !event.request.url.startsWith(self.location.origin)) {
-  return;
-}
-
+  if (
+    event.request.method !== 'GET' ||
+    !event.request.url.startsWith(self.location.origin)
+  ) {
+    return;
+  }
 
   event.respondWith(
-    fetch(event.request)
-      .then(res => {
-        const resClone = res.clone();
-        caches.open(CACHE).then(cache => {
-          cache.put(event.request, resClone);
-        });
-        return res;
-      })
-      .catch(() => caches.match(event.request))
+    caches.match(event.request).then(cached => {
+      return cached || fetch(event.request);
+    })
   );
 });
 
