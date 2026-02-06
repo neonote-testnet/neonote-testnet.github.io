@@ -1018,6 +1018,7 @@ button.collectionbtn {
   padding: 6px 10px;
   border-radius: 5px;
   font-size: 1rem;
+  font-weight: bold;
   cursor: pointer;
   transition: transform 0.1s ease;
 }
