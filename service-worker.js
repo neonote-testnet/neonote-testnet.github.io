@@ -1,29 +1,28 @@
 const CACHE = 'neonote-v355';
 
-const ASSETS = [
-  './',
-  './index.html',
-  './style.css',
-  './app.js',
-  './manifest.json',
-  './icons/icon-192.png',
-  './icons/icon-512.png'
-];
-
-
 self.addEventListener('install', event => {
   
 });
 
 
 self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET') return;
+  if (event.request.method !== 'GET' || !event.request.url.startsWith(self.location.origin)) {
+  return;
+}
+
 
   event.respondWith(
-    caches.match(event.request).then(res => res || fetch(event.request))
+    fetch(event.request)
+      .then(res => {
+        const resClone = res.clone();
+        caches.open(CACHE).then(cache => {
+          cache.put(event.request, resClone);
+        });
+        return res;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
-
 
 self.addEventListener('message', event => {
   if (event.data?.action === 'APPLY_UPDATE') {
@@ -33,20 +32,19 @@ self.addEventListener('message', event => {
 });
 
 async function applyLatestUpdate() {
-
   const keys = await caches.keys();
   await Promise.all(keys.map(k => caches.delete(k)));
 
   const cache = await caches.open(CACHE);
 
   await cache.addAll([
-    './',
-    './index.html',
-    './style.css',
-    './app.js',
-    './manifest.json',
-    './icons/icon-192.png',
-    './icons/icon-512.png'
+    new Request('./', { cache: 'reload' }),
+    new Request('./index.html', { cache: 'reload' }),
+    new Request('./style.css', { cache: 'reload' }),
+    new Request('./app.js', { cache: 'reload' }),
+    new Request('./manifest.json', { cache: 'reload' }),
+    new Request('./icons/icon-192.png', { cache: 'reload' }),
+    new Request('./icons/icon-512.png', { cache: 'reload' })
   ]);
 }
 
