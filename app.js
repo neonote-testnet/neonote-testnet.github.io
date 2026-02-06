@@ -42,10 +42,6 @@ navigator.serviceWorker.addEventListener('controllerchange', () => {
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js').then(reg => {
 
-    setInterval(() => {
-      reg.update();
-    }, 60 * 1000); 
-
     if (reg.waiting) {
       newWorker = reg.waiting;
       updateBanner.classList.remove('hidden');
@@ -1009,7 +1005,7 @@ applyUpdateBtn.onclick = () => {
   if (!newWorker) return;
 
   updateApproved = true;
-  newWorker.postMessage({ action: 'SKIP_WAITING' });
+  newWorker.postMessage({ action: 'APPLY_UPDATE' });
 };
 
 
