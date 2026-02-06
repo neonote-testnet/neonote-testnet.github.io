@@ -1006,7 +1006,7 @@ button.collectionbtn {
 
 #addCollectionPayment {
   padding: 6px 6px;
-  margin-left: 6px;
+  margin-left: 2px;
   background: var(--green);
   color: #000;
   border: 2px solid #000;
