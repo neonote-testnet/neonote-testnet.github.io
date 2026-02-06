@@ -1004,25 +1004,30 @@ button.collectionbtn {
   pointer-events: none;
 }
 
-#addCollectionPayment {
-  padding: 6px 6px;
-  margin-left: 2px;
-  background: var(--green);
-  color: #000;
-  border: 2px solid #000;
-  border-radius: 6px;     
-  font-size: 0.9rem;
-  font-weight: bold;
+.payment-buttons {
+  display: flex;
+  flex-direction: column; 
+  gap: 6px; 
+  margin-top: 4px;
+}
+
+.collection-btn {
+  background: var(--green);  
+  color: #000;            
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 1rem;
   cursor: pointer;
-  white-space: nowrap;
-  box-shadow: 0 0 0 1px #000;  
-  transition: transform 0.1s ease, background 0.1s ease;
+  transition: transform 0.1s ease;
 }
-#addCollectionPayment:hover {
-  background: #3bbfa5; 
-}
-#addCollectionPayment:active {
+
+.collection-btn:active {
   transform: scale(1.08);
+}
+
+.update-btn {
+  color: var(--red);
 }
 
 #copyCollectionBtn {
