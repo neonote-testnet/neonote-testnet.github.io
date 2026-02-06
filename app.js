@@ -612,7 +612,8 @@ passwordConfirmBtn.onclick = async () => {
       nameHistory: getNameHistory(),
       notes,
       collectionData,     
-      quotaData           
+      quotaData,
+      monthlyAccountCounts
     });
 
     const encrypted = await crypto.subtle.encrypt(
@@ -649,8 +650,10 @@ accounts = parsed.accounts || [];
 notes = parsed.notes || [];
 collectionData = parsed.collectionData || [];
 quotaData = parsed.quotaData || {};
+monthlyAccountCounts = parsed.monthlyAccountCounts || {}; 
 localStorage.setItem('collectionData', JSON.stringify(collectionData));
 localStorage.setItem('collectionQuotaData', JSON.stringify(quotaData));
+localStorage.setItem('monthlyAccountCounts', JSON.stringify(monthlyAccountCounts)); 
 localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
 if (parsed.nameHistory) {
   localStorage.setItem(NAME_HISTORY_KEY, JSON.stringify(parsed.nameHistory));
