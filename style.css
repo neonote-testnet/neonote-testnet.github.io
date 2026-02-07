@@ -959,8 +959,8 @@ button.collectionbtn {
 }
 
 .collection-names-list {
-  height: 200px;
-  max-height: 200px;
+  height: 280px;
+  max-height: 280px;
   flex: none;
   overflow-y: auto;
   border-top: 5px solid var(--green);
