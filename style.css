@@ -860,7 +860,6 @@ button.collectionbtn {
 #collectionModal {
   position: fixed;
   color: #f0f0f0;
-  border: 2px solid var(--green);
   border-radius: 10px;
   padding: 0;
   overflow: hidden;
