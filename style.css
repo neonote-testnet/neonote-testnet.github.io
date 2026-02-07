@@ -1123,9 +1123,6 @@ button.collectionbtn {
   line-height: 1.1;
 }
 
-.modal button {
-  touch-action: manipulation;
-}
 
 .collection-modal-content {
   width: 97%;
@@ -1141,11 +1138,11 @@ button.collectionbtn {
   flex-direction: column;
 }
 
-.saveCollectionQuota {
-  background: var(--bg);
+#saveCollectionQuota {
+  background: var(--red);
   color: #000;
   border: 2px solid var(--green);
-  border-radius: 5px;
+  border-radius: 3px;
   padding: 10px;
   font-size: 1.4rem;
   cursor: pointer;
@@ -1153,6 +1150,6 @@ button.collectionbtn {
   font-weight: bold;
 }
 
-.saveCollectionQuota:active {
+#saveCollectionQuota:active {
   transform: scale(1.08);
 }
