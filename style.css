@@ -119,8 +119,9 @@ body {
 button:active,
 .floating-btn:active,
 .tab:active {
-  transform: scale(1.08);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
 }
+
 button,
 .floating-btn,
 .tab {
@@ -863,12 +864,12 @@ button.collectionbtn {
   transform: translate(-50%, -50%);
   width: 97%;
   max-width: 1200px;
-  height: 700px;
+  height: 675px;
   background: #1a1a1a;
   color: #f0f0f0;
   border: 2px solid var(--green);
   border-radius: 10px;
-  padding: 20px;
+  padding: 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -963,8 +964,8 @@ button.collectionbtn {
 }
 
 .collection-names-list {
-  height: 245px;
-  max-height: 245px;
+  height: 200px;
+  max-height: 200px;
   flex: none;
   overflow-y: auto;
   border-top: 5px solid var(--green);
@@ -1033,9 +1034,9 @@ button.collectionbtn {
 }
 
 #copyCollectionBtn {
-  position: absolute;
+  position: static;
   top: 7px;
-  right: 70px; /* space from close button */
+  right: 70px; 
   padding: 4px 8px;
   background: var(--green);
   color: #000;
@@ -1048,25 +1049,53 @@ button.collectionbtn {
 }
 
 #closeCollectionModal {
-  position: absolute;
+  position: static;
   top: 10px;
   right: 15px;
 }
 
 
 .collection-header {
-  position: absolute;
-  top: 10px;
-  right: 15px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2px;       
+  border-bottom: 2px solid var(--green);
+  
+}
+
+.collection-title {
+  margin: 0;
+  padding: 0;
+  font-size: 1.8rem;
+  color: var(--green);
+  text-shadow: 1px 1px 0 #000;
+}
+
+.collection-header-actions {
   display: flex;
   gap: 8px;
-  z-index: 3000;
 }
+
+.collection-header button {
+  padding: 6px 30px;
+  font-size: 1rem;
+  background: var(--green);
+  border: 2px solid #000;
+  cursor: pointer;
+}
+
 
 #copyCollectionBtn,
 #closeCollectionModal {
-  padding: 4px 8px;
+  position: static;
+  padding: 6px 10px;
+  background: var(--green);
+  color: #000;
+  border: 2px solid #000;
   border-radius: 4px;
+  font-size: 0.9rem;
   font-weight: bold;
   cursor: pointer;
 }
@@ -1097,4 +1126,14 @@ button.collectionbtn {
   justify-content: center;
   gap: 2px;
   line-height: 1.1;
+}
+
+.modal button:active,
+.modal .floating-btn:active,
+.modal .tab:active {
+  transform: none !important;
+}
+
+.modal button {
+  touch-action: manipulation;
 }
