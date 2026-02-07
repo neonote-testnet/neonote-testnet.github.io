@@ -1142,10 +1142,10 @@ button.collectionbtn {
 
 #saveCollectionQuota {
   background: var(--bg);
-  color: #000;
+  color: var(--green);
   border: 2px solid var(--green);
   border-radius: 6px;
-  padding: 10px;
+  padding: 6px;
   font-size: 1.4rem;
   cursor: pointer;
   margin-top: 8px;
