@@ -1026,8 +1026,9 @@ button.collectionbtn {
 }
 
 .update-btn {
-  color: var(--red);
+  color: var(--green);
   background: var(--bg);
+  border: solid var(--green);
 }
 
 #copyCollectionBtn {
