@@ -1251,26 +1251,13 @@ let quotaData = JSON.parse(localStorage.getItem('collectionQuotaData') || '{}');
 let monthlyAccountCounts =
   JSON.parse(localStorage.getItem('monthlyAccountCounts') || '{}');
   
-function formatNumber(value) {
-  const num = Number(value);
-  if (isNaN(num)) return '';
-  return num.toLocaleString('en-US');
-}
-
-collectionQuota.addEventListener('input', e => {
-  const raw = e.target.value.replace(/,/g, '');
-  if (raw === '' || isNaN(raw)) return;
-  e.target.value = formatNumber(raw);
-});
-
-
 function calculateTotalReceivable() {
   const total = collectionData.reduce((sum, r) => {
     return sum + (Number(r.balance) || 0);
   }, 0);
 
   const input = document.getElementById('collectionTotalReceivable');
-  if (input) input.value = formatNumber(total);
+  if (input) input.value = total;
 
   return total;
 }
@@ -1334,11 +1321,10 @@ saveCollectionQuota.onclick = () => {
   const quota = Number(collectionQuota.value || 0);
 
   quotaData[month] = {
-  quota: Number(collectionQuota.value.replace(/,/g, '')),
-  balance: Number(collectionTotalBalance.value.replace(/,/g, '')),
-  running: Number(collectionRunning.value.replace(/,/g, ''))
-};
-
+    quota,
+    balance: quota - (quotaData[month]?.running || 0),
+    running: quotaData[month]?.running || 0
+  };
 
   localStorage.setItem(
     'collectionQuotaData',
@@ -1610,10 +1596,9 @@ function restoreCollectionUI() {
   const month = collectionMonth.value;
 
   if (quotaData[month]) {
-    collectionQuota.value = formatNumber(quotaData[month].quota ?? 0);
-collectionTotalBalance.value = formatNumber(quotaData[month].balance ?? 0);
-collectionRunning.value = formatNumber(quotaData[month].running ?? 0);
-
+    collectionQuota.value = quotaData[month].quota ?? 0;
+    collectionTotalBalance.value = quotaData[month].balance ?? 0;
+    collectionRunning.value = quotaData[month].running ?? 0;
   } else {
     collectionQuota.value = '';
     collectionTotalBalance.value = '';
@@ -1624,7 +1609,6 @@ collectionRunning.value = formatNumber(quotaData[month].running ?? 0);
   const totalAccInput = document.getElementById('collectionTotalAcc');
   if (monthData) {
     totalAccInput.value = monthData.Total ?? 0;
-
   } else {
     totalAccInput.value = 0;
   }
