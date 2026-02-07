@@ -1257,7 +1257,7 @@ function calculateTotalReceivable() {
   }, 0);
 
   const input = document.getElementById('collectionTotalReceivable');
-  if (input) input.value = total;
+  if (input) input.value = total.toLocaleString(); // <-- formats 1000000 as 1,000,000
 
   return total;
 }
