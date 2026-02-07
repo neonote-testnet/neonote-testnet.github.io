@@ -1599,7 +1599,7 @@ function restoreCollectionUI() {
   const month = collectionMonth.value;
 
   if (quotaData[month]) {
-    collectionQuota.value = quotaData[month].quota ?? 0;
+    collectionQuota.value = (quotaData[month].quota ?? 0).toLocaleString();
     collectionTotalBalance.value = (quotaData[month].balance ?? 0).toLocaleString();
 collectionRunning.value = (quotaData[month].running ?? 0).toLocaleString();
 
