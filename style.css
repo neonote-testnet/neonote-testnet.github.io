@@ -859,21 +859,12 @@ button.collectionbtn {
 
 #collectionModal {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 97%;
-  max-width: 1200px;
-  height: 675px;
-  background: #1a1a1a;
   color: #f0f0f0;
   border: 2px solid var(--green);
   border-radius: 10px;
   padding: 0;
   overflow: hidden;
-  display: flex;
   flex-direction: column;
-    z-index: 700;
 }
 
 #closeCollectionModal {
@@ -1136,4 +1127,18 @@ button.collectionbtn {
 
 .modal button {
   touch-action: manipulation;
+}
+
+.collection-modal-content {
+  width: 97%;
+  max-width: 1200px;
+  height: 675px;
+  background: #1a1a1a;
+  color: #f0f0f0;
+  border: 2px solid var(--green);
+  border-radius: 10px;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
