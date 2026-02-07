@@ -1141,11 +1141,11 @@ button.collectionbtn {
   flex-direction: column;
 }
 
-#collectionModal #saveCollectionQuota {
-  background: var(--red);
+.saveCollectionQuota {
+  background: var(--bg);
   color: #000;
   border: 2px solid var(--green);
-  border-radius: 3px;
+  border-radius: 5px;
   padding: 10px;
   font-size: 1.4rem;
   cursor: pointer;
