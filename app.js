@@ -1250,6 +1250,17 @@ let currentCollectionTab = '3NM';
 let quotaData = JSON.parse(localStorage.getItem('collectionQuotaData') || '{}');
 let monthlyAccountCounts =
   JSON.parse(localStorage.getItem('monthlyAccountCounts') || '{}');
+  
+function calculateTotalReceivable() {
+  const total = collectionData.reduce((sum, r) => {
+    return sum + (Number(r.balance) || 0);
+  }, 0);
+
+  const input = document.getElementById('collectionTotalReceivable');
+  if (input) input.value = total;
+
+  return total;
+}
 
 function getMonthKey(dateStr) {
   const d = new Date(dateStr);
@@ -1300,11 +1311,10 @@ const infoBlock = document.getElementById('collectionInfoBlock');
 expandPanelBtn.onclick = () => {
   const expanded = panelContent.classList.toggle('visible');
 
+  panelContent.classList.toggle('hidden', !expanded);
   infoBlock.classList.toggle('hidden', expanded);
-
   expandPanelBtn.textContent = expanded ? '>' : '<';
 };
-
 
 saveCollectionQuota.onclick = () => {
   const month = collectionMonth.value;
@@ -1351,7 +1361,8 @@ updateCollectionRecord.onclick = () => {
   }
 
   localStorage.setItem('collectionData', JSON.stringify(collectionData));
-
+  
+  calculateTotalReceivable(); 
   collectionNamesVisible = false;
   updateTabCounts();
   collectionNamesList.innerHTML = '';
@@ -1402,6 +1413,7 @@ if (record.balance < 0) record.balance = 0;
 
   localStorage.setItem('collectionData', JSON.stringify(collectionData));
   localStorage.setItem('collectionQuotaData', JSON.stringify(quotaData));
+  calculateTotalReceivable(); 
   collectionTotalBalance.value = quotaData[month]?.balance || 0;
   collectionRunning.value = quotaData[month]?.running || 0;
   const monthKey = month;
@@ -1498,6 +1510,7 @@ function renderCollectionNames(filter = '') {
     showConfirm(`Are you sure you want to delete "${record.name}"?`, () => {
       collectionData = collectionData.filter(r => r.name !== record.name);
       localStorage.setItem('collectionData', JSON.stringify(collectionData));
+      calculateTotalReceivable();
       renderCollectionNames(collectionSearch.value); 
     });
   };
@@ -1600,6 +1613,7 @@ function restoreCollectionUI() {
     totalAccInput.value = 0;
   }
   
+    calculateTotalReceivable(); 
   updateCollectionPercentage(month);
 
 }
@@ -1685,13 +1699,3 @@ restoreCollectionUI();
 
 
 });
-document.addEventListener('DOMContentLoaded', () => {
-  const expandBtn = document.getElementById('expandPanelBtn');
-  const panel = document.getElementById('panelContent');
-
-  expandBtn.addEventListener('click', () => {
-    panel.classList.toggle('hidden');
-    expandBtn.textContent = panel.classList.contains('hidden') ? '>' : '<';
-  });
-});
-
