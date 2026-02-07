@@ -1,4 +1,4 @@
-const CACHE = 'neonote-v400';
+const CACHE = 'neonote-v401';
 
 self.addEventListener('install', event => {
   

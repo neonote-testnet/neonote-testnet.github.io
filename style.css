@@ -1123,12 +1123,6 @@ button.collectionbtn {
   line-height: 1.1;
 }
 
-.modal button:active,
-.modal .floating-btn:active,
-.modal .tab:active {
-  transform: none !important;
-}
-
 .modal button {
   touch-action: manipulation;
 }
