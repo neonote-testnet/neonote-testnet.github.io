@@ -1252,12 +1252,14 @@ let monthlyAccountCounts =
   JSON.parse(localStorage.getItem('monthlyAccountCounts') || '{}');
   
 function calculateTotalReceivable() {
-  const total = collectionData.reduce((sum, r) => {
+  const total = (collectionData || []).reduce((sum, r) => {
     return sum + (Number(r.balance) || 0);
   }, 0);
 
   const input = document.getElementById('collectionTotalReceivable');
-  if (input) input.value = total.toLocaleString(); // <-- formats 1000000 as 1,000,000
+  if (input) {
+    input.value = isNaN(total) ? '0' : total.toLocaleString();
+  }
 
   return total;
 }
