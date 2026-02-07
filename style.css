@@ -119,8 +119,10 @@ body {
 button:active,
 .floating-btn:active,
 .tab:active {
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
+  transform: scale(1.08);
+  box-shadow: inset 0 0 6px rgba(170, 240, 230, 0.7);
 }
+
 
 button,
 .floating-btn,
@@ -1139,10 +1141,10 @@ button.collectionbtn {
 }
 
 #saveCollectionQuota {
-  background: var(--red);
+  background: var(--bg);
   color: #000;
   border: 2px solid var(--green);
-  border-radius: 3px;
+  border-radius: 6px;
   padding: 10px;
   font-size: 1.4rem;
   cursor: pointer;
