@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Security-Policy"
   content="
   default-src 'self';
-  script-src 'self';
+  script-src 'self' 'unsafe-eval';
   style-src 'self' 'unsafe-inline';
   img-src 'self' data:;
   object-src 'none';
@@ -1092,17 +1092,17 @@ NeonoteX faster, cleaner, and easier to use as your data grows.
 
   <div class="input-row">
     <label>Quota:</label>
-    <input type="number" id="collectionQuota"/>
+    <input type="text" id="collectionQuota"/>
   </div>
 
   <div class="input-row">
     <label>Balance:</label>
-    <input type="number" id="collectionTotalBalance" disabled/>
+    <input type="text" id="collectionTotalBalance" disabled/>
   </div>
 
   <div class="input-row">
     <label>Running:</label>
-    <input type="number" id="collectionRunning" disabled/>
+    <input type="text" id="collectionRunning" disabled/>
   </div>
   <div class="input-row">
   <label>Total Acc:</label>

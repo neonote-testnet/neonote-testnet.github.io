@@ -1333,8 +1333,8 @@ saveCollectionQuota.onclick = () => {
     JSON.stringify(quotaData)
   );
 
-  collectionTotalBalance.value = quotaData[month].balance;
-  collectionRunning.value = quotaData[month].running;
+  collectionTotalBalance.value = (quotaData[month].balance ?? 0).toLocaleString();
+collectionRunning.value = (quotaData[month].running ?? 0).toLocaleString();
 
   updateCollectionPercentage(month);
 };
@@ -1416,8 +1416,9 @@ if (record.balance < 0) record.balance = 0;
   localStorage.setItem('collectionData', JSON.stringify(collectionData));
   localStorage.setItem('collectionQuotaData', JSON.stringify(quotaData));
   calculateTotalReceivable(); 
-  collectionTotalBalance.value = quotaData[month]?.balance || 0;
-  collectionRunning.value = quotaData[month]?.running || 0;
+  collectionTotalBalance.value = (quotaData[month]?.balance ?? 0).toLocaleString();
+collectionRunning.value = (quotaData[month]?.running ?? 0).toLocaleString();
+
   const monthKey = month;
 const monthData = monthlyAccountCounts[monthKey];
 
@@ -1599,8 +1600,9 @@ function restoreCollectionUI() {
 
   if (quotaData[month]) {
     collectionQuota.value = quotaData[month].quota ?? 0;
-    collectionTotalBalance.value = quotaData[month].balance ?? 0;
-    collectionRunning.value = quotaData[month].running ?? 0;
+    collectionTotalBalance.value = (quotaData[month].balance ?? 0).toLocaleString();
+collectionRunning.value = (quotaData[month].running ?? 0).toLocaleString();
+
   } else {
     collectionQuota.value = '';
     collectionTotalBalance.value = '';
